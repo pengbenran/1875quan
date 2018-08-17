@@ -1,5 +1,5 @@
 <template>
-   <div class="jiancaiContainer">
+   <div >
     <div class="jiancaiImg" :style="{width:imageWidth,height:imageHeigth}">
       <image src="https://shop.guqinet.com/html/images/shanquan/jiazhuang.jpg"></image>
     </div>

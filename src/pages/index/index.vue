@@ -61,7 +61,6 @@ export default {
     duration: 1000,    //滑动动画时长
     }
   },
-
   components: {
 
   },
