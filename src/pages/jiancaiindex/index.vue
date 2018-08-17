@@ -17,8 +17,12 @@
         <div class="jcCase-item"></div><div class="jcCase-item"><image src="https://shop.guqinet.com/html/images/shanquan/jccase01.jpg"></image></div>
         <div class="jcCase-item"></div><div class="jcCase-item"><image src="https://shop.guqinet.com/html/images/shanquan/jccase02.jpg"></image></div>
     </div>
+<<<<<<< HEAD
     <!--jcCase end-->
 
+=======
+    <div>彭本燃提交的</div>
+>>>>>>> 43758b8f43aa8e98b6020f8e3eea04ecb48c9aa5
   </div>
  <!--jccontainer end-->
 </template>
