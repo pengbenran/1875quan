@@ -18,7 +18,12 @@ export function formatTime (date) {
   return `${t1} ${t2}`
 }
 
+export function Lcons66 (){
+  console.log("66666====----");
+}
+
 export default {
   formatNumber,
-  formatTime
+  formatTime,
+  Lcons66
 }
