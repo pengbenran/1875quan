@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import globalStore from '../../stores/global-store';
 
 export default {
   data () {
@@ -70,12 +71,46 @@ export default {
     wx.navigateTo({
       url: url,
     })
-   }
+   },
+   //获取初始数据后期更改(暂时数据)
+   getinfo(){
+     let that=this;
+     wx.login({
+       success:function(res){
+         console.log(res.code);
+         if(res.code){
+          wx.request({
+            url: globalStore.state.api+'/api/byCode',
+            data: {
+              code:res.code
+            },
+            header: {
+              'content-type': 'application/json' // 默认值
+            },
+            success: function(res) {
+              console.log(res.data)
+              //根据code获取回调后的数据
+              if(res.data.memberDo!=null){
+                wx.setStorageSync('memberId',res.data.memberDo.memberId)//创建缓存数据
+                let memberId=res.data.memberDo.memberId
+              }else{
+                let memberId="00";
+                wx.setStorageSync('memberId', "00")//创建缓存数据
+              }
+            }
+          })//request end
+         }
+        
+       }
+     })//longin end
+   },
+    //获取code
+
     
   },
   
   onLoad(){ 
-   
+   this.getinfo();
   }
 }
 </script>

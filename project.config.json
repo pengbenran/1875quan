@@ -1,7 +1,7 @@
 {
 	"description": "项目配置文件。",
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": false,
 		"postcss": true,
 		"minified": true,
@@ -9,8 +9,8 @@
 	},
 	"miniprogramRoot": "./dist/",
 	"compileType": "miniprogram",
-	"appid": "wx4a58cc7f93a44fdf",
-	"projectname": "zheng",
+	"appid": "wxc6a44ea909442b31",
+	"projectname": "zheng11",
 	"condition": {
 		"search": {
 			"current": -1,
