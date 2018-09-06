@@ -2,7 +2,7 @@
   <div class="jifencontainer">
      <div class="jifenbrand">
          <div class="brandimg"><image :src='headimg'></image></div>  
-         <div class="brandinfo"><span>4</span><span>我的积分</span>
+         <div class="brandinfo"><span>{{mp}}</span><span>我的积分</span>
            <div class="brandinfobtn" @click="onTimeToast()"><image :src='qianimg'></image>
             <label v-if="signStatus==1">签到</label><label v-if="signStatus==2">已签到</label>
            </div>

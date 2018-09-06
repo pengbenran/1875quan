@@ -25,7 +25,7 @@
     <image src='https://shop.guqinet.com/html/images/shanquan/memintro.jpg'></image>
   </div>
   <div class='membeintrodetail'>
-    <div class='membeintrodetailtitle'>会员特权</div>
+    <div class='membeintrodetailtitle'>限时商品</div>
     <div class='membeintrodetailcontent'>
        <div>
        <image src="https://shop.guqinet.com/html/images/shanquan/adv1.jpg"></image>
