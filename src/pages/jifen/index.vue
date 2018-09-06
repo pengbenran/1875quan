@@ -32,8 +32,8 @@ export default {
     return {
         tabPageHeight:350,
         currentTab: 0,
-        "headimg": [globalStore.state.imgapi+"/images/jifen/bgtu.png"],
-        "qianimg": [globalStore.state.imgapi+"/images/jifen/qiandao.png"],
+        "headimg": [globalStore.state.imgapi+"/image/jifenbcgimg.jpg"],
+        "qianimg": [globalStore.state.imgapi+"/image/qiandao.png"],
         pointSign:[],//积分次数合集
         signStatus:1,//是否签到状态判断
         mp:0 //总分数
@@ -45,21 +45,18 @@ export default {
   },
 
   methods: {
-
     //点击进行签到事件
     onTimeToast(){
-      let aa='+'+2;
+      let addpoint='+'+2;
       var that=this;
-
-        let memberId=wx.getStorageSync('memberId');
-
+      let memberId=wx.getStorageSync('memberId');
       var parms={};
       parms.memberId=memberId;
       parms.cutpoint = 2  //积分签到获取
       var parms=JSON.stringify(parms);
       if (that.signStatus == 1){
         wx.request({
-          url: api+'/api/member/upMemberLv',
+          url: globalStore.state.api+'/api/member/upMemberLv',
           method: 'POST',
           data: {
             parms: parms
@@ -72,7 +69,7 @@ export default {
           }
         })
       that.wetoast.toast({
-        title: aa,
+        title: addpoint,
         duration: 200
       })
      }
@@ -81,18 +78,12 @@ export default {
         title: '提示',
         content: '你已经签到过了哦！',
       })
-      that.setData({
-
-      })
-      return;
      }
     }
   
    },
 
    onLoad(options){
-     globaltime.Lcons66; //这是定义的全局方法
-     //加载初始化数据
     let that = this
     try {
       var memberId = wx.getStorageSync('memberId')
@@ -122,7 +113,6 @@ export default {
           that.mp=mp;
           that.signStatus=signStatus;
           that.pointSign=pointSign;
-        console.log("-数据加载完毕-")  
       }
     })
   } 

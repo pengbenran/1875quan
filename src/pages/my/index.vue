@@ -6,7 +6,7 @@
         <div class="userimg"><image :src="userInfo.avatarUrl" background-size="cover"></image></div>
         <div class="userright">
           <span>{{userInfo.nickName}}</span>
-          <div class="usercase">{{lvidname}}</div>
+          <div class="member" :hidden="!isMember">{{lvidname}}</div>
         </div>
       </div>
      <div class="mybrand"  v-else> <button  open-type="getUserInfo" @click="getUserInfo"> 点击授权登录 </button></div>
@@ -14,100 +14,26 @@
     <!--myBrand end-->
    
    <div class="myorder">
-     <div class="ordertitle"><span>我的订单</span><span>查看全部订单<image class="indent-img" :src="indent"></image></span></div>
+     <div class="ordertitle"><span>我的订单</span><span @click=jumporderdetail(-1)>查看全部订单<image class="indent-img" :src="indent"></image></span></div>
       <div class="orderItem">
         <ul>
-          <li><image :src='df'></image><div>待付款</div></li>
-          <li><image :src='dfh'></image><div>待发货</div></li>
-          <li><image :src='ds'></image><div>待收货</div></li>
-          <li><image :src='ywc'></image><div>已完成</div></li>
+          <li @click=jumporderdetail(index) v-for="(item,index) in itemlist" :index='index' :key='key' >
+            <image :src='item.imgUrl'></image>
+            <div>{{item.name}}</div>
+            <div class='yuan' v-if="item.statuscount!=0">{{item.statuscount}}</div>
+          </li>
         </ul>
       </div>
    </div>
    <!--myorder end-->
-
-   <div class="orderList">
-       <div class="listwarp">
-          <div class="listleft">
-              <image :src='myping'></image>
-          </div>
-          <div class="listRight">
-                <div class="listtiel">微分销会员</div>
-              <image :src="indent"></image>
-          </div>
+    <div class='menu'>
+      <div class='df nav'>
+        <div class='df_1'  v-for="(item,index) in kind" @click=jump(item.jumpurl) :index='index' :key='key'>
+          <image :src='item.imageurl'></image>
+          {{item.name}}
         </div>
-        <!--微分销会员-->
-       <div class="listwarp">
-          <div class="listleft">
-              <image :src='int'></image>
-          </div>
-          <div class="listRight" @click="tojifen()">
-                <div class="listtiel">积分</div>
-              <image :src="indent"></image>
-          </div>
-        </div>
-                <!--积分-->
-       <div class="listwarp" @click="toaddres">
-          <div class="listleft">
-              <image :src='inter'></image>
-          </div>
-          <div class="listRight">
-                <div class="listtiel">地址管理</div>
-              <image :src="indent"></image>
-          </div>
-        </div>
-                <!--地址管理-->
-       <div class="listwarp">
-          <div class="listleft">
-              <image :src='integra'></image>
-          </div>
-          <div class="listRight">
-                <div class="listtiel">会员卡</div>
-              <image :src="indent"></image>
-          </div>
-        </div>
-                <!--微分销会员-->
-       <div class="listwarp">
-          <div class="listleft">
-              <image :src='youhui'></image>
-          </div>
-          <div class="listRight">
-                <div class="listtiel">优惠券</div>
-              <image :src="indent"></image>
-          </div>
-        </div>
-                <!--微分销会员-->
-       <div class="listwarp">
-          <div class="listleft">
-              <image :src='myping'></image>
-          </div>
-          <div class="listRight">
-                <div class="listtiel">我的拼团</div>
-              <image :src="indent"></image>
-          </div>
-        </div>
-                <!--微分销会员-->
-        <div class="listwarp">
-          <div class="listleft">
-              <image :src='shouhou'></image>
-          </div>
-          <div class="listRight">
-                <div class="listtiel">收藏</div>
-              <image :src="indent"></image>
-          </div>
-        </div>
-
-                         <!--微分销会员-->
-         <div class="listwarp">
-          <div class="listleft">
-              <image :src='youhui'></image>
-          </div>
-          <div class="listRight">
-                <div class="listtiel">售后</div>
-              <image :src="indent"></image>
-          </div>
-        </div>
-   </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -117,22 +43,28 @@ import globalStore from "../../stores/global-store";
 export default {
   data () {
     return {
-       head:globalStore.state.imgapi+'/image/wode/zu17.png',
-       df: globalStore.state.imgapi + "/image/wode/qianbao.png",
-       dfh: globalStore.state.imgapi + "/image/wode/shouhuo.png",
-       ds: globalStore.state.imgapi + "/image/wode/pingjia.png",
-       ywc: globalStore.state.imgapi + "/image/wode/tuihuo.png",
-       indent: globalStore.state.imgapi + "/image/wode/kao6.png",
-       myping: globalStore.state.imgapi + "/image/wode/pingtuan.png", //分销图标
-       int: globalStore.state.imgapi + "/image/wode/jifen.png", //积分
-       inter: globalStore.state.imgapi + "/image/wode/dizhi.png", //地址管理
-       integra: globalStore.state.imgapi + "/image/wode/huiyuan.png", //会员卡
-       youhui: globalStore.state.imgapi + "/image/wode/youhuiquan.png", //优惠券
-       shouhou: globalStore.state.imgapi + "/image/wode/shoucang.png",//收藏
+       head:globalStore.state.imgapi+'image/mybcg.jpg',
+       itemlist:[
+       {name:"待付款",imgUrl:globalStore.state.imgapi+'image/qianbao.jpg',statuscount:0},
+       {name:"待发货",imgUrl:globalStore.state.imgapi+'image/shouhuo.jpg',statuscount:0},
+       {name:"待收货",imgUrl:globalStore.state.imgapi+'image/fahuo.jpg',statuscount:0},
+       {name:"已完成",imgUrl:globalStore.state.imgapi+'image/tuihuo.jpg',statuscount:0}
+       ],
        userInfo:[],
        isUse: true,
        hasmemberId:false,
-       lvidname:""
+       lvidname:"",
+       isMember:true,
+       hasmemberId: false,
+       isUse: true,
+       kind: [{ name: '充值圈圈', imageurl:globalStore.state.imgapi+'image/chongzhi.jpg',jumpurl:'../shumaindex/main'},
+      { name: '圈圈兑换', imageurl: globalStore.state.imgapi+'image/duihuan.jpg', jumpurl: '../jifen/main' },
+      { name: '签到', imageurl: globalStore.state.imgapi+'image/qiandao.jpg', jumpurl: '../jifen/main' },
+      { name: '收货地址', imageurl: globalStore.state.imgapi+'image/address.jpg', jumpurl: '../xiemaoindex/main' },
+      { name: '我的拼团', imageurl: globalStore.state.imgapi+'image/pingtuan.jpg', jumpurl: '../grouplist/main' },
+      { name: '我的收藏', imageurl: globalStore.state.imgapi+'image/shoucang.jpg', jumpurl: '../meirongindex/main' },
+      { name: '微分销', imageurl: globalStore.state.imgapi+'image/weifenxiao.jpg', jumpurl: '../peixunindex/main' },
+      { name: '商家入驻', imageurl: globalStore.state.imgapi+'image/ruzhu.jpg', jumpurl: '../lingshouindex/main' }],
       }
   },
 
@@ -169,10 +101,10 @@ export default {
               }else{
                 var mp=res.data.memberDO.mp;
               }
-              that.statuscount=res.data.statuscount,//未付款
-              that.freightstatuscount=res.data.freightstatuscount,//待收货
-              that.finishstatuscount=res.data.finishstatuscount,//已完成
-              that.shippedstatuscount=res.data.shippedstatuscount,//已发货
+              that.itemlist[0].statuscount=res.data.statuscount,//未付款
+              that.itemlist[1].statuscount=res.data.freightstatuscount,//待收货
+              that.itemlist[2].statuscount=res.data.finishstatuscount,//已完成
+              that.itemlist[3].statuscount=res.data.shippedstatuscount,//已发货
               that.lvidname=res.data.memberDO.lvidname,//会员
               that.mp=mp,
               that.vouchercount=res.data.vouchercount
@@ -183,19 +115,6 @@ export default {
           }
         })
       }
-    },
-    //跳转至地址管理
-    toaddres(){
-      let that=this;
-      let url='../address/main';
-      that.jumps(url);
-    },
-    //跳转到积分
-    tojifen(){
-     console.log("6666")
-      let that=this;
-      let url='../jifen/main';
-      that.jumps(url);
     },
     //判断登录才可跳转
     jumps(url){
@@ -212,11 +131,29 @@ export default {
         })
       }
     },
-
+     jump:function(url){
+    var that = this;
+    if (that.hasmemberId && that.isUse) {
+      wx.navigateTo({
+        url: url ,
+      })
+      } else {
+      wx.showToast({
+        title: '未授权登录',
+        icon: 'loading',
+        duration: 2000
+      })
+    }
+  },
+    jumporderdetail(e){
+       var that = this;
+       let id=e+1;
+       let url = '../orderdetail/main?currentTarget=' + id
+       that.jump(url)
+    },
     getUserInfo(e){//获取用户信息
-    console.log("655555")
        let that=this;
-       that.onshow();
+       that.onShow();
        if(that.memberId=="00"){
          wx.login({//登陆获取code
            success:res=>{
@@ -239,7 +176,7 @@ export default {
                         wx.setStorageSync("openid", res.data.openid)//可以把openid保存起来,以便后期需求的使用
                         wx.setStorageSync("memberId", res.data.memberId)
                         wx.setStorageSync("memberIdlvId", res.data.memberIdlvId)
-                        that.onshow();
+                        that.onShow();
                       }
                     })
                   }
@@ -294,28 +231,78 @@ export default {
 .usercase{margin-top:20rpx;text-align:center;width: 160rpx;padding-left: 12rpx;padding-right: 12rpx;border-radius: 45rpx;background:#f9ffff;color:#71b5ff;font-size:30rpx;height:48rpx;line-height:50rpx;}
 
 /*myorder*/
-.ordertitle{display: flex;justify-content: space-between;padding-left: 15rpx;padding-right: 15rpx;line-height: 92rpx;border-bottom: 1px solid #F2F2F2;}
+.ordertitle{display: flex;justify-content: space-between;padding-left: 15rpx;padding-right: 15rpx;line-height: 92rpx;border-bottom: 1px solid #F2F2F2;background: #fff;}
 .ordertitle span{font-size: 28rpx;}
-.orderItem{padding:20rpx 0rpx;}
+.orderItem{padding:20rpx 0rpx; background: #fff;}
 .orderItem ul{display: flex;}
-.orderItem li{width: 25%;text-align: center;}
+.orderItem li{width: 25%;text-align: center; position: relative;}
 .orderItem div{text-align: center;color:#666;font-size: 28rpx;}
 .orderItem image{width: 62rpx;height: 62rpx;}
 .indent-img{width:15rpx;height:22rpx;margin-left: 5rpx;}
+.member{
+  margin-top: 20rpx;
+  border-radius: 45rpx;
+  text-align: center;
+  min-width:158rpx; 
+  background: #f9ffff;
+  color: #000;
+  font-size: 30rpx;
+  height:48rpx;
+  line-height: 50rpx;
+  padding:0 10rpx 0 10rpx;
 
-/*orderList*/
-.listwarp{display: flex;justify-content: center;height: 100rpx;padding-left: 10rpx;padding-right: 10rpx;}
-.listleft{width: 10%;display: flex;justify-content: center;align-items: center;}
-.listleft image{height: 34rpx;width: 39rpx;}
-.listRight{width: 90%;display: flex;justify-content: space-between;align-items: center;border-bottom: 1px solid #f2f2f2;}
-.listRight image{width:15rpx;height:22rpx;}
-.listtiel{font-size: 28rpx;}
-
-/*orderList*/
-.orderList{border-top:5px solid #f2f2f2;}
-
-/*mybrand*/
-.mybrand{position: absolute;top: 35%;width: 100%;text-align:center;}
-.mybrand button{display: inline-block;width: 260rpx;height: 80rpx;font-size: 30rpx;
 }
+.yuan{
+  width: 35rpx;
+  height: 35rpx;
+  background: #ff6a6b;
+  font-size: 12px;
+  color: #fff;
+  position: absolute;
+  border-radius: 50%;
+  line-height: 35rpx;
+  top: -5px;
+  right: 14px;
+}
+/* 菜单选项 */
+.menu{
+  display:block;
+  box-shadow: 0px 5rpx #f1f1f1;
+  margin-top: 10rpx;
+}
+.nav{
+  background: #fff;
+  padding: 10px 0;
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex; 
+  text-align: center;
+  font-size: 28rpx;
+  color: #666;
+
+}
+.nav image{
+  width: 80rpx;
+  height: 80rpx;
+  display: block;
+  text-align: center;
+  margin: 0 auto;
+  margin-bottom: 5px;
+  border-radius: 15px;
+}
+.df{
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+   flex-wrap: wrap;
+}
+.df_1{
+  width: 25%;
+  height: 146rpx;
+  -webkit-tap-highlight-color: transparent;
+}
+
 </style>

@@ -122,7 +122,7 @@ export default {
 
   methods: {
     //请求页面初始数据
-    geiShopinfo(goodid,catid){
+    geiShopinfo(goodid){
       let that=this;
       wx.showLoading({
       title: '加载中',
@@ -413,7 +413,7 @@ export default {
    },
 
    onLoad:function(options){
-     this.geiShopinfo(options.goodid,options.catid);
+     this.geiShopinfo(options.goodid);
   }
 }
 </script>

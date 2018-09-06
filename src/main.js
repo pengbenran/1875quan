@@ -14,12 +14,13 @@ export default {
     pages: ['pages/logs/main', '^pages/index/main', 'pages/my/main', 'pages/group/main'
     , 'pages/hunshaindex/main', 'pages/jiancaiindex/main', 'pages/shumaindex/main', 'pages/meirongindex/main', 'pages/lvyouindex/main'
     , 'pages/cart/main', 'pages/peixunindex/main', 'pages/xiemaoindex/main','pages/shumalist/main','pages/shumainfo/main','pages/dingdan/main'
-    ,'pages/address/main','pages/xinaddress/main','pages/jifen/main'],
+    ,'pages/address/main','pages/xinaddress/main','pages/jifen/main','pages/orderdetail/main','pages/tuikuan/main','pages/orderinfo/main',
+    'pages/grouplist/main','pages/groupdetail/main'],
     window: {
       backgroundTextStyle: 'light',
-      navigationBarBackgroundColor: '#fff',
+      navigationBarBackgroundColor: '#F64F57',
       navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: 'black'
+      navigationBarTextStyle: '#fff'
     }, 
      tabBar: {
       "selectedColor":"#e93429",

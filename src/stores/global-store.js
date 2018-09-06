@@ -7,7 +7,7 @@ export default new Vuex.Store({
     state:{
         count:0,
         api:"https://www.guqinjiujiang.xyz:8444/guqinzhen",
-        imgapi:"https://shop.yogain.cn/simages"
+        imgapi:"https://shop.guqinet.com/html/images/shanquan/"
     },
     mutations:{
     //   increment:(state)=>{

@@ -18,4 +18,7 @@ export default {
   -webkit-transition: width 2s;
   -o-transition: width 2s;
 }
+page{
+  background: #ECEAEB;
+}
 </style>
