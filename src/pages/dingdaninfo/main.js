@@ -5,7 +5,6 @@ const app = new Vue(App)
 app.$mount()
 export default {
   config: {
-    navigationBarTitleText: '购物车',
-    "enablePullDownRefresh": true
+    navigationBarTitleText: '订单详情'
   }
 }

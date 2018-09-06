@@ -14,7 +14,7 @@ export default {
     pages: ['pages/logs/main', '^pages/index/main', 'pages/my/main', 'pages/group/main'
     , 'pages/hunshaindex/main', 'pages/jiancaiindex/main', 'pages/shumaindex/main', 'pages/meirongindex/main', 'pages/lvyouindex/main'
     , 'pages/cart/main', 'pages/peixunindex/main', 'pages/xiemaoindex/main','pages/shumalist/main','pages/shumainfo/main','pages/dingdan/main'
-    ,'pages/address/main','pages/xinaddress/main','pages/jifen/main'],
+    ,'pages/address/main','pages/xinaddress/main','pages/jifen/main','pages/quanchongzhi/main','pages/quanduihuan/main','pages/dingdaninfo/main'],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
@@ -30,12 +30,6 @@ export default {
             selectedIconPath: "/static/images/shouye1.png",
             text: "首页"
           },     
-          {
-            pagePath: "pages/active/main",
-            iconPath: "/static/images/active.png",
-            selectedIconPath: "/static/images/active1.png",
-            text: "活动"
-          },
           {
             pagePath: "pages/group/main",
             iconPath: "/static/images/all.png",
