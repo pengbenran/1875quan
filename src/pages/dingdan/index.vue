@@ -1,7 +1,5 @@
 <template>
   <div class="dingdanContainer">
-     
-
       <div  v-if="isAddr">
      <div class="dingdanHeader">
        <div class="dingleft">

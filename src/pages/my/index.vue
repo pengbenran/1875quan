@@ -62,7 +62,7 @@ export default {
       { name: '签到', imageurl: globalStore.state.imgapi+'image/qiandao.jpg', jumpurl: '../jifen/main' },
       { name: '收货地址', imageurl: globalStore.state.imgapi+'image/address.jpg', jumpurl: '../xiemaoindex/main' },
       { name: '我的拼团', imageurl: globalStore.state.imgapi+'image/pingtuan.jpg', jumpurl: '../grouplist/main' },
-      { name: '我的收藏', imageurl: globalStore.state.imgapi+'image/shoucang.jpg', jumpurl: '../meirongindex/main' },
+      { name: '我的收藏', imageurl: globalStore.state.imgapi+'image/shoucang.jpg', jumpurl: '../collection/main' },
       { name: '微分销', imageurl: globalStore.state.imgapi+'image/weifenxiao.jpg', jumpurl: '../peixunindex/main' },
       { name: '商家入驻', imageurl: globalStore.state.imgapi+'image/ruzhu.jpg', jumpurl: '../lingshouindex/main' }],
       }
@@ -176,7 +176,7 @@ export default {
                         wx.setStorageSync("openid", res.data.openid)//可以把openid保存起来,以便后期需求的使用
                         wx.setStorageSync("memberId", res.data.memberId)
                         wx.setStorageSync("memberIdlvId", res.data.memberIdlvId)
-                        that.onShow();
+                        that.getInfo();
                       }
                     })
                   }
@@ -186,10 +186,7 @@ export default {
          })
        }
     },
-
-  },
-   //请求基本用户信息(头像名称)
-   onShow(){
+    getInfo:function(){
      let that=this;
      let memberId= wx.getStorageSync('memberId');
      that.memberId=memberId;  //设置memberId
@@ -210,6 +207,12 @@ export default {
          }
        }
      })
+    }
+  },
+   //请求基本用户信息(头像名称)
+   onShow(){
+    var that=this;
+    that.getInfo();
    },
 
   created () {

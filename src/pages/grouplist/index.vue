@@ -50,6 +50,9 @@
         </div>
       </div>
     </div>
+    <div class="ordercontentno" v-if="mytuanData.length==0">
+      <image :src="nothingimg"></image>  
+    </div>
   </div>
 </template>
 
@@ -65,6 +68,7 @@ export default {
       {name:"拼团成功",selected:false},
       {name:"拼团失败",selected:false},
       ],
+      nothingimg:globalStore.state.imgapi+'image/nothing.png',
       mytuanData:[]
      }
   },
@@ -91,10 +95,94 @@ export default {
       wx.navigateTo({
         url: '../groupdetail/main?shops= ' + parmss,
       })
+    },
+    onShareAppMessage: function () {
+      var that = this
+      var fenxiangpingtuan = {}
+      fenxiangpingtuan = that.pingtuandetail
+      fenxiangpingtuan.memberId = that.memberId
+      fenxiangpingtuan = JSON.stringify(fenxiangpingtuan)
+      return {
+        path: '/pages/join/main?fenxiangpingtuan=' + fenxiangpingtuan,
+      }
+    }, 
+    showMsgFromChild:function(data){
+    var that = this;
+    if (data == 0){
+      wx.request({
+        url: globalStore.state.api + '/api/collage/allMemberCollage',
+        data: {
+          memberId: that.memberId
+        },
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        success: function (res) { 
+          that.mytuanData=res.data
+        },
+        fail: function () {
+         
+
+        }
+      })
+    }
+    else if (data == 1) {
+      wx.request({
+        url: globalStore.state.api + '/api/collage/waitMemberCollage',
+        data: {
+          memberId: that.memberId
+        },
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        success: function (res) {
+          that.mytuanData=res.data
+        },
+        fail: function () {
+
+        }
+      })
+    }
+    else if (data == 2) {
+      wx.request({
+        url: globalStore.state.api + '/api/collage/succeedMemberCollage',
+        data: {
+          memberId: that.memberId
+        },
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        success: function (res) {
+          that.mytuanData=res.data
+        },
+        fail: function () {
+
+        }
+      })
+    }
+
+    else{
+      wx.request({
+        url: globalStore.state.api + '/api/collage/failMemberCollage',
+        data: {
+          memberId: that.memberId
+        },
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        success: function (res) {
+          that.mytuanData=res.data
+        },
+        fail: function () {
+
+        }
+      })
+    }
     }
   },
   onLoad(options){
   var that = this
+  that.find_item[0].selected=true
   var memberId = wx.getStorageSync('memberId')
   that.memberId=memberId
   wx.request({
@@ -120,6 +208,17 @@ image{
   width: 100%;
   height: 100%;
   display: block;
+}
+.ordercontentno{
+  width: 400rpx;
+  height: 400rpx;
+  margin: 100rpx auto;
+  margin-bottom: 0rpx;
+}
+.ordertip{
+  margin-top: 20rpx;
+  text-align: center;
+  color:#8A8890;
 }
 .spell-down{
   background: #fff;

@@ -5,7 +5,9 @@
   <!--图片  -->
       <div class='can-image'>
         <div class='red-box'>团购</div>
-        <image :src='pingtuandetail.img'></image>
+        <div class="goodimg">
+          <image :src='pingtuandetail.img'></image>
+        </div>      
       </div>
   <!-- 标题，价钱  -->
       <div class='can-tit'>
@@ -60,7 +62,7 @@
     支付开团/参团>邀请参团>人满成团
   </div>
 </div>
-<div class="drawer_screen"  v-if="showModalStatus1"></div>
+<!-- <div class="drawer_screen"  v-if="showModalStatus1"></div>
 <div class="drawer_box" v-if="showModalStatus1">
   <div class='cular>
     <image src='/image/bi.png'></image>
@@ -75,7 +77,7 @@
   <text class='open'>{{item.uname}}</text>
   <text class='open'>{{item.entertime}}参团</text>
   </div>
-</div>
+</div> -->
   
   </div>
 </template>
@@ -85,25 +87,37 @@ import globalStore from "../../stores/global-store"
 export default {
   data () {
     return {
-    
+      pingtuandetail:{},
+      collageSucceed:[]
      }
-  },
-
+    },
   components: {
   
   },
 
   methods: {
-  
+ 
   },
+   onShareAppMessage: function () {
+    var that = this
+    var fenxiangpingtuan = {}
+    fenxiangpingtuan = that.pingtuandetail
+    fenxiangpingtuan.memberId = that.memberId
+    fenxiangpingtuan = JSON.stringify(fenxiangpingtuan)
+    console.log(fenxiangpingtuan);
+    return {
+      path: '/pages/join/main?fenxiangpingtuan=' + fenxiangpingtuan,
+    }
+    },  
   onLoad(options){
      var that = this
     var pingtuandetail = JSON.parse(options.shops)
+    console.log(pingtuandetail)
     var params = {}
     params.goodsId = pingtuandetail.goodsId
     params.memberCollageId = pingtuandetail.memberCollageId
     wx.request({
-      url: api + '/api/collage/collageSucceed',
+      url: globalStore.state.api + '/api/collage/collageSucceed',
       data: {
         "params": params
       },
@@ -133,6 +147,11 @@ image{
   width: 100%;
   height: 100%;
   display: block;
+}
+.goodimg{
+  width: 200rpx;
+  height: 200rpx;
+  overflow: hidden;
 }
 .writeping{
   height: 100rpx;
@@ -172,10 +191,6 @@ image{
   text-align: center;
   line-height: 80rpx;
   color: #fff;
-}
-.can-image image{
-    height:90%;
-  width: 88%;
 }
 /*产品介绍  */
 .can-tit{
@@ -275,7 +290,7 @@ image{
 .btn{
   width: 80%;
   height: 84rpx;
-  background: #26b4fe;
+  background: #F64F57;
   color: #fff;
   border-radius: 16rpx;
   line-height: 84rpx;
@@ -287,7 +302,6 @@ image{
   padding: 20rpx;
   background: #fff;
   margin-top:1rpx;
-
  height: 40rpx;
 display: flex;
 justify-content: space-between;
@@ -297,7 +311,7 @@ align-items: center;
   display: flex;
   align-items: center;
   font-size: 12px;
-  color: #27b5fd;
+  color: #F64F57;
 }
 .paly-left image{
   width: 30rpx;
