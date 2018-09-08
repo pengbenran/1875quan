@@ -15,15 +15,12 @@ export default {
     , 'pages/hunshaindex/main', 'pages/jiancaiindex/main', 'pages/shumaindex/main', 'pages/meirongindex/main', 'pages/lvyouindex/main'
     , 'pages/cart/main', 'pages/peixunindex/main', 'pages/xiemaoindex/main','pages/shumalist/main','pages/shumainfo/main','pages/dingdan/main'
     ,'pages/address/main','pages/xinaddress/main','pages/jifen/main','pages/orderdetail/main','pages/tuikuan/main','pages/orderinfo/main',
-<<<<<<< HEAD
     'pages/grouplist/main','pages/groupdetail/main','pages/membershipdetail/main','pages/micromember/main','pages/fengrungood/main','pages/memberlist/main'
-    ,'pages/address/main','pages/xinaddress/main','pages/jifen/main','pages/quanchongzhi/main','pages/quanduihuan/main','pages/dingdaninfo/main',
-    'pages/membermanage/main','pages/membership/main','pages/putforward/main','^pages/zhekouinfo/main','pages/join/main','pages/collection/main','^pages/collagedetails/main','pages/dingdan2/main'],
+    ,'pages/quanchongzhi/main','pages/quanduihuan/main','pages/dingdaninfo/main',
+    'pages/membermanage/main','pages/membership/main','pages/putforward/main','^pages/zhekouinfo/main','pages/join/main','pages/collection/main',
+    'pages/collagedetails/main','pages/dingdan2/main'
+    ],
 
-=======
-    'pages/grouplist/main','pages/groupdetail/main','pages/address/main','pages/xinaddress/main','pages/jifen/main','pages/quanchongzhi/main',
-    'pages/quanduihuan/main','pages/dingdaninfo/main','pages/join/main','pages/collection/main','^pages/collagedetails/main','pages/dingdan2/main'],
->>>>>>> c09a192297443696c5d8bfc32f2417ffeb48cb1d
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#F64F57',
