@@ -82,6 +82,7 @@ export default {
 
   onLoad: function (options) {
     var that = this
+    console.log(121212)
     if (options.price == undefined || options.pic == undefined || options.goodsId == undefined || options.Type == undefined){
       
         that.price= wx.getStorageSync('price')
