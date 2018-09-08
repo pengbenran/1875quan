@@ -28,7 +28,7 @@
    <!--myorder end-->
     <div class='menu'>
       <div class='df nav'>
-        <div class='df_1'  v-for="(item,index) in kind" @click=jump(item.jumpurl) :index='index' :key='key'>
+        <div class='df_1'  v-for="(item,index) in kind" @click=jump(item.jumpurl,item.menuid) :index='index' :key='key'>
           <image :src='item.imageurl'></image>
           {{item.name}}
         </div>
@@ -57,14 +57,14 @@ export default {
        isMember:true,
        hasmemberId: false,
        isUse: true,
-       kind: [{ name: '充值圈圈', imageurl:globalStore.state.imgapi+'image/chongzhi.jpg',jumpurl:'../shumaindex/main'},
-      { name: '圈圈兑换', imageurl: globalStore.state.imgapi+'image/duihuan.jpg', jumpurl: '../jifen/main' },
-      { name: '签到', imageurl: globalStore.state.imgapi+'image/qiandao.jpg', jumpurl: '../jifen/main' },
-      { name: '收货地址', imageurl: globalStore.state.imgapi+'image/address.jpg', jumpurl: '../xiemaoindex/main' },
-      { name: '我的拼团', imageurl: globalStore.state.imgapi+'image/pingtuan.jpg', jumpurl: '../grouplist/main' },
-      { name: '我的收藏', imageurl: globalStore.state.imgapi+'image/shoucang.jpg', jumpurl: '../meirongindex/main' },
-      { name: '微分销', imageurl: globalStore.state.imgapi+'image/weifenxiao.jpg', jumpurl: '../peixunindex/main' },
-      { name: '商家入驻', imageurl: globalStore.state.imgapi+'image/ruzhu.jpg', jumpurl: '../lingshouindex/main' }],
+       kind: [{ name: '充值圈圈', imageurl:globalStore.state.imgapi+'image/chongzhi.jpg',jumpurl:'../shumaindex/main',menuid:1},
+      { name: '圈圈兑换', imageurl: globalStore.state.imgapi+'image/duihuan.jpg', jumpurl: '../jifen/main',menuid:2 },
+      { name: '签到', imageurl: globalStore.state.imgapi+'image/qiandao.jpg', jumpurl: '../jifen/main',menuid:3 },
+      { name: '收货地址', imageurl: globalStore.state.imgapi+'image/address.jpg', jumpurl: '../xiemaoindex/main',menuid:4 },
+      { name: '我的拼团', imageurl: globalStore.state.imgapi+'image/pingtuan.jpg', jumpurl: '../grouplist/main',menuid:5 },
+      { name: '我的收藏', imageurl: globalStore.state.imgapi+'image/shoucang.jpg', jumpurl: '../meirongindex/main',menuid:6 },
+      { name: '微分销', imageurl: globalStore.state.imgapi+'image/weifenxiao.jpg', jumpurl: '../weifenxiao/main',menuid:7 },
+      { name: '商家入驻', imageurl: globalStore.state.imgapi+'image/ruzhu.jpg', jumpurl: '../lingshouindex/main',menuid:8 }],
       }
   },
 
@@ -85,7 +85,7 @@ export default {
          parms.memberId=memberId;
          console.log(parms);
          wx.request({
-          url: globalStore.state.api + '/api/member/memberIndex', 
+          url: globalStore.state.imgapi + '/api/member/memberIndex',
           data: {
             parms: parms
           },
@@ -117,26 +117,38 @@ export default {
       }
     },
     //判断登录才可跳转
-    jumps(url){
-      let that=this;
-      if(that.hasmemberId&&that.isUse){
-        wx.navigateTo({
-          url:url
-        })
-      }else{
-        wx.showToast({
-          title:'为授权登录',
-          icon:'loading',
-          duration:2000
-        })
-      }
-    },
-     jump:function(url){
+
+     jump:function(url,menuid){
     var that = this;
     if (that.hasmemberId && that.isUse) {
-      wx.navigateTo({
-        url: url ,
-      })
+         if(menuid==7){
+            //当点击微分销的时候
+              wx.request({
+              url: globalStore.state.api + '/api/distribe/whetherDistribe',
+              data: {
+                memberId: that.memberId
+              },
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              success: function (res) {
+                if(res.data.code==1){
+                  wx.navigateTo({
+                        url: url,
+                  })
+                }
+                else{
+                  wx.navigateTo({
+                    url: '../micromember/main',
+                  })
+                }
+              }
+            })
+          }else{
+            wx.navigateTo({
+              url: url ,
+            })
+          }
       } else {
       wx.showToast({
         title: '未授权登录',
