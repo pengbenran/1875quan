@@ -423,6 +423,8 @@ export default {
 <style scoped>
 @import url("~mpvue-wxparse/src/wxParse.css");
 
+.sminfoContainer{background:#fff;}
+
 image{
   display: block;
 }

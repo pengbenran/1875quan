@@ -597,6 +597,7 @@ export default {
 </script>
 
 <style scoped>
+.dingdanContainer{background: #fff;padding-bottom: 50rpx;}
 /*dingdanHeader*/
 .dingdanHeader{display: flex;padding-top: 20rpx;padding-bottom: 15rpx;}
 .dingdanHeader .dingleft{width: 15%;display: flex;align-items: center;justify-content: center;}

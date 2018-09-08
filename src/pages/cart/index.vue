@@ -4,7 +4,7 @@
       <div class="infowarp" v-if="hasList">
         <div class="listWarp" v-for="(item,index) in cartgoods" :index='index' :key='item'>
           <div class="infotitle">
-            <div class="titleleft"><i-icon type="shop_fill" size='20' color='#666'/>谷琴优品 <i-icon type="enter" color='#666'  size='20'/></div>
+            <div class="titleleft">谷琴优品</div>
             <div class="titleright" @click="edits">编辑</div> 
           </div>
             <div class="listinfowarp" :class="isTouchMove?'touch-move-active':''" @touchstart='touchstart' @touchmove='touchmove($event,index)'>
@@ -453,7 +453,7 @@ image {
 
 /*infowarp*/
 .infowarp {display: flex;flex-direction: column;}
-.infotitle {display: flex;justify-content: space-between;border-bottom: 1px solid #f2f2f2;font-size: 28rpx;line-height: 30rpx;padding-left: 15rpx;padding-right: 15rpx;color: #666;}
+.infotitle {display: flex;justify-content: space-between;border-bottom: 1px solid #f2f2f2;height: 80rpx;line-height: 80rpx;font-size: 28rpx;padding-left: 15rpx;padding-right: 15rpx;color: #666;}
 .titleright{font-size: 28rpx;color:#b3b3b3;}
 .infotitle i-icon {padding-right: 20rpx;}
 
