@@ -45,7 +45,15 @@
           <div class="Summaryitem"><span>运费</span><span>￥0</span></div>
         </div>
     </div>
-      
+      <div class="zhifu">
+        <div class="zhifutitle">支付方式</div>
+        <div class="zhifuprice"><div class="price">{{quanprice}}元+{{quanquan}}圈圈</div>
+           <div class="slectico"><icon color='#e93429' type="success" size="20" v-if="selectstu" /><icon type="circle" v-else color="#DDD"   size="20" /></div>
+        </div>
+        <div class="zhifuprice"><div class="price">{{totalPrice}}元</div><div class="slectico">
+          <icon color='#e93429' type="success" size="20" v-if="!selectstu" /><icon type="circle" v-else color="#DDD"   size="20" />
+          </div></div>
+      </div>
       <div class="footer"><div class="footerleft">合计：<span>￥{{totalPrice}}</span></div><div class="footerright" @click="toast()">提交订单</div></div>
   </div>
 </template>
@@ -56,18 +64,21 @@ import globalStore from "../../stores/global-store";
 export default {
   data () {
     return {
-     homeimg:globalStore.state.guqinimgapi  + "/image/shang.png",
-     titleright:globalStore.state.guqinimgapi  +"/image/8.png",
-     heademapimg:globalStore.state.guqinimgapi +"/image/order04.png",
-     headerrightimg:globalStore.state.guqinimgapi +"/image/order03.png",
-     headertopimgbg:globalStore.state.guqinimgapi +"/image/order01.jpg",
+     homeimg:globalStore.state.imgapi  + "/image/shang.png",
+     titleright:globalStore.state.imgapi  +"/image/8.png",
+     heademapimg:globalStore.state.imgapi +"/image/order04.png",
+     headerrightimg:globalStore.state.imgapi +"/image/order03.png",
+     headertopimgbg:globalStore.state.imgapi +"/image/order01.jpg",
+     selectstu:true,
       price:'',
       pic:'',
       goodsId:'',
       Type:'',
       msg:'',
       Goods:{},
-      totalPrice:0
+      totalPrice:0,
+      quanprice:900,
+      quanquan:98
     }
   },
 
@@ -76,7 +87,161 @@ export default {
   },
 
   methods: {
-     
+     //信息提交
+     toast(){
+        var that = this;
+        if (that.addr == undefined) {
+          wx.showToast({
+            title: '请添加地址',
+          })
+        }
+        else {
+          var bean = {}
+          var goodObj = {}
+          wx.showLoading({
+            title: '请稍等',
+          })
+          bean.image = that.Goods.thumbnail
+          bean.memberId = that.memberId
+          bean.gainedpoint=that.Goods.point
+          bean.orderAmount = that.finalAmount
+          bean.weight = that.Goods.weight
+          bean.shippingAmount = 0
+          bean.goodsAmount = that.finalAmount
+          bean.limitId = that.limitId
+          bean.googitem = []
+          goodObj.price = that.Goods.price
+          goodObj.name = that.Goods.name
+          goodObj.num = that.pic * 1
+          goodObj.cart = 0
+          goodObj.goodsId = that.Goods.goodsId
+          goodObj.catId = that.Goods.catId
+          goodObj.image = that.Goods.thumbnail
+          goodObj.goodsAmount = that.totalPrice
+          goodObj.memberCollageId = that.memberCollageId
+          goodObj.productId = that.productId
+          bean.googitem[0] = goodObj
+          // var googitem = that.data.list; 
+          bean.province = that.province
+          bean.city = that.addr.city
+          bean.addr = that.addr.addr
+          bean.region = that.addr.region
+          bean.shipMobile = that.addr.mobile
+          bean.shipName = that.addr.name
+          bean.addrId = that.addr.addrId
+          bean.clickd = that.clickd
+          bean = JSON.stringify(bean)
+          wx.request({
+            url: globalStore.state.api + '/api/order/save',
+            method: 'POST',
+            header: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            data: {
+              order: bean
+            },
+            success: function (res) {
+              if(res.data.code==0){
+                wx.showToast({
+                  title: '订单提交成功',
+                  icon: 'success',
+                  duration: 2000
+                })
+                wx.hideLoading()
+                var parms = {}
+
+                that.order=res.data.order
+
+                parms.orderid = res.data.order.orderId
+                parms.sn = that.order.sn
+                parms.total_fee = that.order.orderAmount * 100
+                wx.login({
+                  success: function (res) {
+                    if (res.code) {
+                      //发起网络请求
+                      wx.request({
+                        url: globalStore.state.api + "/api/pay/prepay",
+                        data: {
+                          code: res.code,
+                          parms: parms,
+                        },
+                        method: 'GET',
+                        success: function (res) {
+                          var pay = res.data
+                          wx.requestPayment({
+                            timeStamp: pay.timeStamp,
+                            nonceStr: pay.nonceStr,
+                            package: pay.package,
+                            signType: pay.signType,
+                            paySign: pay.paySign,
+                            success: function (res) {
+                              wx.showToast({
+                                title: '支付成功',
+                                icon: 'success',
+                                duration: 2000
+                              })
+                              var orderparms = {}
+                              var order = {}
+                              order.orderId = that.order.orderId
+                              orderparms.order = order
+                              orderparms.code = 200
+                              orderparms.gainedpoint = Number(that.order.gainedpoint)
+                              orderparms.paymoney = that.order.orderAmount
+                              wx.request({
+                                url: globalStore.state.api + "/api/order/passOrder",
+                                data: {
+                                  parms: JSON.stringify(orderparms)
+                                },
+                                method: 'PUT',
+                                header: {
+                                  'Content-Type': 'application/x-www-form-urlencoded'
+                                },
+                                success: function (res) {
+                                  if (res.data.code == 0) {
+                                    wx.showToast({
+                                      title: '订单成功',
+                                      icon: 'success',
+                                      duration: 2000
+                                    })
+                                    wx.switchTab({
+                                      url: '../index/index',
+                                    })
+                                  }
+                                }
+                              })
+                            },
+                            fail: function (res) {
+                              // fail   
+                              wx.showToast({
+                                title: '未支付',
+                                icon: 'success',
+                                duration: 2000
+                              })
+
+                            },
+                            complete: function () {
+
+                            }
+                          })
+                        },
+                        fail: function () {
+
+                        },
+                        complete: function () {
+
+                        }
+                      })
+
+                    } else {
+
+                    }
+                  }
+                });
+              }  
+            }
+          })
+        }
+     }
   
   },
 
@@ -156,7 +321,6 @@ export default {
           else {  
             that.addr=res.data.memberAddressDO
           }
-
         }
       })
     }
@@ -198,6 +362,9 @@ export default {
 </script>
 
 <style scoped>
+.dingdanContainer{background: #fff;}
+.topBtn{background: #fff;}
+
 /*dingdanHeader*/
 image{
   height: 100%;width: 100%;display: inline-block;
@@ -233,7 +400,7 @@ image{
 .iconlist icon{height: 45rpx;height: 45rpx;}
 
 /*infoimg*/
-.orderList{margin-bottom: 150rpx;border-top: 20rpx solid #f3f3f3}
+.orderList{border-top: 20rpx solid #f3f3f3}
 .orderinfo{height: 170rpx;display: flex;justify-content:space-between;align-items: center;padding: 25rpx 15rpx;}
 .infoimg{display: flex;align-items: center;width: 100%;}
 .infoimg .infoleft{width: 28%;display: flex;justify-content: center;align-items: center;}
@@ -267,4 +434,11 @@ image{
 .footer .footerleft{width: 65%;text-align:right;font-size: 35rpx;padding-right: 25rpx;background: #fff;}
 .footer .footerright{width: 35%;text-align: center;background: linear-gradient(to right, #ff9003 , #ff5001);color: #ffffff;}
 .footerleft span{color: #fc6305;}
+
+/*zhifu*/
+.zhifu{padding-left: 20rpx;padding-right: 20rpx;padding-top: 15rpx;}
+.zhifuprice .price{font-size: 28rpx;}
+.zhifuprice{padding-top: 6rpx;}
+.zhifuprice{display:flex;justify-content: space-between;}
+.zhifutitle{font-size: 34rpx;padding-bottom: 15rpx}
 </style>

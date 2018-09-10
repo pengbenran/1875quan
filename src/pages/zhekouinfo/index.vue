@@ -108,7 +108,7 @@ export default {
     console.log(that.xianshidetail)
         if(that.xianshidetail.perTotal==0){
             wx.navigateTo({
-                url: "../dingdan2/dingdan2?pic=" + that.pic + '&goodsId=' + that.xianshidetail.goodsId + '&price=' + that.xianshidetail.finalAmount + '&limitId=' + that.xianshidetail.limitId + '&Type=Z',
+                url: "../dingdan2/main?pic=" + that.pic + '&goodsId=' + that.xianshidetail.goodsId + '&price=' + that.xianshidetail.finalAmount + '&limitId=' + that.xianshidetail.limitId + '&Type=Z',
             })
         }
         else{
@@ -118,7 +118,7 @@ export default {
             })
         } else {
             wx.navigateTo({
-                url: "../dingdan2/dingdan2?pic=" + that.pic + '&goodsId=' + that.xianshidetail.goodsId + '&price=' + that.xianshidetail.finalAmount + '&limitId=' + that.xianshidetail.limitId + '&Type=Z',
+                url: "../dingdan2/main?pic=" + that.pic + '&goodsId=' + that.xianshidetail.goodsId + '&price=' + that.xianshidetail.finalAmount + '&limitId=' + that.xianshidetail.limitId + '&Type=Z',
             })
         }
         }
@@ -331,8 +331,8 @@ image{height: 100%;width: 100%;display:block;}
 .add1{display:flex;justify-content:center;align-items:center;border-top-left-radius:0px;border-bottom-left-radius:0px;border-bottom-right-radius:45%;border-top-right-radius:45%;height:50rpx;width:55rpx;border:1px solid #DDD;font-size:18px;}
 
 .modelbtn{margin-left: -20rpx;margin-right: -20rpx;}
-.modelbtn{display: flex;height: 95rpx;line-height: 95rpx;}
+.modelbtn{display: flex;height: 95rpx;}
 .modelbtn div{width: 50%;text-align: center;line-height:66rpx;color: #ffffff;font-size: 32rpx;}
-.modelbtn .cart{background:#feba33;}
-.modelbtn .buy{background:#ff4f4f;}
+.modelbtn .cart{background:#feba33;line-height: 95rpx;}
+.modelbtn .buy{background:#ff4f4f;line-height: 95rpx;}
 </style>

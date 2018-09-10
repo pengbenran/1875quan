@@ -57,7 +57,6 @@ export default {
        isMember:true,
        hasmemberId: false,
        isUse: true,
-<<<<<<< HEAD
        kind: [{ name: '充值圈圈', imageurl:globalStore.state.imgapi+'image/chongzhi.jpg',jumpurl:'../shumaindex/main',menuid:1},
       { name: '圈圈兑换', imageurl: globalStore.state.imgapi+'image/duihuan.jpg', jumpurl: '../jifen/main',menuid:2 },
       { name: '签到', imageurl: globalStore.state.imgapi+'image/qiandao.jpg', jumpurl: '../jifen/main',menuid:3 },
@@ -66,16 +65,7 @@ export default {
       { name: '我的收藏', imageurl: globalStore.state.imgapi+'image/shoucang.jpg', jumpurl: '../meirongindex/main',menuid:6 },
       { name: '微分销', imageurl: globalStore.state.imgapi+'image/weifenxiao.jpg', jumpurl: '../weifenxiao/main',menuid:7 },
       { name: '商家入驻', imageurl: globalStore.state.imgapi+'image/ruzhu.jpg', jumpurl: '../lingshouindex/main',menuid:8 }],
-=======
-       kind: [{ name: '充值圈圈', imageurl:globalStore.state.imgapi+'image/chongzhi.jpg',jumpurl:'../shumaindex/main'},
-      { name: '圈圈兑换', imageurl: globalStore.state.imgapi+'image/duihuan.jpg', jumpurl: '../jifen/main' },
-      { name: '签到', imageurl: globalStore.state.imgapi+'image/qiandao.jpg', jumpurl: '../jifen/main' },
-      { name: '收货地址', imageurl: globalStore.state.imgapi+'image/address.jpg', jumpurl: '../xiemaoindex/main' },
-      { name: '我的拼团', imageurl: globalStore.state.imgapi+'image/pingtuan.jpg', jumpurl: '../grouplist/main' },
-      { name: '我的收藏', imageurl: globalStore.state.imgapi+'image/shoucang.jpg', jumpurl: '../collection/main' },
-      { name: '微分销', imageurl: globalStore.state.imgapi+'image/weifenxiao.jpg', jumpurl: '../peixunindex/main' },
-      { name: '商家入驻', imageurl: globalStore.state.imgapi+'image/ruzhu.jpg', jumpurl: '../lingshouindex/main' }],
->>>>>>> c09a192297443696c5d8bfc32f2417ffeb48cb1d
+
       }
   },
 
