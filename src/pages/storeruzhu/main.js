@@ -5,10 +5,6 @@ const app = new Vue(App)
 app.$mount()
 export default {
   config: {
-    navigationBarTitleText: '圈圈',
-    window:{
-      navigationBarBackgroundColor: '#fff',
-    }
-    
+    navigationBarTitleText: '商家入驻'
   }
 }

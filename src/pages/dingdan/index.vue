@@ -58,9 +58,9 @@ export default {
     return {
      homeimg:globalStore.state.imgapi + "/images/quzhifu/shang.png",
      titleright:globalStore.state.imgapi +"/images/quzhifu/8.png",
-     heademapimg:globalStore.state.guqinimgapi +"/image/order04.png",
-     headerrightimg:globalStore.state.guqinimgapi +"/image/order03.png",
-     headertopimgbg:globalStore.state.guqinimgapi +"/image/order01.jpg",
+     heademapimg:globalStore.state.imgapi +"/image/order04.png",
+     headerrightimg:globalStore.state.imgapi +"/image/order03.png",
+     headertopimgbg:globalStore.state.imgapi +"/image/order01.jpg",
      select:false,
      isAddr:true,
      addr:[],

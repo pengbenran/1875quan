@@ -64,7 +64,7 @@ export default {
       { name: '我的拼团', imageurl: globalStore.state.imgapi+'image/pingtuan.jpg', jumpurl: '../grouplist/main',menuid:5 },
       { name: '我的收藏', imageurl: globalStore.state.imgapi+'image/shoucang.jpg', jumpurl: '../meirongindex/main',menuid:6 },
       { name: '微分销', imageurl: globalStore.state.imgapi+'image/weifenxiao.jpg', jumpurl: '../weifenxiao/main',menuid:7 },
-      { name: '商家入驻', imageurl: globalStore.state.imgapi+'image/ruzhu.jpg', jumpurl: '../lingshouindex/main',menuid:8 }]
+      { name: '商家入驻', imageurl: globalStore.state.imgapi+'image/ruzhu.jpg', jumpurl: '../lingshouindex/main',menuid:8 }],
       }
   },
 
