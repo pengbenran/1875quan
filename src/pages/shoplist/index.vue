@@ -11,12 +11,12 @@
      <!--shoptab end-->
 
      <div class="listwarp">
-           <div class="List" @click="tojump">
+           <div class="List" @click="tojump(item.keywords,item.brandId,item.name)" v-for="(item,index) in brand" :key="key" :index="index">
             <div class="left">
-              <img :src="listimg">
+              <img :src="item.logo">
             </div>
             <div class="right">
-              <div class="title">虾仁拌饭</div>
+              <div class="title">{{item.name}}</div>
               <div class="map"><img :src="listmap"><span>南昌市青山湖区顺外路699创意园</span></div>
               <span class="care">0.5km</span>
             </div>
@@ -33,6 +33,7 @@ export default {
     return {
       syswinth:0,
       sysheight:0,
+      brand:[],
       listimg:globalStore.state.imgapi+'image/quanquanlist01.png',
       listmap:globalStore.state.imgapi+'image/listmaap.png',
       listTab:[{name:'推荐排序',tabstu:true},{name:'距您最近',tabstu:false},{name:'人气优先',tabstu:false}]
@@ -54,6 +55,11 @@ export default {
       }
       //设置为true
       that.listTab[index].tabstu=true;
+   },
+   tojump:function(keywords,brandId,shopname){
+    wx.navigateTo({
+        url:'../store/main?brandId='+brandId+'&keywords='+keywords+'&shopname='+shopname
+      })
    }
   },
 
@@ -63,6 +69,18 @@ export default {
          that.syswinth=res.windowWidth+'px';
          that.sysheight=res.windowHeight + 'px';
         }
+    })
+    wx.request({
+      url: globalStore.state.api+'/api/index/getBrand',
+      data: {
+        catId:options.catId
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function(res) {
+        that.brand=res.data.brand
+      }
     })
   }
 }

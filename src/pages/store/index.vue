@@ -62,8 +62,8 @@ export default {
    
   },
 
-  created () {
-   
+  onLoad (options) {
+    console.log(options)
   }
 }
 </script>
