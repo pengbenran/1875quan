@@ -5,6 +5,8 @@ const app = new Vue(App)
 app.$mount()
 export default {
   config: {
-    navigationBarTitleText: '3c数码'
+    navigationBarTitleText: '3c数码',
+    navigationBarBackgroundColor: '#FFF',
+    navigationBarTextStyle: 'black'
   }
 }

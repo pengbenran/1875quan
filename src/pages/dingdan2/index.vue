@@ -56,11 +56,11 @@ import globalStore from "../../stores/global-store";
 export default {
   data () {
     return {
-     homeimg:globalStore.state.guqinimgapi  + "/image/shang.png",
-     titleright:globalStore.state.guqinimgapi  +"/image/8.png",
-     heademapimg:globalStore.state.guqinimgapi +"/image/order04.png",
-     headerrightimg:globalStore.state.guqinimgapi +"/image/order03.png",
-     headertopimgbg:globalStore.state.guqinimgapi +"/image/order01.jpg",
+     homeimg:globalStore.state.imgapi  + "/image/shang.png",
+     titleright:globalStore.state.imgapi  +"/image/8.png",
+     heademapimg:globalStore.state.imgapi +"/image/order04.png",
+     headerrightimg:globalStore.state.imgapi +"/image/order03.png",
+     headertopimgbg:globalStore.state.imgapi +"/image/order01.jpg",
       price:'',
       pic:'',
       goodsId:'',

@@ -131,7 +131,7 @@ export default {
                              console.log(res.data)
                              if(res.data.code==0){
                                wx.redirectTo({
-                                 url: '../micromember/micromember',
+                                 url: '../micromember/main',
                                })
                              }
                            }

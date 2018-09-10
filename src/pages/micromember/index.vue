@@ -71,8 +71,6 @@ export default {
     return {
      hasmember:false,
      micromemberItem:[
-      { itemImg: "https://shop.guqinet.com/html/images/shanquan/icon1.jpg", itemName: '会员升档', itemintro: '升级会员提高分润', url:'../membershioup/main'},
-      { itemImg: "https://shop.guqinet.com/html/images/shanquan/icon2.jpg", itemName: '分润商品', itemintro: '分润商品详情', url: '../fengrungood/main' },
       { itemImg: "https://shop.guqinet.com/html/images/shanquan/icon3.jpg", itemName: '推荐', itemintro: '推荐用户/会员', url: '../memberlist/main'  },
       { itemImg: "https://shop.guqinet.com/html/images/shanquan/icon4.jpg", itemName: '账户管理', itemintro: '会员账户管理', url: '../membermanage/main'  }
       ],
@@ -80,6 +78,7 @@ export default {
       ImageHeight:0,
       distribeDo:[],
       memberDo:[],
+      memberDOList:[],
       total:0,
       totalAssets:0
     }
@@ -93,7 +92,7 @@ export default {
     distribeposter(){
         var that=this;
             wx.navigateTo({
-            url: '../distribeposter/distribeposter?distribeId=' + that.distribeDo.distribeId,
+            url: '../distribeposter/main?distribeId=' + that.distribeDo.distribeId,
         })
     },
     jumpfenrungood(url){
@@ -117,7 +116,7 @@ export default {
                 }
                 if (flag) {
                 wx.redirectTo({
-                    url: '../membershioup/membershioup?name=' + that.distribeDo.name + '&face=' + that.memberDo.face,
+                    url: '../membershioup/main?name=' + that.distribeDo.name + '&face=' + that.memberDo.face,
                 })
                 }
                 else {
@@ -233,7 +232,7 @@ display:-webkit-box; -webkit-box-orient:vertical;-webkit-line-clamp:3; padding-t
 .memberList{width: 95%;margin: 10rpx auto;border: 1rpx solid #F1F1F1;border-radius:10rpx;}
 .memberuser{display: flex;width: 95%;margin: 0 auto;border-bottom:1rpx solid #F1F1F1; }
 .memberuseravator{width: 80rpx;height: 80rpx;overflow: hidden;margin: 20rpx;border-radius:50%; }
-.memberName{height: 100rpx;line-height: 100rpx;font-size: 0.9rem;}
+.memberName{height: 100rpx;line-height: 100rpx;font-size: 0.9em;}
 .membergrade{display: flex;justify-content: space-between;height: 80rpx;line-height: 80rpx;font-size: 0.9rem;color: #B0B0B0;width: 95%;margin: 0 auto;}
 .tip{height: 200rpx;line-height: 200rpx;text-align: center;color: #B0B0B0;}
 </style>

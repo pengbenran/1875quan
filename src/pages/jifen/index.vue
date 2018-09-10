@@ -2,7 +2,7 @@
   <div class="jifencontainer">
      <div class="jifenbrand">
          <div class="brandimg"><image :src='headimg'></image></div>  
-         <div class="brandinfo"><span>{{mp}}</span><span>我的积分</span>
+         <div class="brandinfo"><span>{{mp}}</span><span>我的圈圈</span>
            <div class="brandinfobtn" @click="onTimeToast()"><image :src='qianimg'></image>
             <label v-if="signStatus==1">签到</label><label v-if="signStatus==2">已签到</label>
            </div>
@@ -13,7 +13,7 @@
      <div class="jifenlist">
        <ul>
          <li v-for="(item,index) in pointSign" :index='index' :key='item' >
-           <span class="tit1">签到积分</span>
+           <span class="tit1">签到圈圈</span>
            <span class="tit2">+ {{item.signPoint}}</span>
            <span class="tit3">{{item.signTime}}</span>
          </li>

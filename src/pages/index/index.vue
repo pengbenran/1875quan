@@ -1,40 +1,49 @@
 <template>
- 
-<div class='shanquanindex'>
-<swiper class="swiper_box" autoplay="true" interval="5000" duration="1000">    
-    <swiper-item>
-      <image src="https://shop.guqinet.com/html/images/shanquan/banner2.jpg" />
-    </swiper-item>
-    <swiper-item>
-      <image src="https://shop.guqinet.com/html/images/shanquan/banner.jpg" />
-    </swiper-item>
-    <swiper-item>
-      <image src="https://shop.guqinet.com/html/images/shanquan/banner1.jpg" />
-    </swiper-item>
-</swiper>
-<!-- 菜单选项-->
-  <div class='menu'>
-    <div class='df nav'>
-      <div class='df_1'  v-for="(item,index) in kind" @click=jump(item.jumpurl)>
-        <image :src='item.imageurl'></image>
-        {{item.name}}
+  <div class='shanquanindex'>
+    <swiper class="swiper_box" autoplay="true" interval="5000" duration="1000">    
+      <swiper-item>
+        <image src="https://shop.guqinet.com/html/images/shanquan/banner2.jpg" />
+      </swiper-item>
+      <swiper-item>
+        <image src="https://shop.guqinet.com/html/images/shanquan/banner.jpg" />
+      </swiper-item>
+      <swiper-item>
+        <image src="https://shop.guqinet.com/html/images/shanquan/banner1.jpg" />
+      </swiper-item>
+    </swiper>
+    <!-- 菜单选项-->
+    <div class='menu'>
+      <div class='df nav'>
+        <div class='df_1'  v-for="(item,index) in kind" @click=jump(item.jumpurl)>
+          <image :src='item.imageurl'></image>
+          {{item.name}}
+        </div>
       </div>
     </div>
-  </div>
-  <div class='membeintro'>
-    <image src='https://shop.guqinet.com/html/images/shanquan/memintro.jpg'></image>
-  </div>
-  <div class='membeintrodetail'>
-    <div class='membeintrodetailtitle'>限时商品</div>
-    <div class='membeintrodetailcontent'>
-       <div>
-       <image src="https://shop.guqinet.com/html/images/shanquan/adv1.jpg"></image>
+    <div class='membeintro'>
+      <image src='https://shop.guqinet.com/html/images/shanquan/memintro.jpg'></image>
+    </div>
+    <div class='membeintrodetail' v-if="apiLimit.length!=0">
+      <div class='membeintrodetailtitle'>限时商品</div>
+      <div class='membeintrodetailcontent'>
+        <div v-for="(item,index) in apiLimit" :index="index" :key="key" class="membeintrodetaillist" @click="jumpLimit(index)">
+          <div class="groupImg">
+            <image :src="item.goodsDO.thumbnail"></image>
+          </div>
+          <div class="groupDetail"><span>活动价</span><span class="nowprice">￥{{item.finalAmount}}</span></div>
+          <div class="oldprice">￥{{item.goodsPrice}}</div>
+        </div>
       </div>
-        <div>
-       <image src="https://shop.guqinet.com/html/images/shanquan/adv1.jpg"></image>
-      </div>
-       <div>
-       <image src="https://shop.guqinet.com/html/images/shanquan/adv1.jpg"></image>
+    </div>
+    <div class='membeintrodetail' v-if="pingtuanList.length!=0">
+      <div class='membeintrodetailtitle'>商圈拼团</div>
+      <div class='membeintrodetailcontent'>
+       <div v-for="(item,index) in pingtuanList" :index="index" :key="key" class="membeintrodetaillist" @click="jumpgroup(item.goodsId,item.collageGoodsId)">
+        <div class="groupImg">
+          <image :src="item.thumbnail"></image>
+        </div>
+        <div class="groupDetail"><span>{{item.collagePersons}}人团</span><span class="nowprice">￥{{item.activityPrice}}</span></div>
+        <div class="oldprice">￥{{item.goodsPrice}}</div>
       </div>
     </div>
   </div>
@@ -60,6 +69,8 @@ export default {
     autoplay: true,     //自动切换
     interval: 5000,    //自动切换时间间隔
     duration: 1000,    //滑动动画时长
+    apiLimit:[],
+    pingtuanList:[]
     }
   },
   components: {
@@ -73,11 +84,10 @@ export default {
     })
    },
    //获取初始数据后期更改(暂时数据)
-   getinfo(){
+   getCode(callback){
      let that=this;
      wx.login({
        success:function(res){
-         console.log(res.code);
          if(res.code){
           wx.request({
             url: globalStore.state.api+'/api/byCode',
@@ -93,9 +103,12 @@ export default {
               if(res.data.memberDo!=null){
                 wx.setStorageSync('memberId',res.data.memberDo.memberId)//创建缓存数据
                 let memberId=res.data.memberDo.memberId
+                callback(memberId)
+                console.log(memberId)
               }else{
                 let memberId="00";
                 wx.setStorageSync('memberId', "00")//创建缓存数据
+                callback(memberId)
               }
             }
           })//request end
@@ -105,12 +118,103 @@ export default {
      })//longin end
    },
     //获取code
-
-    
+  getMermberId(memberId){
+    var parms = {}
+    parms.memberId = memberId
+    wx.request({
+      url: globalStore.state.api +'/api/member/memberIndex',
+      // url: 'http://192.168.2.131:8080/mall/api/member/memberIndex', 
+      // url: 'http://192.168.2.131/mall/api/member/memberIndex',
+      data: {
+        parms: parms
+      },
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      success: function (res) {
+        if (res.data.code == 0) {
+          wx.setStorageSync('point', res.data.memberDO.point)
+          wx.setStorageSync('memberIdlvId', res.data.memberDO.lvId)
+          wx.setStorageSync('isAgent', res.data.memberDO.isAgent)
+          wx.setStorageSync('name', res.data.memberDO.name)
+          wx.setStorageSync('face', res.data.memberDO.face)
+          wx.setStorageSync('openId', res.data.memberDO.openId)
+        }
+      }
+    })   
   },
-  
+  getactive(){
+    var that=this;
+      wx.request({
+        url: globalStore.state.api  + '/api/activity/limit',
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        success: function (res) {
+          // 拼团活动没有添加商品 
+          var limitActive=[];
+          for(var i=0;i<res.data.apiLimit.length;i++){
+            limitActive=limitActive.concat(res.data.apiLimit[i].apilimitGoods)
+          }
+          that.apiLimit=limitActive,
+          that.limitActive=res.data.apiLimit
+          console.log(that.apiLimit)
+        }
+      });
+      wx.request({
+        url:  globalStore.state.api + '/api/collage/collageGoodsList',
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        success: function (res) {    
+          that.pingtuanList=res.data
+          console.log(that.pingtuanList)
+        }
+      });
+  },
+  userLogin:function(){ 
+    var that = this
+    that.getCode(function (memberId) {
+      that.getMermberId(memberId)
+      that.memberId=memberId
+    })
+  },
+   jumpgroup:function(goodsId,collageGoodsId){
+    wx.navigateTo({
+      url: '../collagedetails/main?collageGoodsId=' + collageGoodsId + '&goodsId=' +goodsId,
+    })
+   }, 
+  jumpLimit:function(indx){
+    var that=this;
+    let xianshi = that.apiLimit[indx]
+    var xianshidetail = {}
+    for(var i=0;i<that.limitActive.length;i++){
+      if (that.limitActive[i].limitId == xianshi.limitId){
+        xianshidetail.endtime = that.limitActive[i].endtime
+        xianshidetail.perTotal = that.limitActive[i].perTotal
+      }
+    }
+    xianshidetail.finalAmount = xianshi.finalAmount
+    xianshidetail.goodsPrice = xianshi.goodsPrice
+    xianshidetail.goodsId = xianshi.goodsId
+    xianshidetail.limitId = xianshi.limitId  
+    if (xianshidetail.endtime<(new Date()).valueOf()){
+      wx.showToast({
+        title: '该活动已结束',
+      });
+    }
+    else{
+     wx.navigateTo({
+      url: '../zhekouinfo/main?xianshidetail=' + JSON.stringify( xianshidetail)
+      }) 
+    }
+    }
+  },
   onLoad(){ 
-   this.getinfo();
+   this.userLogin();
+   this.getactive();
   }
 }
 </script>
@@ -141,6 +245,7 @@ width:100%;
   display:block;
   box-shadow: 0px 5rpx #f1f1f1;
   margin-top: 10rpx;
+  background: #fff;
 }
 .nav{
   background: #fff;
@@ -193,14 +298,29 @@ width:100%;
   font-size: 26rpx;
 }
 .membeintrodetailcontent{
-  height:180rpx;
   width:100%;
   overflow: scroll;
   white-space:nowrap;
+ 
+  font-size: 0.8em;
 }
-.membeintrodetailcontent view{
-  width: 301rpx;
-  height: 170rpx;
+.groupImg{
+  width: 200rpx;
+  height: 200rpx;
   display: inline-block;
+}
+.membeintrodetaillist{
+  width: 200rpx;
+}
+.groupDetail{
+ text-align: center;
+}
+.oldprice{
+  text-align: center;
+  text-decoration: line-through;
+  color:#ccc;
+}
+.nowprice{
+  color: #F64F57;
 }
 </style>

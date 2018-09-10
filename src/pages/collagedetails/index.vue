@@ -331,12 +331,12 @@ export default {
     var windWidth=(wx.getSystemInfoSync().windowWidth);
     that.imageWidth=windWidth+"px";
     that.imageHeigth=windWidth*9/16+'px';
-    // that.collageGoodsId: options.collageGoodsId;
-    that.collageGoodsId=1
-    // that.goodsId=options.goodsId;
-    that.goodsId=199692
-    // that.memberId=wx.getStorageSync('memberId');
-    that.memberId=131
+    that.collageGoodsId=options.collageGoodsId;
+    // that.collageGoodsId=1
+    that.goodsId=options.goodsId;
+    // that.goodsId=199692
+    that.memberId=wx.getStorageSync('memberId');
+    // that.memberId=131
 
     wx.showLoading({
       title: '加载中',

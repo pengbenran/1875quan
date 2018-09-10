@@ -157,13 +157,13 @@ image{width: 100%;height: 100%;display: block;}
 .smBrand{height: 290rpx;}
 
 /*smList*/
-.smList ul{padding-left: 15rpx;padding-right: 15rpx;height: 150rpx;}
+.smList ul{padding-left: 15rpx;padding-right: 15rpx;height: 150rpx;background: #fff;}
 .smList li{float: left;height: 100rpx;width: 25%;}
 .smList image{width: 88rpx;height: 88rpx;margin: auto;}
 .smList span{display: block;text-align: center;font-size: 23rpx;margin-top: 13rpx;}
 
 /*smMian*/
-.smMain{margin-top: 25rpx;border-top:8px solid #f4f4f4;}
+.smMain{margin-top: 25rpx;border-top:8px solid #f4f4f4; background: #fff;}
 .smMiantitle{text-align: center;margin-top: 38rpx;}
 .smMiantitle image{height: 38rpx;width: 202rpx;margin:auto;}
 .smMainwarp{text-align: center;}

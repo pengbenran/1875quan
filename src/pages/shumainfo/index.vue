@@ -12,7 +12,7 @@
      <div class="Shopinfo">
          <div class="shoppir"><label>￥</label>{{goodDetail.price}}</div>
          <div class="shopinfotitel">{{goodDetail.name}}</div>
-         <div class="shopinfotab"><span>快递：免运费</span><span>库存：{{goodDetail.enableStore}}</span><span>江西南昌</span></div>
+         <div class="shopinfotab"><span>快递：免运费</span><span>库存：{{goodDetail.enableStore}}</span></div>
      </div>
      <!--Shopinfo end-->
 
@@ -29,24 +29,8 @@
       <div class="shpocontenxq">
         <div class="shoptitle"> <span>商品详情</span></div>
         <div class="shopcontents01">
-          <wxParse :content="article" @preview="preview" @navigate="navigate" />
+          <wxParse :content="article" @prediv="prediv" @navigate="navigate" />
         </div>
-     </div>
-
-      <div class="shpocontenxq bordertop"><!--产品概要暂无-->
-        <div class="shoptitle shoptitle2"> <span>产品概要</span><image src="https://shop.guqinet.com/html/images/shanquan/shumainfo/huawei.jpg"></image></div>
-        <div class="shopcontents02"><image src="https://shop.guqinet.com/html/images/shanquan/shumainfo/conten01.jpg"></image></div>
-        <div class="shoprcoinfo">
-          <strong>包装清单</strong>
-          <div class="shopbaozhang">手机*1，电池（内置）*1，快速指南*1，充电器*1，三包凭证*1,3.5mm耳机*1，USB数据线*1，取卡针*1，TPU保护壳*1
-            （最终以实物为准）
-          </div>
-        </div>
-     </div>
-
-     <div class="shpocontenxq bordertop"><!--参数对比暂无-->
-        <div class="shoptitle shoptitle2"> <span>参数对比</span><image src="https://shop.guqinet.com/html/images/shanquan/shumainfo/huawei.jpg"></image></div>
-        <div class="shopcontents03"><image src="https://shop.guqinet.com/html/images/shanquan/shumainfo/conten02.jpg"></image></div>
      </div>
      </div>
      <!--shopcontent end-->
@@ -96,7 +80,7 @@
 </template>
 
 <script>
-import wxParse from 'mpvue-wxparse' 
+import wxParse from 'mpvue-wxparse'
 import globalStore from "../../stores/global-store";
 
 export default {
@@ -107,7 +91,7 @@ export default {
      tags:[],
      article:"",
      elesimg:globalStore.state.imgapi+"/image/group/10.png",
-     gimg:globalStore.state.imgapi+"/image/group/6.png",
+     gimg:globalStore.state.imgapi+"image/zhichi.jpg",
      xximg:globalStore.state.imgapi+"/images/guige/xx.png",
      showModalStatus: false,
      animationData:{},
@@ -445,7 +429,7 @@ image{
 .shopcontenttop li{font-size: 20rpx;display: flex;align-items: center;justify-content: center;  }
 .shpocontenxq{margin-top: 25rpx;}
 .shoptitle{padding-left: 25rpx;padding-bottom: 15rpx;}
-.shoptitle span{border-left: 3px solid #0d68f4;padding-left: 10rpx;font-size: 28rpx;}
+.shoptitle span{border-left: 3px solid #F64F57;padding-left: 10rpx;font-size: 28rpx;}
 .shoptitle2{display: flex;justify-content: space-between;align-items: center;border-bottom: 1px solid #d52939;}
 .shoptitle2 span{border-left: 3px solid #d52939;}
 .shoptitle2 image{width: 130rpx;height: 43rpx;}

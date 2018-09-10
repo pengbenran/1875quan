@@ -11,19 +11,16 @@ export default {
   // 这个字段走 app.json
   config: {
     // 页面前带有 ^ 符号的，会被编译成首页，其他页面可以选填，我们会自动把 webpack entry 里面的入口页面加进去
-    pages: ['pages/logs/main', 'pages/index/main', 'pages/my/main', 'pages/group/main'
+    pages: ['pages/logs/main', '^pages/index/main', 'pages/my/main', 'pages/group/main'
     , 'pages/hunshaindex/main', 'pages/jiancaiindex/main', 'pages/shumaindex/main', 'pages/meirongindex/main', 'pages/lvyouindex/main'
     , 'pages/cart/main', 'pages/peixunindex/main', 'pages/xiemaoindex/main','pages/shumalist/main','pages/shumainfo/main','pages/dingdan/main'
     ,'pages/address/main','pages/xinaddress/main','pages/jifen/main','pages/orderdetail/main','pages/tuikuan/main','pages/orderinfo/main',
-<<<<<<< HEAD
-    'pages/grouplist/main','pages/groupdetail/main','pages/membershipdetail/main','pages/micromember/main','pages/fengrungood/main','pages/memberlist/main'
-    ,'pages/address/main','pages/xinaddress/main','pages/jifen/main','pages/quanchongzhi/main','pages/quanduihuan/main','pages/dingdaninfo/main',
-    'pages/membermanage/main','pages/membership/main','pages/putforward/main','^pages/zhekouinfo/main','pages/join/main','pages/collection/main','^pages/collagedetails/main','pages/dingdan2/main'],
+    'pages/grouplist/main','pages/groupdetail/main','pages/membershipdetail/main','pages/micromember/main','pages/distribeposter/main','pages/memberlist/main'
+    ,'pages/quanchongzhi/main','pages/quanduihuan/main','pages/dingdaninfo/main',
+    'pages/membermanage/main','pages/membership/main','pages/putforward/main','pages/zhekouinfo/main','pages/join/main','pages/collection/main',
+    'pages/collagedetails/main','pages/dingdan2/main'
+    ],
 
-=======
-    'pages/grouplist/main','pages/groupdetail/main','pages/address/main','pages/xinaddress/main','pages/jifen/main','pages/quanchongzhi/main',
-    'pages/quanduihuan/main','pages/dingdaninfo/main','pages/join/main','pages/collection/main','^pages/collagedetails/main','pages/dingdan2/main'],
->>>>>>> c09a192297443696c5d8bfc32f2417ffeb48cb1d
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#F64F57',

@@ -20,7 +20,7 @@ import globalStore from "../../stores/global-store";
 export default {
   data () {
     return {
-            
+       memberDOList:[]     
     }
   },
 

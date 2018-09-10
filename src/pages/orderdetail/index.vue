@@ -77,7 +77,6 @@
     <div class="ordercontentno" v-if="orderList.length==0">
       <image :src="nothingimg"></image>  
     </div>
-    <div class="ordertip" v-if="orderList.length==0">暂无订单</div>
   </div>
 </template>
 

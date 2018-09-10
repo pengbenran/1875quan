@@ -5,6 +5,8 @@ const app = new Vue(App)
 app.$mount()
 export default {
   config: {
-    navigationBarTitleText: '微分销会员'
+    navigationBarTitleText: '微分销会员',
+    navigationBarBackgroundColor: '#FFF',
+    navigationBarTextStyle: 'black'
   }
 }

@@ -2,7 +2,7 @@
   <div class="zhekou">
    <div class="header">
        <swiper :indicator-dots='indicatorDots' :autoplay='autoplay'>
-           <swiper-item v-for="(item,index) in Gallery" :index='index' :key='item'>
+           <swiper-item v-for="(item,index) in Gallery" :index='index' :key='item' :style="{width:imageWidth,height:imageHeigth}">
                <img :src="item.original" width="100%" height="180" @click='previewImage(item.type,item.action)'>
            </swiper-item>
        </swiper>
@@ -17,15 +17,12 @@
        </div>
    </div>
     <div class="infolist">
-        <ul>
-            <li><img :src="listimg">正品保证</li>
-            <li><img :src="listimg">全场包邮</li>
-            <li><img :src="listimg">24h发货</li>
-            <li><img :src="listimg">返点积分</li>
-        </ul>
-    </div>
-    <div class="guige">
-       <span>选择：规格</span> 
+        <div class='genuine'>
+          <div class='g1' v-for="(item,index) in tags" :index="index" :key="key">
+            <image :src='gimg'></image>
+            <text>{{item.tagName}}</text>
+          </div>
+        </div>
     </div>
     <div class="shopcontent">
         <div class="shoptitle"><span>商品详情</span></div>
@@ -78,6 +75,7 @@ export default {
         indicatorDots:true,
         showModalStatus:false,
         autoplay:true,
+        gimg:globalStore.state.imgapi+"image/zhichi.jpg",
         pic:1,
         ImageWidth:0,
         ImageHeight:0,
@@ -108,7 +106,7 @@ export default {
     console.log(that.xianshidetail)
         if(that.xianshidetail.perTotal==0){
             wx.navigateTo({
-                url: "../dingdan2/dingdan2?pic=" + that.pic + '&goodsId=' + that.xianshidetail.goodsId + '&price=' + that.xianshidetail.finalAmount + '&limitId=' + that.xianshidetail.limitId + '&Type=Z',
+                url: "../dingdan2/main?pic=" + that.pic + '&goodsId=' + that.xianshidetail.goodsId + '&price=' + that.xianshidetail.finalAmount + '&limitId=' + that.xianshidetail.limitId + '&Type=Z',
             })
         }
         else{
@@ -118,78 +116,13 @@ export default {
             })
         } else {
             wx.navigateTo({
-                url: "../dingdan2/dingdan2?pic=" + that.pic + '&goodsId=' + that.xianshidetail.goodsId + '&price=' + that.xianshidetail.finalAmount + '&limitId=' + that.xianshidetail.limitId + '&Type=Z',
+                url: "../dingdan2/main?pic=" + that.pic + '&goodsId=' + that.xianshidetail.goodsId + '&price=' + that.xianshidetail.finalAmount + '&limitId=' + that.xianshidetail.limitId + '&Type=Z',
             })
         }
         }
    },
-   onloads(options){
-        var that=this;
-        wx.getSystemInfo({ success: res => {
-            that.ImageWidth=res.screenWidth + 'px';
-            that.ImageHeight=res.screenWidth + 'px';
-        } });
-        wx.showLoading({
-         title: '加载中',
-        })
-       // var xianshidetail = JSON.parse(options.xianshidetail);
-        console.log()
-        that.xianshidetail=options.xianshidetail;
-        var timestamp2 = (new Date()).valueOf();
-        var leftTime = that.xianshidetail.endtime - timestamp2;
-        console.log("获取时间")
-        // console.log(timestamp2)
-        // console.log(that.xianshidetail.endtime)
-        // console.log(leftTime)
-        //获取时间
-        if (leftTime >= 0) {
-          var interval = setInterval(function () {
-            var days = parseInt(leftTime / 1000 / 60 / 60 / 24, 10); //计算剩余的天数
-            var hours = parseInt(leftTime / 1000 / 60 / 60 % 24, 10); //计算剩余的小时
-            var minutes = parseInt(leftTime / 1000 / 60 % 60, 10);//计算剩余的分钟
-            var seconds = parseInt(leftTime / 1000 % 60, 10);//计算剩余的秒数
-            leftTime = leftTime - 1000;
-            that.countDownDay=days;
-            that.countDownHour=hours;
-            that.countDownMinute=minutes;
-            that.countDownSecond=seconds;
-          }, 1000)
-          if (leftTime <= 0) {
-            clearinterval(interval)
-          }
-          console.log(hours)
-           console.log(minutes)
-            console.log(seconds)
-        }
-       
-        var parms = {}
-        parms.goodsId = that.xianshidetail.goodsId
-        wx.request({
-        url:  globalStore.state.api + '/api/Goods/getGoods',
-        // url: 'http://192.168.2.144/api/index/getGoods/166993'
-        data: {
-            "parms": parms
-        },
-        header: {
-            'Content-Type': 'json'
-        },
-        success: function (res) {
-            wx.hideLoading()
-            that.article = res.data.Goods.intro;
-            var percount = res.data.percount
-            var point = res.data.Goods.point
-            var haveSpec = res.data.Goods.haveSpec;
-            that.Gallery=res.data.Gallery;
-            that.Gooddetatil=res.data.Goods;
-            that.tags=res.data.tags;
-
-            console.log(that.Gallery);
-         },
-        })
-   },
-
     //显示模拟框
-    showModle(){
+  showModle(){
       let that=this;
       let animation=wx.createAnimation({//设置动画
       duration: 200,
@@ -242,18 +175,55 @@ export default {
       this.pic=parseInt(e.target.value);
     },
   },
-    onLoad:function(){
-        //模拟数据
-        var options={};
-        var xianshidetail={};
-        xianshidetail.endtime=1536336000000;
-        xianshidetail.perTotal=1;
-        xianshidetail.finalAmount=0.01;
-        xianshidetail.goodsPrice=0.01;
-        xianshidetail.goodsId=199692;
-        xianshidetail.limitId=1;
-        options.xianshidetail=xianshidetail
-       this.onloads(options)
+    onLoad:function(options){
+        var that=this;
+        wx.showLoading({
+         title: '加载中',
+        })
+        var windWidth=(wx.getSystemInfoSync().windowWidth);
+        that.imageWidth=windWidth+"px";
+        that.imageHeigth=windWidth*9/16+'px';
+        that.xianshidetail=JSON.parse(options.xianshidetail);
+        var timestamp2 = (new Date()).valueOf();
+        var leftTime = that.xianshidetail.endtime - timestamp2;
+        if (leftTime >= 0) {
+          var interval = setInterval(function () {
+            var days = parseInt(leftTime / 1000 / 60 / 60 / 24, 10); //计算剩余的天数
+            var hours = parseInt(leftTime / 1000 / 60 / 60 % 24, 10); //计算剩余的小时
+            var minutes = parseInt(leftTime / 1000 / 60 % 60, 10);//计算剩余的分钟
+            var seconds = parseInt(leftTime / 1000 % 60, 10);//计算剩余的秒数
+            leftTime = leftTime - 1000;
+            that.countDownDay=days;
+            that.countDownHour=hours;
+            that.countDownMinute=minutes;
+            that.countDownSecond=seconds;
+          }, 1000)
+          if (leftTime <= 0) {
+            clearinterval(interval)
+          }
+        } 
+        var parms = {}
+        parms.goodsId = that.xianshidetail.goodsId
+        wx.request({
+        url:  globalStore.state.api + '/api/Goods/getGoods',
+        // url: 'http://192.168.2.144/api/index/getGoods/166993'
+        data: {
+            "parms": parms
+        },
+        header: {
+            'Content-Type': 'json'
+        },
+        success: function (res) {
+            wx.hideLoading()
+            that.article = res.data.Goods.intro;
+            var percount = res.data.percount
+            var point = res.data.Goods.point
+            var haveSpec = res.data.Goods.haveSpec;
+            that.Gallery=res.data.Gallery;
+            that.Gooddetatil=res.data.Goods;
+            that.tags=res.data.tags;
+         },
+        })
 
     }
 }
