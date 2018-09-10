@@ -326,7 +326,7 @@ export default {
   },
   },
 
-  onLoad() {
+  onLoad(options) {
     var that = this;
     var windWidth=(wx.getSystemInfoSync().windowWidth);
     that.imageWidth=windWidth+"px";

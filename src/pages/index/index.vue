@@ -1,21 +1,15 @@
 <template>
   <div class='shanquanindex'>
     <swiper class="swiper_box" autoplay="true" interval="5000" duration="1000">    
-      <swiper-item>
-        <image src="https://shop.guqinet.com/html/images/shanquan/banner2.jpg" />
-      </swiper-item>
-      <swiper-item>
-        <image src="https://shop.guqinet.com/html/images/shanquan/banner.jpg" />
-      </swiper-item>
-      <swiper-item>
-        <image src="https://shop.guqinet.com/html/images/shanquan/banner1.jpg" />
+      <swiper-item v-for="(item,index) in banner" :key="key" :index="index">
+        <image :src="item.imageUrl" ></image>
       </swiper-item>
     </swiper>
     <!-- 菜单选项-->
     <div class='menu'>
       <div class='df nav'>
-        <div class='df_1'  v-for="(item,index) in kind" @click=jump(item.jumpurl)>
-          <image :src='item.imageurl'></image>
+        <div class='df_1'  v-for="(item,index) in menus" :key="key" :index="index" @click="jump(index,item.catId)">
+          <image :src='item.image'></image>
           {{item.name}}
         </div>
       </div>
@@ -56,15 +50,8 @@ import globalStore from '../../stores/global-store';
 export default {
   data () {
     return {
-      banner:['https://shop.guqinet.com/shopimages/dimages/ynkrfldb-yyu4-0l61-0t3v-0xrxcw5q1i3r.jpg','https://shop.guqinet.com/shopimages/dimages/ynkrfldb-yyu4-0l61-0t3v-0xrxcw5q1i3r.jpg','https://shop.guqinet.com/shopimages/dimages/ynkrfldb-yyu4-0l61-0t3v-0xrxcw5q1i3r.jpg'],
-       kind: [{ name: '3c数码', imageurl:'https://shop.guqinet.com/html/images/shanquan/kindicon.jpg',jumpurl:'../shumaindex/main'},
-      { name: '家装建材', imageurl: 'https://shop.guqinet.com/html/images/shanquan/kindicon1.jpg', jumpurl: '../jiancaiindex/main' },
-      { name: '婚纱摄影', imageurl: 'https://shop.guqinet.com/html/images/shanquan/kindicon2.jpg', jumpurl: '../hunshaindex/main' },
-      { name: '鞋帽服饰', imageurl: 'https://shop.guqinet.com/html/images/shanquan/kindicon3.jpg', jumpurl: '../xiemaoindex/main' },
-      { name: '旅游特产', imageurl: 'https://shop.guqinet.com/html/images/shanquan/kindicon4.jpg', jumpurl: '../lvyouindex/main' },
-      { name: '美容养生', imageurl: 'https://shop.guqinet.com/html/images/shanquan/kindicon5.jpg', jumpurl: '../meirongindex/main' },
-      { name: '培训教育', imageurl: 'https://shop.guqinet.com/html/images/shanquan/kindicon7.jpg', jumpurl: '../peixunindex/main' },
-      { name: '新零售', imageurl: 'https://shop.guqinet.com/html/images/shanquan/kindicon8.jpg', jumpurl: '../lingshouindex/main' }],
+    banner:[],
+    menus: [],
     indicatorDots: false,  //显示面板指示点
     autoplay: true,     //自动切换
     interval: 5000,    //自动切换时间间隔
@@ -78,11 +65,14 @@ export default {
   },
 
   methods: {
-   jump:function(url){
-    wx.navigateTo({
-      url: url,
-    })
-   },
+    jump:function(index,catId){
+      var that=this;
+      if(index==0){
+        wx.navigateTo({
+        url:'../shoplist/main?catId='+catId
+      })
+      } 
+    },
    //获取初始数据后期更改(暂时数据)
    getCode(callback){
      let that=this;
@@ -210,11 +200,38 @@ export default {
       url: '../zhekouinfo/main?xianshidetail=' + JSON.stringify( xianshidetail)
       }) 
     }
-    }
+    },
+      // 获得商品详情
+  getMain:function(){
+    // 获取商品详情
+    var that = this;
+    wx.request({
+      url: globalStore.state.api + '/api/index/main',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      success: function (res) {
+        //将获取到的json数据，存在名字叫zhihu的这个数组中
+        that.menus= res.data.data.menus;
+        that.banner=res.data.data.imgurl
+        // that.data= res.data.data;
+        // wx.setStorageSync('indexdata', res.data.data.message, )
+        // 判断是否注册过
+      },
+      fail: function () {
+        wx.showToast({
+          title: '网络异常',
+        })
+        wx.stopPullDownRefresh()
+        wx.hideNavigationBarLoading()
+      }
+    })
+  },
   },
   onLoad(){ 
    this.userLogin();
    this.getactive();
+   this.getMain();
   }
 }
 </script>
