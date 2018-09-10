@@ -57,8 +57,8 @@ export default {
        isMember:true,
        hasmemberId: false,
        isUse: true,
-       kind: [{ name: '充值圈圈', imageurl:globalStore.state.imgapi+'image/chongzhi.jpg',jumpurl:'../shumaindex/main',menuid:1},
-      { name: '圈圈兑换', imageurl: globalStore.state.imgapi+'image/duihuan.jpg', jumpurl: '../jifen/main',menuid:2 },
+       kind: [{ name: '充值圈圈', imageurl:globalStore.state.imgapi+'image/chongzhi.jpg',jumpurl:'../quanchongzhi/main',menuid:1},
+      { name: '圈圈兑换', imageurl: globalStore.state.imgapi+'image/duihuan.jpg', jumpurl: '../quanduihuan/main',menuid:2 },
       { name: '签到', imageurl: globalStore.state.imgapi+'image/qiandao.jpg', jumpurl: '../jifen/main',menuid:3 },
       { name: '收货地址', imageurl: globalStore.state.imgapi+'image/address.jpg', jumpurl: '../xiemaoindex/main',menuid:4 },
       { name: '我的拼团', imageurl: globalStore.state.imgapi+'image/pingtuan.jpg', jumpurl: '../grouplist/main',menuid:5 },
@@ -110,6 +110,7 @@ export default {
               that.vouchercount=res.data.vouchercount
               //res代表success函数的事件对，data是固定的
               wx.setStorageSync("point",mp);
+              wx.setStorageSync("lvname",that.lvidname);
             }
             console.log(that.lvidname)
           }
@@ -145,7 +146,9 @@ export default {
                 }
               }
             })
-          }else{
+          }
+
+          else{
             wx.navigateTo({
               url: url ,
             })
