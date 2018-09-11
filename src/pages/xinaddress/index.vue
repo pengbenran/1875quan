@@ -58,10 +58,11 @@ export default {
     
     //点击显示地址
     clickListarea(){
-      let that=this;
-     that.areaitem.show=true;
-      console.log("666");
-       that.animationEvents()
+      // let that=this;
+      // that.areaitem.show=true;
+      // console.log("666");
+      //  that.animationEvents()
+      wx.navigateTo({ url: '../map/main' });
     },
     //动画
     animationEvents() {
@@ -131,6 +132,7 @@ image{
   height: 100%;
   display: block;
 }
+.smlistContainer{background: #fff;height: 100vh;}
 .listItem{display: flex;line-height: 100rpx;border-top: 1px solid #f2f2f2;}
 .listItem span{width: 25%;padding-left: 18rpx;font-size: 32rpx;}
 .listItem input{width: 75%;height: 100rpx;line-height: 100rpx;font-size: 30rpx;}
