@@ -17,13 +17,9 @@ export default {
     ,'pages/address/main','pages/xinaddress/main','pages/jifen/main','pages/orderdetail/main','pages/tuikuan/main','pages/orderinfo/main',
     'pages/grouplist/main','pages/groupdetail/main','pages/membershipdetail/main','pages/micromember/main','pages/distribeposter/main','pages/memberlist/main'
     ,'pages/quanchongzhi/main','pages/quanduihuan/main','pages/dingdaninfo/main',
-<<<<<<< HEAD
-    'pages/membermanage/main','pages/membership/main','pages/putforward/main','pages/zhekouinfo/main','pages/join/main','pages/collection/main','pages/collagedetails/main',
-    'pages/dingdan2/main','pages/fengrungood/main','pages/store/main','pages/storeruzhu/main','pages/shoplist/main'
-=======
     'pages/membermanage/main','pages/membership/main','pages/putforward/main','pages/zhekouinfo/main','pages/join/main','pages/collection/main',
     'pages/collagedetails/main','pages/dingdan2/main','pages/store/main','pages/storeruzhu/main','pages/shoplist/main'
->>>>>>> c70150b58825c4ff57937d3f994e1012995e8b4a
+
     ],
     window: {
       backgroundTextStyle: 'light',
