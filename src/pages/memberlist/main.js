@@ -6,5 +6,7 @@ app.$mount()
 export default {
   config: {
     navigationBarTitleText: '推荐用户',
+     navigationBarBackgroundColor: '#FFF',
+    navigationBarTextStyle: 'black'
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="dingdanContainer">
-      <div  v-if="isAddr">
+    <div  v-if="isAddr"  @click="address">
      <div class="dingdanHeader">
        <div class="dingleft">
          <img :src="heademapimg" >
@@ -13,7 +13,7 @@
        <div class="dingrightimg"><img :src="headerrightimg" ></div>
      </div>
      <div class="topbgimg"><img :src="headertopimgbg"></div>
-     </div>
+   </div>
      <!--dingdanHeader end-->
 
      <div class="topBtn" @click="address" v-else><span>+ 点击新增地址</span></div>
@@ -54,7 +54,20 @@
           <icon color='#e93429' type="success" size="20" v-if="!selectstu" /><icon type="circle" v-else color="#DDD"   size="20" />
           </div></div>
       </div>
-      <div class="footer"><div class="footerleft">合计：<span>￥{{totalPrice}}</span></div><div class="footerright" @click="toast()">提交订单</div></div>
+      <div class="footer"><div class="footerleft">合计：<span>￥{{totalPrice}}</span></div>
+
+      <div class="footerright" @click="kaituan" v-if="Type=='K'">
+        <text>立即开团</text>
+      </div>
+      <div class="footerright" @click="cantuan" v-if="Type=='C'">
+        <text>立即参团</text>
+      </div>
+      <div class="footerright" @click="xianshi" v-if="Type=='Z'">
+        <text>限时参加</text>
+      </div>
+ <!--      <div class="footerright" bindtap="kanjia" wx:if="{{Type=='KJ'}}">
+        <text>提交订单</text>  -->
+      </div>
   </div>
 </template>
 
@@ -80,7 +93,14 @@ export default {
       quanprice:900,
       quanquan:98,
       isAddr:false,
-      addr:{}
+      addr:{},
+      memberCollageId:'',
+      finalAmount:'',
+      memberCollageId:'',
+      collagePersons:'',
+      cutId:'',
+      memberId:'',
+      order:{},
     }
   },
 
@@ -89,167 +109,568 @@ export default {
   },
 
   methods: {
+    address:function(){
+      var that = this
+      wx.setStorageSync('price', that.price);
+      wx.setStorageSync('pic', that.pic);
+      wx.setStorageSync('goodsId', that.goodsId);
+      wx.setStorageSync('collagePersons', that.collagePersons);
+      wx.setStorageSync('memberCollageId', that.memberCollageId);
+      wx.setStorageSync('limitId', that.limitId);
+      wx.setStorageSync('Type', that.Type);
+      wx.setStorageSync('finalAmount', that.finalAmount);
+      wx.setStorageSync('cutId', that.cutId);
+      wx.navigateTo({
+        url: '../address/main',
+      })
+    },
      //信息提交
-     toast(){
-        var that = this;
-        if (that.addr == undefined) {
-          wx.showToast({
-            title: '请添加地址',
-          })
-        }
-        else {
-          var bean = {}
-          var goodObj = {}
-          wx.showLoading({
-            title: '请稍等',
-          })
-          bean.image = that.Goods.thumbnail
-          bean.memberId = that.memberId
-          bean.gainedpoint=that.Goods.point
-          bean.orderAmount = that.finalAmount
-          bean.weight = that.Goods.weight
-          bean.shippingAmount = 0
-          bean.goodsAmount = that.finalAmount
-          bean.limitId = that.limitId
-          bean.googitem = []
-          goodObj.price = that.Goods.price
-          goodObj.name = that.Goods.name
-          goodObj.num = that.pic * 1
-          goodObj.cart = 0
-          goodObj.goodsId = that.Goods.goodsId
-          goodObj.catId = that.Goods.catId
-          goodObj.image = that.Goods.thumbnail
-          goodObj.goodsAmount = that.totalPrice
-          goodObj.memberCollageId = that.memberCollageId
-          goodObj.productId = that.productId
-          bean.googitem[0] = goodObj
-          // var googitem = that.data.list; 
-          bean.province = that.province
-          bean.city = that.addr.city
-          bean.addr = that.addr.addr
-          bean.region = that.addr.region
-          bean.shipMobile = that.addr.mobile
-          bean.shipName = that.addr.name
-          bean.addrId = that.addr.addrId
-          bean.clickd = that.clickd
-          bean = JSON.stringify(bean)
-          wx.request({
-            url: globalStore.state.api + '/api/order/save',
-            method: 'POST',
-            header: {
-              'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            data: {
-              order: bean
-            },
-            success: function (res) {
-              if(res.data.code==0){
-                wx.showToast({
-                  title: '订单提交成功',
-                  icon: 'success',
-                  duration: 2000
-                })
-                wx.hideLoading()
-                var parms = {}
-
-                that.order=res.data.order
-
-                parms.orderid = res.data.order.orderId
-                parms.sn = that.order.sn
-                parms.total_fee = that.order.orderAmount * 100
-                wx.login({
-                  success: function (res) {
-                    if (res.code) {
-                      //发起网络请求
-                      wx.request({
-                        url: globalStore.state.api + "/api/pay/prepay",
-                        data: {
-                          code: res.code,
-                          parms: parms,
-                        },
-                        method: 'GET',
+    xianshi:function(){
+    var that = this
+    if (that.addr == undefined) {
+      wx.showToast({
+        title: '请添加地址',
+      })
+    }
+    else {
+      var bean = {}
+      var goodObj = {}
+      wx.showLoading({
+        title: '请稍等',
+      })
+      bean.image = that.Goods.thumbnail
+      bean.memberId = that.memberId
+      bean.gainedpoint=that.Goods.point
+      bean.orderAmount = that.finalAmount
+      bean.weight = that.Goods.weight
+      bean.shippingAmount = 0
+      bean.goodsAmount = that.finalAmount
+      bean.limitId = that.limitId
+      bean.googitem = []
+      goodObj.price = that.Goods.price
+      goodObj.name = that.Goods.name
+      goodObj.num = that.pic * 1
+      goodObj.cart = 0
+      goodObj.goodsId = that.Goods.goodsId
+      goodObj.catId = that.Goods.catId
+      goodObj.image = that.Goods.thumbnail
+      goodObj.goodsAmount = that.totalPrice
+      goodObj.memberCollageId = that.memberCollageId
+      goodObj.productId = that.productId
+      bean.googitem[0] = goodObj
+      // var googitem = that.list; 
+      bean.province = that.province
+      bean.city = that.addr.city
+      bean.addr = that.addr.addr
+      bean.region = that.addr.region
+      bean.shipMobile = that.addr.mobile
+      bean.shipName = that.addr.name
+      bean.addrId = that.addr.addrId
+      bean.clickd = that.clickd
+      bean = JSON.stringify(bean)
+      wx.request({
+        url: globalStore.state.api  + '/api/order/save',
+        method: 'POST',
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        data: {
+          order: bean
+        },
+        success: function (res) {
+          if(res.data.code==0){
+            wx.showToast({
+              title: '订单提交成功',
+              icon: 'success',
+              duration: 2000
+            })
+            wx.hideLoading()
+            var parms = {}
+            that.order= res.data.order
+            parms.orderid = res.data.order.orderId
+            parms.sn = that.order.sn
+            parms.total_fee = that.order.orderAmount * 100
+            wx.login({
+              success: function (res) {
+                if (res.code) {
+                  //发起网络请求
+                  wx.request({
+                    url: globalStore.state.api + "/api/pay/prepay",
+                    data: {
+                      code: res.code,
+                      parms: parms,
+                    },
+                    method: 'GET',
+                    success: function (res) {
+                      var pay = res.data
+                      wx.requestPayment({
+                        timeStamp: pay.timeStamp,
+                        nonceStr: pay.nonceStr,
+                        package: pay.package,
+                        signType: pay.signType,
+                        paySign: pay.paySign,
                         success: function (res) {
-                          var pay = res.data
-                          wx.requestPayment({
-                            timeStamp: pay.timeStamp,
-                            nonceStr: pay.nonceStr,
-                            package: pay.package,
-                            signType: pay.signType,
-                            paySign: pay.paySign,
+                          wx.showToast({
+                            title: '支付成功',
+                            icon: 'success',
+                            duration: 2000
+                          })
+                          var orderparms = {}
+                          var order = {}
+                          order.orderId = that.order.orderId
+                          orderparms.order = order
+                          orderparms.code = 200
+                          orderparms.gainedpoint = Number(that.order.gainedpoint)
+                          orderparms.paymoney = that.order.orderAmount
+                          wx.request({
+                            url: globalStore.state.api  + "/api/order/passOrder",
+                            data: {
+                              parms: JSON.stringify(orderparms)
+                            },
+                            method: 'PUT',
+                            header: {
+                              'Content-Type': 'application/x-www-form-urlencoded'
+                            },
                             success: function (res) {
-                              wx.showToast({
-                                title: '支付成功',
-                                icon: 'success',
-                                duration: 2000
-                              })
-                              var orderparms = {}
-                              var order = {}
-                              order.orderId = that.order.orderId
-                              orderparms.order = order
-                              orderparms.code = 200
-                              orderparms.gainedpoint = Number(that.order.gainedpoint)
-                              orderparms.paymoney = that.order.orderAmount
-                              wx.request({
-                                url: globalStore.state.api + "/api/order/passOrder",
-                                data: {
-                                  parms: JSON.stringify(orderparms)
-                                },
-                                method: 'PUT',
-                                header: {
-                                  'Content-Type': 'application/x-www-form-urlencoded'
-                                },
-                                success: function (res) {
-                                  if (res.data.code == 0) {
-                                    wx.showToast({
-                                      title: '订单成功',
-                                      icon: 'success',
-                                      duration: 2000
-                                    })
-                                    wx.switchTab({
-                                      url: '../index/index',
-                                    })
-                                  }
-                                }
-                              })
-                            },
-                            fail: function (res) {
-                              // fail   
-                              wx.showToast({
-                                title: '未支付',
-                                icon: 'success',
-                                duration: 2000
-                              })
-
-                            },
-                            complete: function () {
-
+                              if (res.data.code == 0) {
+                                wx.showToast({
+                                  title: '订单成功',
+                                  icon: 'success',
+                                  duration: 2000
+                                })
+                                wx.switchTab({
+                                  url: '../index/main',
+                                })
+                              }
                             }
                           })
                         },
-                        fail: function () {
+                        fail: function (res) {
+                          // fail   
+                          wx.showToast({
+                            title: '未支付',
+                            icon: 'success',
+                            duration: 2000
+                          })
 
                         },
                         complete: function () {
 
                         }
                       })
+                    },
+                    fail: function () {
 
-                    } else {
+                    },
+                    complete: function () {
 
                     }
-                  }
-                });
-              }  
-            }
-          })
+                  })
+
+                } else {
+
+                }
+              }
+            });
+          }  
         }
+      })
+    }
+  },
+  cantuan:function(){
+    var that = this
+    if (that.addr == undefined) {
+      wx.showToast({
+        title: '请添加地址',
+      })
+    }
+     else{
+      var bean = {}
+      var goodObj = {}
+      wx.showLoading({
+        title: '请稍等',
+      })
+      wx.request({
+        url: globalStore.state.api + '/api/collage/judgeIsCollaged',
+        data: {
+          memberCollageId: that.memberCollageId
+        },
+        success: function (res) {
+            if(res.code==1){
+              wx.showToast({
+                title: '手慢了，已成团',
+              })
+              setTimeout(function(){
+                wx.switchTab({
+                  url: '../active/active',
+                })
+              },1000)          
+            }
+            else{
+              bean.image = that.Goods.thumbnail
+              bean.memberId = that.memberId
+              bean.orderAmount = that.totalPrice
+              bean.weight = that.Goods.weight
+              bean.shippingAmount = 0
+              bean.goodsAmount = that.totalPrice
+              bean.googitem = []
+              goodObj.price = that.Goods.price
+              goodObj.name = that.Goods.name
+              goodObj.num = that.pic * 1
+              goodObj.cart = 0
+              goodObj.goodsId = that.Goods.goodsId
+              goodObj.catId = that.Goods.catId
+              goodObj.image = that.Goods.thumbnail
+              goodObj.goodsAmount = that.totalPrice
+              goodObj.memberCollageId = that.memberCollageId
+              goodObj.productId = that.productId
+              bean.googitem[0] = goodObj
+              // var googitem = that.list; 
+              bean.province = that.province
+              bean.city = that.addr.city
+              bean.addr = that.addr.addr
+              bean.region = that.addr.region
+              bean.shipMobile = that.addr.mobile
+              bean.shipName = that.addr.name
+              bean.addrId = that.addr.addrId
+              bean.clickd = that.clickd
+              bean = JSON.stringify(bean)
+              wx.request({
+                url: globalStore.state.api  + '/api/order/save',
+                method: 'POST',
+                header: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                data: {
+                  order: bean
+                },
+                success: function (res) {
+                  wx.hideLoading()
+                  var parms = {}
+                  that.setData({
+                    order: res.data.order
+                  })
+                  parms.orderid = res.data.order.orderId
+                  parms.sn = that.order.sn
+                  parms.total_fee = that.totalPrice * 100
+                  wx.login({
+                    success: function (res) {
+                      if (res.code) {
+                        //发起网络请求
+                        wx.request({
+                          url: globalStore.state.api + "/api/pay/prepay",
+                          data: {
+                            code: res.code,
+                            parms: parms,
+                          },
+                          method: 'GET',
+                          success: function (res) {
+                            var pay = res.data
+                            wx.requestPayment({
+                              timeStamp: pay.timeStamp,
+                              nonceStr: pay.nonceStr,
+                              package: pay.package,
+                              signType: pay.signType,
+                              paySign: pay.paySign,
+                              success: function (res) {
+                                wx.showToast({
+                                  title: '支付成功',
+                                  icon: 'success',
+                                  duration: 2000
+                                })
+                                let cantuanparams = {}
+                                cantuanparams.orderId = that.order.orderId
+
+                                wx.request({
+                                  url: globalStore.state.api  + "/api/order/collagepayreturn",
+                                  data: {
+                                    parms: JSON.stringify(cantuanparams)
+                                  },
+                                  method: 'PUT',
+                                  header: {
+                                    'Content-Type': 'application/x-www-form-urlencoded'
+                                  },
+                                  success: function (res) {
+                                    if (res.data.code == 0) {
+                                      let cantuanorderparams = {}
+                                      cantuanorderparams.goodsId = that.goodsId
+                                      cantuanorderparams.price = that.price
+                                      cantuanorderparams.sn = that.order.sn
+                                      cantuanorderparams.amounts = that.totalPrice * 100
+                                      cantuanorderparams.amount = that.totalPrice
+                                      cantuanorderparams.memberId = that.memberId
+                                      cantuanorderparams.memberCollageId = that.memberCollageId
+                                      cantuanorderparams.productId = that.productId
+                                      cantuanorderparams.num = that.pic * 1
+                                      cantuanorderparams.orderId = that.order.orderId
+                                      wx.request({
+                                        url: globalStore.state.api + '/api/collage/joinCollage',
+                                        data: {
+                                          params: cantuanorderparams
+                                        },
+                                        header: {
+                                          'Content-Type': 'application/json'
+                                        },
+                                        success: function (res) {
+                                          //util.sendMsg(pay.package, that.order.orderId, payordertime, ordername, that.order.orderAmount)
+                                          console.log(res.data)
+                                          wx.showToast({
+                                            title: '参团成功',
+                                            icon: 'success',
+                                            duration: 2000
+                                          })
+                                          var parmss = {}
+                                          parmss.price = res.data.price
+                                          parmss.activityPrice = res.data.activityPrice
+                                          parmss.goodsId = res.data.goodsId
+                                          parmss.goodsName = res.data.goodsName
+                                          parmss.memberCollageId = res.data.memberCollageId
+                                          parmss.img = res.data.img
+                                          parmss.shortPerson = res.data.shortPerson
+                                          if (res.data.shortPerson == 0) {
+                                            parmss.iscollage = 1
+                                          }
+                                          else {
+                                            parmss.iscollage = 2
+                                          }
+                                          parmss = JSON.stringify(parmss)
+                                          wx.navigateTo({
+                                            url: '../cantuan/cantuan?shops= ' + parmss,
+                                          })
+                                        }
+                                      })
+                                    }
+                                  }
+                                })
+                              },
+                              fail: function (res) {
+                                // fail   
+                                wx.showToast({
+                                  title: '登录失败',
+                                  icon: 'success',
+                                  duration: 2000
+                                })
+
+                              },
+                              complete: function () {
+
+                              }
+                            })
+                          },
+                          fail: function () {
+
+                          },
+                          complete: function () {
+
+                          }
+                        })
+
+                      } else {
+
+                      }
+                    }
+                  });
+                }
+              })
+            }
+        }
+      })
      }
-  
+  },
+  kaituan: function () {
+// 获取订单
+    var that = this
+    if (that.addr == undefined) {
+      wx.showToast({
+        title: '请添加地址',
+      })
+    }
+    else {
+    var bean = {}
+    var goodObj={}
+    wx.showLoading({
+      title: '请稍等',
+    })
+    bean.image = that.Goods.thumbnail
+    bean.memberId = that.memberId
+    bean.orderAmount = that.totalPrice
+    bean.weight = that.Goods.weight
+    bean.shippingAmount = 0
+    bean.goodsAmount = that.totalPrice
+    bean.googitem = []
+    goodObj.price = that.Goods.price
+    goodObj.name = that.Goods.name
+    goodObj.num = that.pic*1
+    goodObj.cart = 0
+    goodObj.goodsId = that.Goods.goodsId
+    goodObj.catId = that.Goods.catId
+    goodObj.image = that.Goods.thumbnail
+    goodObj.goodsAmount = that.totalPrice
+    goodObj.collagePersons = that.collagePersons
+    goodObj.productId = that.productId
+    bean.googitem[0] = goodObj
+    // var googitem = that.list; 
+    bean.province = that.province
+    bean.city = that.addr.city
+    bean.addr = that.addr.addr
+    bean.region = that.addr.region
+    bean.shipMobile = that.addr.mobile
+    bean.shipName = that.addr.name
+    bean.addrId = that.addr.addrId
+    bean.clickd = that.clickd
+    bean = JSON.stringify(bean)
+    console.log(bean)
+    // if (that.addr == {}) {
+    //   that.addr == ""
+    // }
+    // if (that.region == undefined) {
+    //   wx.showToast({
+    //     title: '请添加地址',
+    //   })
+    //   return;
+    wx.request({
+      url: globalStore.state.api  + '/api/order/save',
+      method: 'POST',
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        order: bean
+      },
+      success: function (res) {
+        wx.hideLoading()
+        var parms = {}
+       
+        that.order=res.data.order
+        parms.orderid = res.data.order.orderId
+        parms.sn = that.order.sn
+        parms.total_fee = that.totalPrice*100
+        wx.login({
+          success: function (res) {
+            if (res.code) {
+              //发起网络请求
+              wx.request({
+                url: globalStore.state.api  + "/api/pay/prepay",
+                data: {
+                  code: res.code,
+                  parms: parms,
+                },
+                method: 'GET',
+                success: function (res) {
+                  var pay = res.data  
+                  wx.requestPayment({
+                    timeStamp: pay.timeStamp,
+                    nonceStr: pay.nonceStr,
+                    package: pay.package,
+                    signType: pay.signType,
+                    paySign: pay.paySign,
+                    success: function (res) {
+                      wx.showToast({
+                        title: '支付成功',
+                        icon: 'success',
+                        duration: 2000
+                      })
+                      var orderparams = {}
+                      orderparams.goodsId = that.goodsId
+                      orderparams.price = that.price
+                      orderparams.sn = that.order.sn
+                      orderparams.amounts = that.totalPrice * 100
+                      orderparams.amount = that.totalPrice
+                      orderparams.memberId = that.memberId
+                      orderparams.collagePersons = that.collagePersons
+                      orderparams.productId = that.productId
+                      orderparams.num = that.pic*1
+                      orderparams.orderId = that.order.orderId
+                      wx.request({
+                        url: globalStore.state.api  + '/api/collage/openCollage',
+                        data: {
+                          "params": orderparams
+                        },
+                        header: {
+                          'Content-Type': 'application/json'
+                        },
+                        success: function (res) {
+                          var kaituanrest=res.data
+                          wx.request({
+                            url: globalStore.state.api  + "/api/order/collagepayreturn",
+                            data: {
+                              parms: JSON.stringify(orderparams)
+                            },
+                            method: 'PUT',
+                            header: {
+                              'Content-Type': 'application/x-www-form-urlencoded'
+                            },
+                            success: function (res) {
+                              if(res.data.code==0){
+                                wx.showToast({
+                                  title: '开团成功',
+                                  icon: 'success',
+                                  duration: 2000
+                                })
+                                var parmss = {}
+                                parmss.price = kaituanrest.price
+                                parmss.activityPrice = kaituanrest.activityPrice
+                                parmss.goodsId = kaituanrest.goodsId
+                                parmss.goodsName = kaituanrest.goodsName
+                                parmss.memberCollageId = kaituanrest.memberCollageId
+                                parmss.img = kaituanrest.img
+                                parmss.shortPerson = kaituanrest.shortPerson
+                                if (kaituanrest.shortPerson == 0) {
+                                  parmss.iscollage = 1
+                                }
+                                else {
+                                  parmss.iscollage = 2
+                                }
+                                parmss = JSON.stringify(parmss)
+                                wx.navigateTo({
+                                  url: '../groupdetail/main?shops= ' + parmss,
+                                })
+
+                              }
+                            }
+                          })
+                        
+                        }
+                      });
+                    },
+                    fail: function (res) {
+                      // fail   
+                      wx.showToast({
+                        title: '支付失败',
+                        icon: 'success',
+                        duration: 2000
+                      })
+
+                    },
+                    complete: function () {
+                      // complete   
+                      console.log("pay complete")
+                    }
+                  })
+                },
+                fail: function () {
+                  // fail
+                },
+                complete: function () {
+                  // complete
+                }
+              })
+
+            } else {
+              console.log('登录失败！' + res.errMsg)
+            }
+          }
+        });
+      }
+    })
+    }
+  }
   },
 
   onLoad: function (options) {
+    console.log(options)
     var that = this
-    console.log(121212)
+    console.log(wx.getStorageSync('addr') )
     if (options.price == undefined || options.pic == undefined || options.goodsId == undefined || options.Type == undefined){
       
         that.price= wx.getStorageSync('price')
@@ -329,7 +750,7 @@ export default {
       })
     }
     else {
-      
+        that.isAddr= true
         that.addr= wx.getStorageSync('addr')
       
     }

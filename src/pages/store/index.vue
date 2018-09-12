@@ -109,7 +109,7 @@ image{width: 100%;height: 100%;display: block;}
 .info{display: flex;align-items: center;padding-top: 6rpx;}
 .info .left{width: 80%;display: flex;}
 .info .right{width: 20%;}
-.left span{display: inline-block;color: #b5b4ba;font-size: 30rpx;}
+.left span{color: #b5b4ba;font-size: 30rpx;}
 .left span image{width: 30rpx;height: 35rpx;}
 .right image{height: 60rpx;width: 50rpx;float:right;margin-right: 16rpx;}
 

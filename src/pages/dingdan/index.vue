@@ -1,6 +1,6 @@
 <template>
   <div class="dingdanContainer">
-      <div  v-if="isAddr">
+      <div  v-if="isAddr" @click="address">
      <div class="dingdanHeader">
        <div class="dingleft">
          <img :src="heademapimg" >
@@ -56,8 +56,8 @@ import globalStore from "../../stores/global-store";
 export default {
   data () {
     return {
-     homeimg:globalStore.state.imgapi + "/images/quzhifu/shang.png",
-     titleright:globalStore.state.imgapi +"/images/quzhifu/8.png",
+     homeimg:globalStore.state.imgapi + "/image/shang.png",
+     titleright:globalStore.state.imgapi +"/image/8.png",
      heademapimg:globalStore.state.imgapi +"/image/order04.png",
      headerrightimg:globalStore.state.imgapi +"/image/order03.png",
      headertopimgbg:globalStore.state.imgapi +"/image/order01.jpg",
@@ -130,7 +130,7 @@ export default {
         wx.setStorageSync('orderAmount', that.orderAmount);
         wx.setStorageSync('pars', that.pars);
         wx.navigateTo({
-          url: '../myaddresstwo/myaddresstwo',
+          url: '../address/main',
         })
       },
 
@@ -567,7 +567,7 @@ export default {
                                           duration: 2000
                                         })
                                         wx.switchTab({
-                                          url: '../index/index',
+                                          url: '../index/main',
                                         })
                                       }
                                     }

@@ -16,21 +16,10 @@ export default {
     , 'pages/cart/main', 'pages/peixunindex/main', 'pages/xiemaoindex/main','pages/shumalist/main','pages/shumainfo/main','pages/dingdan/main'
     ,'pages/address/main','pages/xinaddress/main','pages/jifen/main','pages/orderdetail/main','pages/tuikuan/main','pages/orderinfo/main',
     'pages/grouplist/main','pages/groupdetail/main','pages/membershipdetail/main','pages/micromember/main','pages/distribeposter/main','pages/memberlist/main'
-<<<<<<< HEAD
     ,'pages/quanchongzhi/main','pages/quanduihuan/main','pages/dingdaninfo/main','pages/memberconsume/main','pages/addresschange/main',
-    'pages/membermanage/main','pages/membership/main','pages/putforward/main','pages/zhekouinfo/main','pages/join/main','pages/collection/main',
-    'pages/collagedetails/main','pages/dingdan2/main','pages/store/main','pages/storeruzhu/main','pages/shoplist/main'
-=======
-    ,'pages/quanchongzhi/main','pages/quanduihuan/main','pages/dingdaninfo/main',
-<<<<<<< HEAD
-    'pages/membermanage/main','pages/membership/main','pages/putforward/main','pages/zhekouinfo/main','pages/join/main','pages/collection/main','pages/collagedetails/main',
-    'pages/dingdan2/main','pages/fengrungood/main','pages/store/main','pages/storeruzhu/main','pages/shoplist/main','pages/map/main'
-=======
-    'pages/membermanage/main','pages/membership/main','pages/putforward/main','pages/zhekouinfo/main','pages/join/main','pages/collection/main',
-    'pages/collagedetails/main','pages/dingdan2/main','pages/store/main','pages/storeruzhu/main','pages/shoplist/main'
-
->>>>>>> c30aba4b7eea5f90919a9ced7b32e24d30b5457c
->>>>>>> d2e686c5f99d83dcdb9d185c0f8a0a9fb1bd0d24
+   ,'pages/putforward/main','pages/zhekouinfo/main','pages/join/main','pages/collection/main',
+    'pages/collagedetails/main','pages/dingdan2/main','pages/store/main','pages/storeruzhu/main','pages/shoplist/main',
+    'pages/membermanage/main','pages/membership/main','pages/map/main'
     ],
     window: {
       backgroundTextStyle: 'light',

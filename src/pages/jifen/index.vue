@@ -139,7 +139,7 @@ image{
 
 .jifenlist ul{width: 94%;margin: auto;}
 .jifenlist li{border:1rpx solid #eee;margin-top: 20rpx;
-border-radius: 15rpx;display: flex;justify-content: space-between;line-height: 70rpx;padding-left: 16rpx;padding-right: 16rpx;}
+border-radius: 15rpx;display: flex;justify-content: space-between;line-height: 70rpx;padding-left: 16rpx;padding-right: 16rpx; background: #fff;}
 .jifenlist span{font-size: 30rpx;}
 .tit1{color:#666;}
 .tit2{color:#26b4ff;}

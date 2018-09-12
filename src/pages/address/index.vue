@@ -1,7 +1,7 @@
 <template>
   <div class="addressContainer">
        <div class="addlist" v-for="(item,index) in memberAddressList" :key="key" :index="index">
-          <div class="additem">
+          <div class="additem" @click="jumpback(index)">
             <span class="addname">{{item.name}}</span> <span class="addphone">{{item.mobile}}</span>
             <div class="adddizhi">{{item.addr}}</div>
           </div>
@@ -22,7 +22,8 @@ import globalStore from "../../stores/global-store";
 export default {
   data () {
     return {
-      memberAddressList:[]
+      memberAddressList:[],
+      pageurl:''
      }
   },
 
@@ -31,6 +32,41 @@ export default {
   },
 
   methods: {
+    jumpback:function(indx){
+      var that=this;
+      if(that.pageurl=="pages/dingdan2/main"){
+        var pars = 1
+        var gooditem = []
+        var address = {}
+        try {
+          var memberId = wx.getStorageSync('memberId')
+          if (memberId) {
+            memberId: memberId
+          }
+        } catch (e) {
+        }
+        wx.setStorageSync('addr', that.memberAddressList[indx]);
+        wx.redirectTo({
+          url: '../dingdan2/main?pars=' + pars
+        })
+      }
+      else if(that.pageurl1=="pages/my/main"){
+
+      }
+      else{
+        try {
+          var memberId = wx.getStorageSync('memberId')
+          if (memberId) {
+            memberId: memberId
+          }
+        } catch (e) {
+        }
+        wx.setStorageSync('addr', that.memberAddressList[indx]);
+        wx.redirectTo({
+          url: '../dingdan/main'
+        })
+      }
+    },
     del:function(addrId){
       var that= this
       wx.showModal({
@@ -141,7 +177,17 @@ export default {
 
    onLoad(options){
     var that=this;
-    that.getaddres()
+    that.getaddres();   
+    var pages = getCurrentPages()    //获取加载的页面
+    if(pages.length>3){
+      var currentPage = pages[2]    //获取当前页面的对象
+      that.pageurl = currentPage.route    //当前页面url
+    }
+    else{
+      var currentPage = pages[0]    //获取当前页面的对象
+      that.pageurl1 = currentPage.route    //当前页面url
+    }
+    
   }
     
 }

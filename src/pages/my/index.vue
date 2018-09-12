@@ -64,7 +64,7 @@ export default {
       { name: '我的拼团', imageurl: globalStore.state.imgapi+'image/pingtuan.jpg', jumpurl: '../grouplist/main',menuid:5 },
       { name: '我的收藏', imageurl: globalStore.state.imgapi+'image/shoucang.jpg', jumpurl: '../collection/main',menuid:6 },
       { name: '微分销', imageurl: globalStore.state.imgapi+'image/weifenxiao.jpg', jumpurl: '../weifenxiao/main',menuid:7 },
-      { name: '商家入驻', imageurl: globalStore.state.imgapi+'image/ruzhu.jpg', jumpurl: '../lingshouindex/main',menuid:8 }],
+      { name: '商家入驻', imageurl: globalStore.state.imgapi+'image/ruzhu.jpg', jumpurl: '../storeruzhu/main',menuid:8 }],
       }
   },
 
@@ -103,8 +103,8 @@ export default {
               }
               that.itemlist[0].statuscount=res.data.statuscount,//未付款
               that.itemlist[1].statuscount=res.data.freightstatuscount,//待收货
-              that.itemlist[2].statuscount=res.data.finishstatuscount,//已完成
-              that.itemlist[3].statuscount=res.data.shippedstatuscount,//已发货
+              that.itemlist[2].statuscount=res.data.shippedstatuscount,//已完成
+              that.itemlist[3].statuscount=res.data.finishstatuscount,//已发货
               that.lvidname=res.data.memberDO.lvidname,//会员
               that.mp=mp,
               that.vouchercount=res.data.vouchercount
