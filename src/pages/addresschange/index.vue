@@ -20,7 +20,7 @@
      </div>
     
     <div class="listbtn">
-      <div class="btnquren" @click="add">确认</div>
+      <div class="btnquren" @click="put">修改</div>
       <div class="btnquxiao">取消</div>
     </div>
   </div>
@@ -72,7 +72,7 @@ export default {
         }
         })
     },
-   add(){
+   put(){
      var that = this
      var parms = {}
      var address = {}  
@@ -130,32 +130,68 @@ export default {
     address.city = city
     address.region = county
     address.addr = addr
+    address.addrId = that.addrId
     parms.address = address
     parms = JSON.stringify(parms)
 
     wx.request({
-      url: globalStore.state.api  + '/api/address/add',
+      url: globalStore.state.api  + '/api/address/update',
       data: {
         parms:parms
       },
-      method: "POST",
+      method: "PUT",
       header: {
         'Content-Type': 'application/x-www-form-urlencoded'
       },
       success: function (res) {
-        wx.showToast({
-          title: '添加成功',
+        if(res.data.code==0){
+          wx.showToast({
+          title: '修改成功',
           icon: 'success',
           duration: 1500
         })
-        wx.redirectTo({
-          url:'../address/main'
-        })
+          setTimeout(function(){
+            wx.redirectTo({
+            url:'../address/main'
+            })
+          },1500)
+        }
+       
+      
       }
     })
    }
 },
    onLoad(options){
+   var that = this
+   var addrId= options.addrId
+   var parms = {}
+   parms.addrId = addrId
+   wx.request({
+     url: globalStore.state.api  + '/api/address/get',
+     data: {
+       parms: parms
+     },
+     header: {
+       'Content-Type': 'application/x-www-form-urlencoded'
+     },
+     success: function (res) {
+         that.address= res.data.getaddr.addr
+         that.city= res.data.getaddr.city
+         that.mobile= res.data.getaddr.mobile
+         that.userName=res.data.getaddr.name
+         that.province=res.data.getaddr.province
+         that.defAddr= res.data.getaddr.defAddr
+         if(res.data.getaddr.defAddr==1){
+          that.switchData[0].isOn=true
+         }
+         else{
+          that.switchData[0].isOn=false
+         }
+         that.region=res.data.getaddr.region,
+         that.addrId=addrId
+     }
+   })
   }
 }
 </script>

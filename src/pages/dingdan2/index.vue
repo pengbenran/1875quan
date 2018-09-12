@@ -78,7 +78,9 @@ export default {
       Goods:{},
       totalPrice:0,
       quanprice:900,
-      quanquan:98
+      quanquan:98,
+      isAddr:false,
+      addr:{}
     }
   },
 
@@ -320,6 +322,7 @@ export default {
             that.isAddr= false
           }
           else {  
+            that.isAddr= true
             that.addr=res.data.memberAddressDO
           }
         }

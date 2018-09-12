@@ -11,7 +11,7 @@
      <!--shoptab end-->
 
      <div class="listwarp">
-           <div class="List" @click="tojump(item.keywords,item.brandId,item.name)" v-for="(item,index) in brand" :key="key" :index="index">
+           <div class="List" @click="tojump(item.brandId)" v-for="(item,index) in brand" :key="key" :index="index">
             <div class="left">
               <img :src="item.logo">
             </div>
@@ -56,9 +56,9 @@ export default {
       //设置为true
       that.listTab[index].tabstu=true;
    },
-   tojump:function(keywords,brandId,shopname){
+   tojump:function(brandId){
     wx.navigateTo({
-        url:'../store/main?brandId='+brandId+'&keywords='+keywords+'&shopname='+shopname
+        url:'../store/main?brandId='+brandId
       })
    }
   },

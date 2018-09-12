@@ -2,12 +2,17 @@
   <div class="chongzhi" >
     <div class="header"><image :src="headerimg"></image></div>
     <div class="headerbtn">
-        <div class="price">
-            <span>{{pay}} 元</span>
-             <small>实际到账{{quanAmount}}圈圈</small>
+        <div class="price" v-for="(item,index) in  quanquanPayDOList" :key="key" :index="index" @click="next(item.pay,item.quanPayId)">
+            <span>{{item.pay}} 元</span>
+            <small>实际到账{{item.quanAmount}}圈圈</small>
         </div>
     </div>
-    <div class="tijiao" @click="next()"><span>微信支付</span> <div class="info">提示：一次性消费1元等于1圈圈</div> </div>
+    <!-- <div class="tijiao" @click="next()"><span>微信支付</span> <div class="info">提示：一次性消费1元等于1圈圈</div> </div> -->
+     <div class="tip">
+       <p>充值规则</p>
+       <p>1、充值对象为商圈会员</p>
+       <p>2、当圈圈数量大于500不能再次充值</p>
+     </div>
   </div>
 </template>
 
@@ -21,7 +26,8 @@ export default {
        syswidth:0,
        sysheight:0,
        pay:0,
-       quanAmount:0
+       quanAmount:0,
+       quanquanPayDOList:[]
     }
   },
 
@@ -31,15 +37,37 @@ export default {
 
   methods: {
     //提交付款
-      next(){
+      next(paymoney,quanPayId){
         let that=this;
-        let lvname=wx.getStorageSync('lvname');
-        let memberId=wx.getStorageSync('memberId');
-        if(lvname!='用户'){
-          let payParms={}
+        let memberId=wx.getStorageSync('memberId');  
+        wx.request({
+         url: globalStore.state.api + "/api/member/judgeQuanUp",
+         data: {
+           memberId:memberId
+         },
+         header: {
+           'content-type': 'application/json' 
+         },
+         success: function (res) {
+          if(res.data.status==2){
+           wx.showToast({
+             title: '请先成为会员',
+             icon: 'success',
+             duration: 2000
+           })
+          }
+          else if(res.data.status==1){
+             wx.showToast({
+             title: res.data.msg,
+             icon: 'success',
+             duration: 2000
+           })
+          }
+          else{
+               let payParms={}
           var  sn = Date.parse(new Date())
            payParms.orderid = Date.parse(new Date())
-           payParms.total_fee = that.money*100 
+           payParms.total_fee = paymoney*100 
            payParms.sn = sn
             wx.login({
              success: function (res) {
@@ -70,22 +98,19 @@ export default {
                 
                          wx.request({
                            url: globalStore.state.api + "/api/member/quanquanUp",
-                           method:"POST",
                            data: {
-                             quanPayId:that.quanPayId,
+                             quanPayId:quanPayId,
                              memberId:memberId
                            },
                            header: {
-                             'Content-Type': 'application/x-www-form-urlencoded'
+                             'content-type': 'application/json' 
                            },
-                           method:"POST",
                            success: function (res) {
-                                        console.log(res.data)
-                                        // if(res.data.code==0){
-                                        //   wx.redirectTo({
-                                        //     url: '../micromember/main',
-                                        //   })
-                                        // }
+                                if(res.data.status==0){
+                                  wx.switchTab({
+                                      url: '../my/main',
+                                  })
+                              }
                            }
                          })
                        }
@@ -95,25 +120,34 @@ export default {
                }
              }
            })
-        }else{
-          wx.showModal({
-            title: '提示',
-            content: '你还不是会员',
-            success: function(res) {
-              if (res.confirm) {
-                console.log("点了确定")
-                wx.redirectTo({
-                  url: '../my/main',
-                })
-              } else if (res.cancel) {
-                console.log("点了取消")
-                wx.redirectTo({
-                  url: '../my/main',
-                })
-              }
-            }
-          })
+    
+          }
         }
+      })
+
+
+
+
+
+       
+          // wx.showModal({
+          //   title: '提示',
+          //   content: '你还不是会员',
+          //   success: function(res) {
+          //     if (res.confirm) {
+          //       console.log("点了确定")
+          //       wx.redirectTo({
+          //         url: '../my/main',
+          //       })
+          //     } else if (res.cancel) {
+          //       console.log("点了取消")
+          //       wx.redirectTo({
+          //         url: '../my/main',
+          //       })
+          //     }
+          //   }
+          // })
+        
         
       },
       //请求数据列表
@@ -128,9 +162,9 @@ export default {
             console.log("获取到浮夸列表数据")
             console.log(res.data);
             console.log(res.data.quanquanPayDOList[0].quanPayId);
-            that.quanPayId=res.data.quanquanPayDOList[0].quanPayId;//获取到quanPayId
-            that.pay=res.data.quanquanPayDOList[0].pay;
-            that.quanAmount=res.data.quanquanPayDOList[0].quanAmount;
+            if(res.data.code==0){
+              that.quanquanPayDOList=res.data.quanquanPayDOList
+            }
           }
         })
     },
@@ -150,7 +184,7 @@ export default {
 image{width: 100%;height: 100%;display: block;}  
 
 .header{height: 350rpx;}
-.headerbtn{padding-top: 30rpx;padding-bottom: 30rpx;text-align: center;}
+.headerbtn{padding-top: 30rpx;padding-bottom: 30rpx;text-align: center; display: flex; justify-content: space-around;}
 .price{width: 36%;margin: auto;border-top:1px solid #f5f5f5;padding-top: 16rpx;padding-bottom: 16rpx;border-radius: 10rpx;
     box-shadow: 0 15px 30px rgba(0,0,0,0.1);}
 .price small{font-size: 26rpx;color: #c1c1c1;padding-top: 10rpx;}
@@ -158,4 +192,5 @@ image{width: 100%;height: 100%;display: block;}
 .tijiao{padding-top:40rpx;text-align: center;}
 .tijiao span{display: inline-block;width: 40%;background: #111111;color:#fff;line-height: 58rpx;border-radius: 15rpx;text-align: center;margin: auto;}
 .tijiao .info{font-size: 26rpx;color: #c1c1c1;padding-top: 15rpx;}
+.tip{ font-size: 0.8em; color: #ccc;position: absolute; left: 150rpx;bottom: 100rpx;}
 </style>

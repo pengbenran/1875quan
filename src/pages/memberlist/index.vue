@@ -20,7 +20,8 @@ import globalStore from "../../stores/global-store";
 export default {
   data () {
     return {
-       memberDOList:[]     
+       memberDOList:[],
+       hasmember:false  
     }
   },
 
@@ -59,7 +60,7 @@ export default {
    },
    jumpconsume(memberid){
     wx.navigateTo({
-      url: '../memberconsume/memberconsume?memberId='+memberid,
+      url: '../memberconsume/main?memberId='+memberid,
     })
    }
   },
@@ -82,7 +83,7 @@ image{
 .memberList{width: 95%;margin: 10rpx auto;border: 1rpx solid #F1F1F1;border-radius:10rpx;}
 .memberuser{display: flex;width: 95%;margin: 0 auto;border-bottom:1rpx solid #F1F1F1;   }
 .memberuseravator{width: 100rpx;height: 100rpx;overflow: hidden;margin: 20rpx;border-radius:50%; }
-.memberName{height: 100rpx;line-height: 100rpx;font-size: 0.9rem;}
+.memberName{height: 100rpx;line-height: 100rpx;font-size: 0.9em;}
 
 .tip{height: 100vh;background: #fff;text-align: center;color: #B0B0B0;}
 </style>

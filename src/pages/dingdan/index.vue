@@ -437,7 +437,7 @@ export default {
                                           duration: 2000
                                         })
                                         wx.switchTab({
-                                          url: '../index/index',
+                                          url: '../index/main',
                                         })
                                       }
                                   }

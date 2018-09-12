@@ -1,37 +1,29 @@
 <template>
   <div class="store">
-    <div class="header"><img :src="headerimg"></div>
+    <div class="header" :style="{width:imageWidth,height:imageHeigth}"><image :src="brandDO.keywords"></image></div>
     <div class="headerinfo">
-        <div class="title"> 泡面食堂（红谷滩店）</div>
+        <div class="title">{{brandDO.name}}</div>
         <div class="info">
-            <div class="left"><span class="leftspan1"><img :src="mapimg">南昌市红谷滩会展路999号</span><span class="leftspan2">(距您13.2公里)</span></div>
-            <div class="right"><img :src="fenxiangimg"></div>
+            <div class="left"><span class="leftspan1"><image :src="mapimg"></image></span><span class="leftspan2">{{address}}(距您13.2公里)</span></div>
+            <div class="right"><image :src="fenxiangimg"></image></div>
         </div>
     </div>
     <!--store end-->
      
      <div class="shopinfo">
          <div class="infotitle">商家详情</div>
-         <div class="shopontent">这家的泡面小食堂，种类繁多这家的泡面小食堂，种类繁多这家的泡面小食堂，
-             种类繁多这家的泡面小食堂，种类繁多这家的泡面小食堂，种类繁多
+         <div class="shopontent">
+             <wxParse :content="brandDO.brief" @prediv="prediv" @navigate="navigate" />
          </div>
      </div>
      <!--shopinfo end-->
      
      <div class="shoplist">
-         <div class="shoplisttitle"><img :src="jinpinimg1">精品推荐<img :src="jinpinimg2"></div>
+         <div class="shoplisttitle"><image :src="jinpinimg1"></image>精品推荐<image :src="jinpinimg2"></image></div>
          <div class="shoplistwarp">
          <ul>
             <li>
-                <div class="liimg"><img :src="shoplistimg"></div>
-                <div class="liinfo"><div>韩国综艺RunnimgMan同款</div><div class="price">￥20</div></div>
-            </li>
-            <li>
-                <div class="liimg"><img :src="shoplistimg"></div>
-                <div class="liinfo"><div>韩国综艺RunnimgMan同款</div><div class="price">￥20</div></div>
-            </li>
-            <li>
-                <div class="liimg"><img :src="shoplistimg"></div>
+                <div class="liimg"><image :src="shoplistimg"></image></div>
                 <div class="liinfo"><div>韩国综艺RunnimgMan同款</div><div class="price">￥20</div></div>
             </li>
          </ul>
@@ -42,20 +34,25 @@
 
 <script>
 import globalStore from "../../stores/global-store"
+import wxParse from 'mpvue-wxparse'
 export default {
   data () {
     return {
-      headerimg:globalStore.state.imgapi+'image/store01.png',
+      imageWidth:'',
+      imageHeigth:'',
       mapimg:globalStore.state.imgapi+'image/listmaap.png',
       fenxiangimg:globalStore.state.imgapi+'image/store02.png',
       jinpinimg1:globalStore.state.imgapi+'image/store03.png',
       jinpinimg2:globalStore.state.imgapi+'image/store04.png',
       shoplistimg:globalStore.state.imgapi+'image/store05.png',
+      brandDO:[],
+      Goods:[],
+      address:''
     }
   },
 
   components: {
- 
+ wxParse
   },
 
   methods: {
@@ -63,30 +60,62 @@ export default {
   },
 
   onLoad (options) {
-    console.log(options)
+    var that = this
+    var windWidth=(wx.getSystemInfoSync().windowWidth);
+    that.imageWidth=windWidth+"px";
+    that.imageHeigth=windWidth*9/16+'px';
+    wx.showLoading({
+      title: '加载中',
+    })
+    var parms = {}
+    var goods = {}
+    goods.brandId = options.brandId
+    parms.goods = goods
+    wx.request({
+      url: globalStore.state.api+'/api/Goods/getGoodsAll',
+      data:{
+        parms:parms
+      },
+      header: {
+        'Content-Type': 'json'
+      },
+      success:function(res){
+        wx.hideLoading()
+        if(res.data.code==0){
+          that.brandDO=res.data.brandDO;
+          that.Goods=res.data.Goods;
+          that.address=res.data.brandDO.url.split(',')[2]
+        }
+        // wx.setNavigationBarTitle({
+        //   title: option.titlebar//页面标题为路由参数
+        // })
+      }
+    })
   }
 }
 </script>
 
 <style scoped>
-img{width: 100%;height: 100%;display: block;}
+@import url("~mpvue-wxparse/src/wxParse.css")
+image{width: 100%;height: 100%;display: block;}
 .store{background: #fff;height: 100vh;}
-
+.header{
+  overflow: hidden;
+}
 /*header*/
-.header{height: 358rpx;}
 .headerinfo{padding: 0 20rpx 20rpx;}
 .headerinfo .title{font-size: 35rpx;border-bottom: 1px solid #f6f6f6;}
 .title{height: 70rpx;line-height: 70rpx;padding-right: 20rpx;padding-left: 20rpx;}
 .info{display: flex;align-items: center;padding-top: 6rpx;}
-.info .left{width: 80%}
+.info .left{width: 80%;display: flex;}
 .info .right{width: 20%;}
-.left span{display: block;color: #b5b4ba;font-size: 30rpx;}
-.left span img{width: 30rpx;height: 35rpx;}
-.right img{height: 60rpx;width: 50rpx;float:right;margin-right: 16rpx;}
+.left span{display: inline-block;color: #b5b4ba;font-size: 30rpx;}
+.left span image{width: 30rpx;height: 35rpx;}
+.right image{height: 60rpx;width: 50rpx;float:right;margin-right: 16rpx;}
 
 .left .leftspan1{display: flex;align-items: center;}
 .left .leftspan2{padding-left: 40rpx;}
-.leftspan1 img{margin-right: 12rpx;}
+.leftspan1 image{margin-right: 12rpx;}
 
 /*shopinfo*/
 .shopinfo{border-top: 15rpx solid #f4f5f9;padding-bottom: 25rpx;}
@@ -97,7 +126,7 @@ img{width: 100%;height: 100%;display: block;}
 .shoplist{background: #fff;}
 .shoplist{border-top: 15rpx solid #f4f5f9;}
 .shoplisttitle{display: flex;justify-content: center;align-items: center;height: 85rpx;line-height: 85rpx;font-size: 35rpx;}
-.shoplisttitle img{width: 10rpx;height: 20rpx;margin-left: 10rpx;margin-right: 10rpx;}
+.shoplisttitle image{width: 10rpx;height: 20rpx;margin-left: 10rpx;margin-right: 10rpx;}
 
 /*shoplistwarp*/
 .shoplistwarp ul{overflow: hidden;display: flex;align-items: center;flex-wrap: wrap;}
