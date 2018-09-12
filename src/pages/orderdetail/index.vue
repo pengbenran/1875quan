@@ -68,7 +68,7 @@
             <div class='complete-box4'>
                <div class='com-input01'>删除订单</div>
               <div class='com-input02'  @click="payoff('查看订单',orderListOut.orderId)">查看订单</div>
-              <div class='com-input02' style='margin-left:20rpx;'>申请退货</div>
+              <div class='com-input02'  @click="payoff('申请退货',orderListOut.orderId,orderListOut.sn,orderListOut.goodssn)" style='margin-left:20rpx;'>申请退货</div>
             </div>
           </block>
         </div>
@@ -390,6 +390,32 @@ export default {
         }
       }
     })  
+  }else if(value=="申请退货"){
+   wx.showModal({
+     title: '提示', //提示的标题,
+     content: '是否确认退货', //提示的内容,
+     success: res => {
+       if (res.confirm) {
+         console.log('用户点击确定')
+        //  console.log(value);
+        //  console.log(orderId);
+        //  console.log(sn);
+        //  console.log(total);
+         
+          let dd={};
+          dd.orderId = orderId;
+          dd.goodssn = total;
+          dd.sn = sn;
+          var dd = JSON.stringify(dd)
+          wx.navigateTo({
+            url: '../tuihuo/main?dd=' + dd,
+          })
+
+       } else if (res.cancel) {
+         console.log('用户点击取消')
+       }
+     }
+   });
   }
 
   },

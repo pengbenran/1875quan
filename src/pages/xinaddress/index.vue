@@ -71,7 +71,7 @@ export default {
         // complete
         }
         })
-    },
+},
    add(){
      var that = this
      var parms = {}

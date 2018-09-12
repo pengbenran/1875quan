@@ -1,49 +1,33 @@
 <template>
   <div class="tuikuanContainer">
-     <!--pages/tuikuan/tuikuan.wxml-->
-    <div class='Spcart'v-for="(item,index) in tuikuandetail.item" :key="key" :index="index">
-        <div class='box2'>
-          <image :src='item.image'></image>
-        </div>
-      <!-- 数量加减 -->
-        <div class='box6'>
-          <div class='character'>{{item.name}}</div>
-        </div>
-        <div class='box5'>
-            <div class='box5-text'>
-              <text class='box5-one'>￥{{item.price}}</text>
-              <text class='box5-two'>x{{item.num}}</text>
-            </div>
-            <div class='box5-two'>
-              <text class='bao'>正品保障</text>
-            </div>
-        </div>
-    </div>
-    <div class='way'>
-      <text class='way-text1'>合计：</text>
-      <text class='way-text3'>￥{{tuikuandetail.orderAmount}}</text>
-    </div>
-    <div class='body'>
-     <!--  <div class='title'>
-        <text>选择退款选项</text>
-      </div> -->
-    <!--选择  -->
-      <div class='option_box'>{{item}}</div>
-      <!-- 退款原因  
-      <div class='select' catchtap='selectTaps'>
-          <text class='select_text'>{{selectDatas[index]}}</text>
-          <image class='select_img {{shows&&"select_img_rotate"}}' src='/image/xiala.png'></image>         
+         <div class="header" v-for="(items,index) in tuikuandetail.item" :index="index" :key='key'>
+          <div class="left">
+              <img :src="items.image"/>
+          </div>
+          <div class="right">
+              <div class="title">{{items.name}}</div>
+               <span class="price">￥{{items.price}}</span><span class="num">×{{items.num}}</span>
+          </div>
       </div>
-      <div class='option_box1' style='height:{{shows?(selectDatas.length>5?300:selectDatas.length*60):0}}rpx;'>
-          <text class='option1' style='{{inx==selectDatas.length-1&&"border:0;"}}' v-for='{{selectDatas}}' wx:key='thiss' data-index='{{index}}' catchtap='optionTap'>{{item}}</text>
-      </div> -->
-      <div class='inputs'>
-        <textarea placeholder="请输入你要退款的原因" class='add-input' placeholder-style="color:#b3b3b3;" v-model="tuikuanreson"/>
+      <!--header end-->
+      
+      <div class="shopstu">
+          <div class="stutitle"><span>货物状态</span><span class="spanr">{{shopstu}}</span></div>
+          <div class="stuyuan"><span>退款原因</span><div class="spandiv spanr"> 
+               <picker @change='changpick' :value='index' :range='selectData'>
+                    <div class="picker">{{selectData[index]}} ></div>
+                </picker>
+              </div></div>
+          <div class="price"><span>退款金额：</span><small class="stuprice">￥{{tuikuandetail.orderAmount}}</small></div>
       </div>
-      <div class='cellbtn'>
-        <button class='com-input01' @click="tuikuan">申请退款</button>
-      </div>
-  </div>
+      <!--shopstu end-->
+
+      <div class="tip">最多选择￥{{tuikuandetail.orderAmount}}，含发货邮费￥{{yunfei}}</div>
+      <!--tip end-->
+      
+      <div class="shuoming"><span>退款说明：</span>  <input type="text" @input="more" placeholder="选填" placeholder-style='color:#939393'/></div>
+  
+      <div class="btn" @click="tuikuan">提交</div>
   </div>
 </template>
 
@@ -52,9 +36,13 @@ import globalStore from "../../stores/global-store"
 export default {
   data () {
     return {
+      selectData:['不喜欢/不想要','快递没有收到','其他'],
       Goods:[],
       tuikuandetail:[],
-      tuikuanreson:''
+      tuikuanreson:'',
+      shopstu:'申请退款',
+      index:0,
+      show:false
      }
   },
 
@@ -63,6 +51,22 @@ export default {
   },
 
   methods: {
+ 
+      //详情信息
+      more(e){
+          let that=this;
+          console.log(e)
+          var key = e.mp.detail.value;
+          that.more=key;
+      },
+
+     changpick(e){
+        let that=this;
+        console.log(e.mp.detail.value);
+        that.index=e.mp.detail.value;
+        that.show=!that.show;
+      },
+
     tuikuan:function(){
       var that=this;
       console.log(that.tuikuanreson);
@@ -74,16 +78,41 @@ export default {
         }
       } catch (e) {
       }
+    let index=that.index;
+    var applyReason="";
+    if (index == 0) {
+        applyReason = "不喜欢/不想要"
+      } if (index == 1) {
+        applyReason = "快递没收到"
+      }
+      if (index == 2) {
+        applyReason = "其他"
+      }
+      if (that.more == undefined){
+        wx.showModal({
+          title: '提示',
+          content: '请描述退款原因详情',
+          success: function (res) {
+            if (res.confirm) {
+
+              console.log('用户点击确定')
+            } else if (res.cancel) {
+              console.log('用户点击取消')
+            }
+          }
+        })  
+        return
+      }
       var returnorder = {}
-      returnorder.memberid = memberId
-      returnorder.ordersn = that.sn
-      returnorder.sellbackAmount = that.tuikuandetail.goodsAmount
-      returnorder.remark = ""
-      returnorder.show = ""
-      returnorder.applyReason = that.tuikuanreson
-      returnorder.orderId = that.orderId
-      returnorder.type = 0
-      parms.returnorder = returnorder
+      returnorder.memberid = memberId;
+      returnorder.ordersn = that.sn;
+      returnorder.sellbackAmount = that.tuikuandetail.goodsAmount;
+      returnorder.remark = that.more;
+      returnorder.show = that.show;
+      returnorder.applyReason = applyReason;
+      returnorder.orderId = that.orderId;
+      returnorder.type = 0;
+      parms.returnorder = returnorder;
       parms = JSON.stringify(parms)
       wx.request({
         url: globalStore.state.api + '/api/order/returnOrder',
@@ -126,6 +155,8 @@ export default {
         if(res.data.code==0){
           that.tuikuandetail=res.data.orderDO
         }    
+        console.log("=============");
+        console.log(that.tuikuandetail);
       }
     })
   }
@@ -137,129 +168,31 @@ image{
   height: 100%;
   display: block;
 }
-.tuikuanContainer{
-  background: #fff;
-  width: 95%;
-  margin: 20rpx auto;
-  height: 95vh;
-}
-.Spcart{
-  background: #FFF;
-  display: flex;
-  justify-content:  space-between;
-  align-items: center;
-  height: 260rpx;
-  margin-top: 10rpx;
-  padding: 10rpx;
-  border-bottom: 1rpx solid #eee;
-}
-.box2{
-  height: 200rpx;
-  width: 200rpx;
-}
-.character{
-  display:-webkit-box;
-word-break:break-all;
-text-overflow:ellipsis;
-overflow:hidden;
--webkit-box-orient:vertical;
--webkit-line-clamp:3;
+.tuikuanContainer{background: #f3f3f3;height: 100vh;}
 
-  font-size: 14px;
-}
+.header{display: flex;align-items: center;padding: 16rpx 0;border-top: 10rpx solid #f1f1f1;background: #fff;border-bottom: 13rpx solid #f1f1f1;}
+.header .left{height: 155rpx;width: 25%;padding-left: 20rpx;padding-right: 20rpx;}
+.header .right{width: 75%;height: 165rpx;}
+.title{font-size: 30rpx;}
+.right span{color: #666;font-size: 30rpx;padding-top: 30rpx;display: inline-block;margin-right: 28rpx;}
+.right .price{color: #F64F57;font-size: 32rpx;}
 
-.price{
-  color: red;
-  font-size: 15px;
-  height: 25%;
-}
-.box5{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-end;
-  height: 80%;
-  width: 24%;
-  padding-right: 15rpx;
-}
-.box5-text{
-display: flex;
-flex-direction: column;
-align-items: flex-end;
-}
-.bao{
-font-size:28rpx;
-color: #F64F57;
-}
-.box5-one{
-font-size: 15px;
-color: red;
-}
-.box5-two{
-display: flex;
-justify-content: center;
-align-items: center;
-font-size: 14px;
-color: #8d8d8d;
-}
-.way{
-  display: flex;
-  height: 100rpx;
-  justify-content: space-between;
-  align-items: center;
-  background: #fff;
-  border-bottom: 1rpx solid #eee;
-  padding:  0 15rpx 0 10rpx;
-}
-.way-text1{
- font-size:15px;
-}
-.way-text3{
-  font-size:15px;
-  color:red; 
-}
-.select{
-  box-sizing: border-box;
-  width: 100%;
-  height: 70rpx;
-  border:1px solid #efefef;
-  border-radius: 8rpx;
-  display: flex;
-  align-items: center;
-  padding: 0 20rpx;
-}
-.option_box{
-  top: 70rpx;
-  width: 100%;
-  border:1px solid #efefef;
-  box-sizing: border-box;
-  height: 0;
-  overflow-y: auto;
-  border-top: 0;
-  background: #fff;
-  transition: height 0.3s;
-}
-.inputs{
-  border: 1px solid #DDD;
-  height: 400rpx;
-  padding: 10rpx;
-  box-sizing: border-box;
-}
-.cellbtn{
-  width: 100%;
-  height:100rpx;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 40rpx;
-}
-.com-input01{
-  height:90rpx;
-  line-height: 90rpx;
-  width:85%;
-  color: #fff;
-  border-radius: 45rpx;
-  background: #F64F57;
-  text-align: center;
-}
+.shopstu{padding-left: 15rpx;padding-right: 15rpx;background: #fff;}
+.stutitle{border-bottom: 1px solid #f3f3f3;}
+.shopstu div{line-height: 85rpx;}
+.shopstu span{font-size: 30rpx;}
+.shopstu .spanr{color:#939393;}
+.stuprice{color: #F64F57;font-size: 34rpx;}
+.stutitle,.stuyuan{display: flex;justify-content: space-between;align-items: center;}
+.shopstu .price{display: flex;align-items: center;}
+
+.picker{font-size: 30rpx;}
+
+.tip{background:#f3f3f3;line-height: 75rpx;color: #939393;font-size: 30rpx;padding-left: 20rpx;}
+.shuoming{display: flex;align-items: center;background: #fff;padding:15rpx 20rpx;}
+.shuoming span{font-size: 30rpx;}
+.shuoming input{font-size: 30rpx;}
+
+.btn{position: fixed;bottom: 0;width: 100%;text-align: center;background:#f23f3f;color: #fff;font-size: 36rpx;line-height: 90rpx;}
+
 </style>
