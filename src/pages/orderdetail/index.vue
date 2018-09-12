@@ -30,7 +30,7 @@
               </div>
             </div>
           </div>
-          <div class='complete-box2' v-for="orderListInner in orderListOut.item" @click="jumpgooddetail(orderListInner.goodsId)">
+          <div class='complete-box2' v-for="orderListInner in orderListOut.item"  @click="jumpgooddetail(orderListInner.goodsId)">
             <div class='box2-left'>
               <image :src='orderListInner.image'></image>
             </div>
@@ -54,7 +54,7 @@
           </block>
           <block v-if="orderListOut.status==1 || orderListOut.status == 2&orderListOut.shipStatus==0&orderListOut.payStatus==2">
             <div class='complete-box4'>
-              <div class='com-input01' @click="payoff('查看订单',orderListOut.orderId)">查看订单</div>
+              <div class='com-input01' @click="payoff('查看订单',orderListOut.orderId,outindex)">查看订单</div>
               <div class='com-input02' @click="payoff('申请退款',orderListOut.orderId,orderListOut.sn,'')">申请退款</div>
             </div>
           </block>
@@ -260,8 +260,12 @@ export default {
     }
     else if (value == "查看订单") {
       var orderId = orderId
+      // console.log(sn);//获取当前点击的数据列表下标
+       console.log("----获取数据-----")
+       console.log(that.orderList[sn]);
+       var orderlist=JSON.stringify(that.orderList[sn]);
       wx.redirectTo({
-        url: '../listgruop/listgruop?orderId=' + orderId,
+        url: '../orderinfo/main?OrderList='+orderlist,
       })
       return;
     }

@@ -54,6 +54,7 @@ export default {
   },
 
   methods: {
+<<<<<<< HEAD
     chooseAddr(){
       var that=this;
       wx.chooseLocation({
@@ -71,6 +72,16 @@ export default {
         // complete
         }
         })
+=======
+    
+    //点击显示地址
+    clickListarea(){
+      // let that=this;
+      // that.areaitem.show=true;
+      // console.log("666");
+      //  that.animationEvents()
+      wx.navigateTo({ url: '../map/main' });
+>>>>>>> d2e686c5f99d83dcdb9d185c0f8a0a9fb1bd0d24
     },
    add(){
      var that = this
@@ -170,6 +181,7 @@ image{
   height: 100%;
   display: block;
 }
+<<<<<<< HEAD
 .addressicon{
   width: 20px;
   height: 27px;
@@ -183,6 +195,10 @@ image{
   height: 100vh;
 }
 .listItem{display: flex;line-height: 100rpx;border-top: 1px solid #f2f2f2; position: relative;padding-right: 70rpx;box-sizing: border-box;}
+=======
+.smlistContainer{background: #fff;height: 100vh;}
+.listItem{display: flex;line-height: 100rpx;border-top: 1px solid #f2f2f2;}
+>>>>>>> d2e686c5f99d83dcdb9d185c0f8a0a9fb1bd0d24
 .listItem span{width: 25%;padding-left: 18rpx;font-size: 32rpx;}
 .listItem input{height: 100rpx;line-height: 100rpx;font-size: 30rpx; flex-grow: 1;}
 .listItem .lianbox{width: 20rpx;height: 32rpx;} 
