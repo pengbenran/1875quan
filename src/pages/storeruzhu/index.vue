@@ -25,7 +25,6 @@ export default {
     return {
        downimg:globalStore.state.imgapi+'image/down.png', 
        strongimg:globalStore.state.imgapi+'image/store01.png', 
-       listitem:['运动健身','美食','餐饮','景区游玩'],
        index:0,
        menus:[],
        listmenu:[]
@@ -42,7 +41,7 @@ export default {
        let that=this;
       console.log(e); 
       console.log(e.mp.detail.value);
-  
+      that.index=e.mp.detail.value;
   },
 
   fromsub(s){
