@@ -79,11 +79,8 @@ export default {
         content: '你已经签到过了哦！',
       })
      }
-    }
-  
-   },
-
-   onLoad(options){
+    },
+    getquanquan:function(){
     let that = this
     try {
       var memberId = wx.getStorageSync('memberId')
@@ -115,6 +112,13 @@ export default {
           that.pointSign=pointSign;
       }
     })
+    }
+  
+   },
+
+   onLoad(options){
+    var that=this
+    that.getquanquan()
   } 
 }
 </script>

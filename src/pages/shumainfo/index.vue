@@ -92,7 +92,7 @@ export default {
      article:"",
      elesimg:globalStore.state.imgapi+"/image/group/10.png",
      gimg:globalStore.state.imgapi+"image/zhichi.jpg",
-     xximg:globalStore.state.imgapi+"/images/guige/xx.png",
+     xximg:globalStore.state.imgapi+"/image/xx.png",
      showModalStatus: false,
      animationData:{},
      pic:1,
@@ -111,14 +111,13 @@ export default {
       wx.showLoading({
       title: '加载中',
       })
-      const api="https://www.guqinjiujiang.xyz:8444/guqinzhen";
       let goodparms={}
       that.memberId=wx.getStorageSync('memberId');//此处定义了memberId
       goodparms.goodsId=goodid;
       goodparms.memberId= that.memberId;//此为变量为异步缓存过来的参数
       console.log(goodparms)
      wx.request({
-        url:  api+'/api/Goods/getGoods',
+        url:  globalStore.state.api +'/api/Goods/getGoods',
         data: {
           parms:goodparms
         },
@@ -145,7 +144,7 @@ export default {
       })
       //请求获取productId
       wx.request({
-        url: api + '/api/Goods/getProduct',
+        url: globalStore.state.api  + '/api/Goods/getProduct',
         data: {
           parms: goodparms
         },
@@ -235,8 +234,8 @@ export default {
             cartparms.itemtype = that.goodDetail.typeId,
             cartparms.image = that.goodDetail.thumbnail
             cartparms.num = that.pic,
-            cartparms.point = that.goodDetail.point
-            cartparms.weight = that.goodDetail.weight,
+            cartparms.point = that.goodDetail.memberPoint
+            cartparms.weight = that.goodDetail.cost,
             cartparms.name = that.goodDetail.name,
             cartparms.price = that.goodDetail.price,
             cartparms.cart = 1//判断购物车订单
@@ -397,7 +396,7 @@ export default {
    },
 
    onLoad:function(options){
-     this.geiShopinfo(options.goodid);
+     this.geiShopinfo(options.goodsId);
   }
 }
 </script>

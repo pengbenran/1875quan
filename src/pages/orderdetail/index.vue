@@ -44,12 +44,13 @@
           </div>
           <div class='complete-box3'>
             <text class='tex01'>共件商品{{orderListOut.totalnum}}合计:</text>
-            <text class='tex02'>￥{{orderListOut.needPayMoney}}</text>
+            <text class='tex02' v-if="orderListOut.shipZip==0">￥{{orderListOut.needPayMoney}}</text>
+            <text class='tex02' v-else>￥{{orderListOut.shipZip}}圈圈</text>
           </div>
           <block>
             <div class='complete-box4'  v-if="orderListOut.status==0&orderListOut.shipStatus==0">
               <div class='com-input01' @click="payoff('取消订单',orderListOut.orderId)">取消订单</div>
-              <div class='com-input02'  @click="payoff('确认付款',orderListOut.orderId,orderListOut.sn,orderListOut.needPayMoney)">确认付款</div>
+              <div class='com-input02'  @click="payoff('确认付款',orderListOut.orderId,orderListOut.sn,orderListOut.needPayMoney,orderListOut.shipZip)">确认付款</div>
             </div>
           </block>
           <block v-if="orderListOut.status==1 || orderListOut.status == 2&orderListOut.shipStatus==0&orderListOut.payStatus==2">
@@ -97,6 +98,7 @@ export default {
       {name:"已完成",selected:false}],
       currentTab:'',
       orderList:[],
+      quanquan:''
      }
   },
 
@@ -170,6 +172,9 @@ export default {
           for(var j=0;j<orderList[i].item.length;j++){
             totalnum=totalnum+orderList[i].item[j].num
           }
+          // if(orderList.shipZip!=0){
+          //    orderList[i]["shipWay"]=orderList[i].shipZip.split('+')
+          // }
           orderList[i]["totalnum"]=totalnum;
         }
         that.orderList = orderList
@@ -216,7 +221,7 @@ export default {
   },
   // 支付
 
-  payoff: function (value,orderId,sn,total) {
+  payoff: function (value,orderId,sn,total,shipzip) {
     var  that=this
     var status = 4
     var parms = {}
@@ -288,13 +293,28 @@ export default {
     wx.showLoading({
       title:'请稍等'
     })
-    let surepayparms = {}
-    surepayparms.orderid = orderId
-    surepayparms.total_fee = total * 100
-    surepayparms.sn=sn
-    wx.login({
-      success: function (res) {
-        if (res.code) {
+    let payflag=true
+    if(shipzip!=0){
+      that.quanquan=shipzip.split("+")[1]
+      let mp=wx.getStorageSync('mp')
+      if(mp<that.quanquan){
+          wx.showToast({
+            title: '圈圈不足',
+            icon: 'success',
+            duration: 2000
+          })
+          payflag=false
+      }    
+    }
+
+    if(payflag){
+      let surepayparms = {}
+      surepayparms.orderid = orderId
+      surepayparms.total_fee = total * 100
+      surepayparms.sn=sn
+      wx.login({
+        success: function (res) {
+          if (res.code) {
           //发起网络请求
           wx.request({
             url: globalStore.state.api + "/api/pay/prepay",
@@ -320,34 +340,64 @@ export default {
                 signType: res.data.signType,
                 paySign: res.data.paySign,
                 success: function (res) {
-                wx.showToast({
-                  title: '支付成功',
-                  icon: 'success',
-                  duration: 2000
-                })
-                wx.request({
-                  url: globalStore.state.api + "/api/order/passOrder",
-                  data: {
-                    parms: parms
-                  },
-                  method: 'PUT',
-                  header: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                  },
-                  success: function (res) {
-                   let stauts=1;
-                  let cat="待付款"
-                  that.orderRequest(0,0,0,stauts,cat)
+                  wx.showToast({
+                    title: '支付成功',
+                    icon: 'success',
+                    duration: 2000
+                  })
 
+                  if(shipzip!=0){
+                    // 选择圈圈加现金支付
+                    let fenrunParm = {}
+                    fenrunParm.memberId = that.memberId
+                    fenrunParm.distribeId = wx.getStorageSync('isAgent')
+                    fenrunParm.monetary = total * 100
+                    fenrunParm.memberPoint = that.quanquan
+                    wx.request({
+                      url: globalStore.state.api + "/api/distribe/shareProfit",
+                      method: "POST",
+                      data: {
+                        params: JSON.stringify(fenrunParm)
+                      },
+                      header: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                      },
+                      method: "POST",
+                      success: function (res) {
+                        console.log(res.data)
+                        if (res.data.code == 0) {
+
+
+                        }
+                      }
+                    })
                   }
-                })
-              }
-            })
-          }
-        })    
+                  wx.request({
+                    url: globalStore.state.api + "/api/order/passOrder",
+                    data: {
+                      parms: parms
+                    },
+                    method: 'PUT',
+                    header: {
+                      'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    success: function (res) {
+                     let stauts=1;
+                     let cat="待付款"
+                     that.orderRequest(0,0,0,stauts,cat)
+
+                   }
+                 })
+                }
+              })
+            }
+          })    
+        }
       }
+    })
+
     }
-  })
+  
   }
   else if(value=="取消订单"){
     var orderId = orderId

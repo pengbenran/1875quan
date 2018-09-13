@@ -27,7 +27,7 @@
          <div class="infoleft"><img :src="item.image"></div>
          <div class="inforight">
            <div class="inforighttitle">{{item.name}}</div>
-           <div class="infoguige"><span class="infoshopnum">20只 / 一盒</span>
+           <div class="infoguige">
              <span class="infocase">正品发货</span>
            </div>
            <div class="infobottom">
@@ -44,9 +44,20 @@
           <div class="Summaryitem"><span>商品金额</span><span>￥{{goodsAmount}}</span></div>
           <div class="Summaryitem"><span>运费</span><span>￥0</span></div>
         </div>
-    </div>
+        <div class="zhifu">
+          <div class="zhifutitle">支付方式</div>
+          <div class="zhifuprice" v-for="(item,index) in payway" :index="index" :key="key">
+            <div class="price">{{item.way}}</div>
+            <div class="slectico" @click="choosepayway(index)">
+              <icon color='#e93429' type="success" size="20" v-if="item.isthisway" /><icon type="circle" v-else color="#DDD"   size="20" />
+            </div>
+          </div>
+     </div>
+    </div> 
       
-      <div class="footer"><div class="footerleft">合计：<span>￥{{goodsAmount}}</span></div><div class="footerright" @click="toast()">提交订单</div></div>
+    <div class="footer" v-for="(item,index) in payway" :index="index" :key="key" v-if="item.isthisway">
+      <div class="footerleft" >合计：<span>￥{{item.way}}</span></div><div class="footerright" @click="toast()">提交订单</div>
+    </div>
   </div>
 </template>
 
@@ -68,7 +79,15 @@ export default {
      point_price:0,
      goodsAmount:0,
      orderAmount:0,
-     list:[]
+     list:[],
+     payway:[
+     {way:'3元+2圈圈',isthisway:true},
+     {way:'3元',isthisway:false}
+     ],
+     paymoney:'',
+     mp:'',
+     quanquan:'',
+     gooditem:[]
     }
   },
 
@@ -77,49 +96,18 @@ export default {
   },
 
   methods: {
+      choosepayway(index){
+        var that=this
+        for(var i in that.payway){
+          that.payway[i].isthisway=false
+        }
+        that.payway[index].isthisway=true
+        // console.log(that.selectstu)
+      },
       clickd(e){
         console.log("留言填写");
         this.clickd=e.target.value
       },
-
-      hongbao(e){
-        var that = this
-        wx.setStorageSync('cart', that.cart);
-        wx.setStorageSync('gooditem', that.gooditem);
-        wx.setStorageSync('goodlist', that.goodlist);
-        wx.setStorageSync('select', that.select);
-        wx.setStorageSync('orderAmount', that.orderAmount);
-        wx.setStorageSync('pars', that.pars);
-        wx.setStorageSync('facevalue', that.facevalue);
-        wx.navigateTo({
-          url: '../voucher/voucher?type=1',
-        })
-      },
-
-      youhui(e){
-          var that = this
-          wx.setStorageSync('cart', that.cart);
-          wx.setStorageSync('gooditem', that.gooditem);
-          wx.setStorageSync('goodlist', that.goodlist);
-          wx.setStorageSync('select', that.select);
-          wx.setStorageSync('orderAmount', that.orderAmount);
-          wx.setStorageSync('pars', that.pars);
-          wx.setStorageSync('redamount', that.redamount);
-          var parms = {}
-          var goodsIds = []
-          console.log(that.list)
-          for (let i = 0; i < that.list.length; i++) {
-            goodsIds.push(that.list[i].goodsId)
-          }
-          var goodsAmount = that.goodsAmount
-          parms.orderAmount = goodsAmount
-          parms.goodsIds = goodsIds
-          parms = JSON.stringify(parms)
-          wx.navigateTo({
-            url: '../voucher/voucher?parms=' + parms,
-          })
-      },
-
       /*新增地址*/
       address(){
         var that=this
@@ -133,20 +121,6 @@ export default {
           url: '../address/main',
         })
       },
-
-      selects(){
-        console.log("测试点击");
-          var that = this
-          var defAddr = that.select
-          var select = that.select
-          if (defAddr == "false" || defAddr =="") {
-            select= true
-            that.select=true
-          } else {
-            select= false
-            that.select=false
-          }
-      },
       //加载初始数据并存入缓存
       onloads(options){
           var that=this
@@ -154,9 +128,9 @@ export default {
           wx.showLoading({
             title: '加载中',
           })
-          var point = wx.getStorageSync('point') //创建缓存
+          that.mp=wx.getStorageSync('mp')
           var indexdata = wx.getStorageSync('indexdata') //创建缓存
-          var point_price = Number(point / indexdata.pointCash).toFixed(2)
+          // var point_price = Number(point / indexdata.pointCash).toFixed(2)
           if (options.cart==undefined){that.cart=wx.getStorageSync('cart')}
           else{that.cart=options.cart}
 
@@ -195,8 +169,8 @@ export default {
             }
                 that.memberId=wx.getStorageSync('memberId'),
                 that.indexdata=indexdata;
-                that.point=point;
-                that.point_price=point_price;
+                // that.point=point;
+                // that.point_price=point_price;
 
             // 加载地址
             if (wx.getStorageSync('addr') == '') {
@@ -212,13 +186,20 @@ export default {
                 },
                 success: function (res) {
                   // wx.setStorageSync('addr', res.data.memberAddressDO);
-                  if (res.data.code == 1) {that.isAddr=false}
-                  else {that.addr=res.data.memberAddressDO}
+                  if (res.data.code == 1) {
+                    that.isAddr=false
+                  }
+                  else {
+                    that.addr=res.data.memberAddressDO
+                    that.isAddr=true
+                  }
                 }
               })
             }
-            else {that.addr=wx.getStorageSync('addr')}
-
+            else {
+              that.addr=wx.getStorageSync('addr')
+              that.isAddr=true
+            }
            if(that.cart==1){ //Cart订单类型
               wx.hideLoading()
               if (options.gooditem==undefined){
@@ -228,29 +209,37 @@ export default {
               }
               else{
                 var gooditem = JSON.parse(options.gooditem);
-                  that.gooditem=gooditem  
+                that.gooditem=gooditem  
               }  
-              var orderamount = Number(gooditem.goodsAmount - that.facevalue - that.redamount).toFixed(2)
-              if (orderamount <= 0) {
-                orderamount = 0.01
+              var orderamount = Number(gooditem.goodsAmount).toFixed(2)
+              let paymoney=0;
+              let quanquan=0;
+              for(var i in that.gooditem.googitem){
+                paymoney=Number(paymoney*1+that.gooditem.googitem[i].num * that.gooditem.googitem[i].weight).toFixed(2)
+                quanquan=Number(quanquan*1+that.gooditem.googitem[i].num * that.gooditem.googitem[i].point)
               }
-                that.goodsAmount=Number(gooditem.goodsAmount).toFixed(2),
-                that.list=gooditem.googitem,
-                that.weight=gooditem.weight,
-                that.orderAmount=orderamount,
-                that.gainedpoint=gooditem.gainedpoint
+              that.paymoney=paymoney;
+              that.quanquan=quanquan;
+              that.payway[0].way=paymoney+'元+'+quanquan+"圈圈"
+              that.payway[0].isthisway=true
+              that.payway[1].way=orderamount
+              that.payway[1].isthisway=false   
+              that.goodsAmount=orderamount;
+              that.list=gooditem.googitem;
+              that.weight=gooditem.weight;
+              that.orderAmount=orderamount;
+                // that.gainedpoint=gooditem.gainedpoint
             }
            else{
               if (options.goodlist == undefined) {
-                var goodlist = wx.getStorageSync('goodlist');
-                
-                  that.goodlist=wx.getStorageSync('goodlist'),
-                  that.select=wx.getStorageSync('select')
+                var goodlist = wx.getStorageSync('goodlist');   
+                that.goodlist=wx.getStorageSync('goodlist');
+                that.select=wx.getStorageSync('select')
         
               }
               else {
                 var goodlist = JSON.parse(options.goodlist);
-                  that.goodlist=goodlist
+                that.goodlist=goodlist
               }
                 var goodArr = [];
                 var goodparms = {}
@@ -264,18 +253,22 @@ export default {
                   header: {
                     'Content-Type': 'json'
                   },
-                  success: function (res) {
-                    
+                  success: function (res) {                  
                     res.data.Goods.num = that.goodlist[0].pic
                     res.data.Goods.image = res.data.Goods.thumbnail
                     goodArr.push(res.data.Goods) 
-                    let ordermount = Number(that.goodlist[0].pic * res.data.Goods.price - that.facevalue - that.redamount).toFixed(2)
-                    if(ordermount<=0){
-                      ordermount=0.01
-                    }
-                      that.list=goodArr;
-                      that.goodsAmount=Number(that.goodlist[0].pic * res.data.Goods.price).toFixed(2);
-                      that.orderAmount=ordermount;
+                    let ordermount = Number(that.goodlist[0].pic * res.data.Goods.price).toFixed(2)
+                    that.list=goodArr;
+                    that.goodsAmount=ordermount;
+                    that.orderAmount=ordermount;
+                    let paymoney=Number(that.goodlist[0].pic * res.data.Goods.cost).toFixed(2)
+                    let quanquan=Number(that.goodlist[0].pic * res.data.Goods.memberPoint)
+                    that.paymoney=paymoney;
+                    that.quanquan=quanquan;
+                    that.payway[0].way=paymoney+'元+'+quanquan+"圈圈"
+                    that.payway[0].isthisway=true
+                    that.payway[1].way=ordermount
+                    that.payway[1].isthisway=false
                     wx.hideLoading()
                   }
                 })
@@ -289,26 +282,52 @@ export default {
             })
           }
           else {
-            if (that.cart==0){
             var bean = {}
             var goodObj = {}
             wx.showLoading({
               title: '请稍等',
             })
-            //  判断是否使用积分
-            if(that.select==true){
-              if (that.goodsAmount - that.point_price<=0){
-                bean.orderAmount =0.01
-                bean.consumepoint = parseInt((that.goodsAmount-0.01)*indexdata.pointCash)
-              }else{
-                bean.orderAmount = that.orderAmount - that.point_price
-                bean.consumepoint = that.point
-              }      
+            let canflag=true;
+            
+            if(that.payway[0].isthisway==true){
+              bean.orderAmount = that.paymoney
+              if(that.mp<that.quanquan){
+                wx.showToast({
+                title: '圈圈不足',
+                icon: 'success',
+                duration: 2000
+              })
+               canflag=false
+              }
+              else{
+               bean.shipZip=that.paymoney+'+'+that.quanquan 
+              }
             }
             else{
-              bean.orderAmount = that.orderAmount 
-              bean.consumepoint =0
-              }
+              bean.orderAmount = that.orderAmount
+              bean.shipZip=0
+            }
+            
+
+            if (that.cart==0){
+           
+            // //判断是否使用积分
+            // if(that.select==true){
+            //   if (that.goodsAmount - that.point_price<=0){
+            //     bean.orderAmount =0.01
+            //     bean.consumepoint = parseInt((that.goodsAmount-0.01)*indexdata.pointCash)
+            //   }else{
+            //     bean.orderAmount = that.orderAmount - that.point_price
+            //     bean.consumepoint = that.point
+            //   }      
+            // }
+            // else{
+            //   bean.orderAmount = that.orderAmount 
+            //   bean.consumepoint =0
+            //   }
+              // 确定支付方式
+          
+              if(canflag){
               bean.memberId = that.memberId
               bean.image = that.list[0].image
               bean.weight = that.list[0].weight * that.list[0].num
@@ -324,8 +343,8 @@ export default {
               goodObj.goodsAmount = that.list[0].price * that.list[0].num
               goodObj.productId = that.goodlist[0].productId
               bean.googitem[0] = goodObj
-              bean.point = that.point
-              bean.gainedpoint = that.list[0].point
+              // bean.point = that.point
+              // bean.gainedpoint = that.list[0].point
               bean.province = that.addr.province
               bean.city = that.addr.city
               bean.addr = that.addr.addr
@@ -337,53 +356,52 @@ export default {
               bean.goodsAmount = that.list[0].price * that.list[0].num
               bean = JSON.stringify(bean)
               wx.request({
-              url: globalStore.state.api + '/api/order/save',
-              method: 'POST',
-              header: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-              },
-              data: {
-                order: bean
-              },
-              success: function (res) {
-                wx.hideLoading()
-                if(res.data.code==0){
-                  wx.showToast({
-                    title: '订单提交成功',
-                    icon: 'success',
-                    duration: 2000
-                  })
-                  var parms = {}
+                url: globalStore.state.api + '/api/order/save',
+                method: 'POST',
+                header: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                data: {
+                  order: bean
+                },
+                success: function (res) {
+                  wx.hideLoading()
+                  if(res.data.code==0){
+                    wx.showToast({
+                      title: '订单提交成功',
+                      icon: 'success',
+                      duration: 2000
+                    })
+                    var parms = {}
                     that.order=res.data.order
-
-                  if(that.pars==1){
-                    wx.request({
-                      url: globalStore.state.api + '/api/vocher/usedState',
-                      data: {
-                        memberVoucherId:that.memberVoucherId
-                      },
-                      header: {
-                        'Content-Type': 'json'
-                      },
-                      success: function (res) {
-                      console.log(res.data)
-                      }
-                    })
-                  }
-                  else if(that.pars==2){
-                    wx.request({
-                      url: globalStore.state.api + '/api/redPacket/RedusedState',
-                      data: {
-                        memberRedpacketId: that.memberredpacketid
-                      },
-                      header: {
-                        'Content-Type': 'json'
-                      },
-                      success: function (res) {
-                        console.log(res.data)
-                      }
-                    })
-                  }
+                  // if(that.pars==1){
+                  //   wx.request({
+                  //     url: globalStore.state.api + '/api/vocher/usedState',
+                  //     data: {
+                  //       memberVoucherId:that.memberVoucherId
+                  //     },
+                  //     header: {
+                  //       'Content-Type': 'json'
+                  //     },
+                  //     success: function (res) {
+                  //     console.log(res.data)
+                  //     }
+                  //   })
+                  // }
+                  // else if(that.pars==2){
+                  //   wx.request({
+                  //     url: globalStore.state.api + '/api/redPacket/RedusedState',
+                  //     data: {
+                  //       memberRedpacketId: that.memberredpacketid
+                  //     },
+                  //     header: {
+                  //       'Content-Type': 'json'
+                  //     },
+                  //     success: function (res) {
+                  //       console.log(res.data)
+                  //     }
+                  //   })
+                  // }
                   parms.orderid = res.data.order.orderId
                   parms.sn=that.order.sn
                   parms.total_fee = res.data.order.orderAmount * 100
@@ -396,7 +414,7 @@ export default {
                           data: {
                             code: res.code,
                             parms: parms,
-                          
+
                           },
                           method: 'GET',
                           success: function (res) {
@@ -413,13 +431,44 @@ export default {
                                   icon: 'success',
                                   duration: 2000
                                 })
-                                var orderparms = {}
-                                var order={}
-                                order.orderId = that.order.orderId
-                                orderparms.order = order
-                                orderparms.code = 200
-                                orderparms.gainedpoint = Number(that.order.gainedpoint)
-                                orderparms.paymoney = that.order.orderAmount
+                                // 如果使用圈圈支付则给上级推广商加圈圈
+                               
+                                  if(that.payway[0].isthisway==true){
+                                      // 选择圈圈加现金支付
+                                    let fenrunParm = {}
+                                    fenrunParm.memberId = that.memberId
+                                    fenrunParm.distribeId = wx.getStorageSync('isAgent')
+                                    fenrunParm.monetary = that.order.orderAmount
+                                    fenrunParm.memberPoint = that.quanquan
+                                    wx.request({
+                                      url: globalStore.state.api + "/api/distribe/shareProfit",
+                                      method: "POST",
+                                      data: {
+                                        params: JSON.stringify(fenrunParm)
+                                      },
+                                      header: {
+                                        'Content-Type': 'application/x-www-form-urlencoded'
+                                      },
+                                      method: "POST",
+                                      success: function (res) {
+                                        console.log(res.data)
+                                        if (res.data.code == 0) {
+
+                    
+                                        }
+                                      }
+                                    })
+                                    }
+                                    else{
+
+                                    }
+                                  var orderparms = {}
+                                  var order={}
+                                  order.orderId = that.order.orderId
+                                  orderparms.order = order
+                                  orderparms.code = 200
+                                // orderparms.gainedpoint = Number(that.order.gainedpoint)
+                                  orderparms.paymoney = that.order.orderAmount
                                 wx.request({
                                   url: globalStore.state.api + "/api/order/passOrder",
                                   data: {
@@ -430,16 +479,16 @@ export default {
                                     'Content-Type': 'application/x-www-form-urlencoded'
                                   },
                                   success: function (res) {
-                                      if(res.data.code==0){
-                                        wx.showToast({
-                                          title: '订单成功',
-                                          icon: 'success',
-                                          duration: 2000
-                                        })
-                                        wx.switchTab({
-                                          url: '../index/main',
-                                        })
-                                      }
+                                    if(res.data.code==0){
+                                      wx.showToast({
+                                        title: '订单成功',
+                                        icon: 'success',
+                                        duration: 2000
+                                      })
+                                      wx.switchTab({
+                                        url: '../index/main',
+                                      })
+                                    }
                                   }
                                 })
                               }
@@ -449,34 +498,36 @@ export default {
                         })
                       }
                     }
-                })
-            }
-            }
-              })
+                  })
+                }
+              }
+            })
+
+
+              }
+
             }
             else{
               // 购物车提交订单
-              var bean = {}
-              var goodObj = {}
-              wx.showLoading({
-                title: '请稍等',
-              })
               //  判断是否使用积分
-              if (that.select == true) {
-                if (that.goodsAmount - that.point_price <= 0) {
-                  bean.orderAmount = 0.01
-                  bean.consumepoint = parseInt((that.goodsAmount - 0.01) * indexdata.pointCash)
-                } else {
-                  bean.orderAmount = that.orderAmount - that.point_price
-                  bean.consumepoint = that.point
-                }
-              }
-              else {
-                bean.orderAmount = that.orderAmount
-                bean.consumepoint = 0
-              }
+              // if (that.select == true) {
+              //   if (that.goodsAmount - that.point_price <= 0) {
+              //     bean.orderAmount = 0.01
+              //     // bean.consumepoint = parseInt((that.goodsAmount - 0.01) * indexdata.pointCash)
+              //   } else {
+              //     bean.orderAmount = that.orderAmount - that.point_price
+              //     // bean.consumepoint = that.point
+              //   }
+              // }
+              // else {
+              //   bean.orderAmount = that.orderAmount
+              //   // bean.consumepoint = 0
+              // }
+
+              if(canflag){
+
               bean.weight = that.weight
-              bean.gainedpoint = that.gainedpoint
+              // bean.gainedpoint = that.gainedpoint
               bean.memberId = that.memberId
               bean.goodsAmount = that.goodsAmount
               bean.shippingAmount = 0
@@ -500,21 +551,21 @@ export default {
                       duration: 2000
                     })
                     var parms = {}
-                      that.order=res.data.order
-                    if (that.pars == 1) {
-                      wx.request({
-                        url: globalStore.state.api + '/api/vocher/usedState',
-                        data: {
-                          memberVoucherId: that.memberVoucherId
-                        },
-                        header: {
-                          'Content-Type': 'json'
-                        },
-                        success: function (res) {
-                          console.log(res.data)
-                        }
-                      })
-                    }
+                    that.order=res.data.order
+                    // if (that.pars == 1) {
+                    //   wx.request({
+                    //     url: globalStore.state.api + '/api/vocher/usedState',
+                    //     data: {
+                    //       memberVoucherId: that.memberVoucherId
+                    //     },
+                    //     header: {
+                    //       'Content-Type': 'json'
+                    //     },
+                    //     success: function (res) {
+                    //       console.log(res.data)
+                    //     }
+                    //   })
+                    // }
                     parms.orderid = res.data.order.orderId
                     parms.sn = that.order.sn
                     parms.total_fee = res.data.order.orderAmount * 100
@@ -543,12 +594,44 @@ export default {
                                     icon: 'success',
                                     duration: 2000
                                   })
+                               // 如果使用圈圈支付则给上级推广商加圈圈
+                               
+                                  if(that.payway[0].isthisway==true){
+                                      // 选择圈圈加现金支付
+                                    let fenrunParm = {}
+                                    fenrunParm.memberId = that.memberId
+                                    fenrunParm.distribeId = wx.getStorageSync('isAgent')
+                                    fenrunParm.monetary = that.order.orderAmount
+                                    fenrunParm.memberPoint = that.quanquan
+                                    wx.request({
+                                      url: globalStore.state.api + "/api/distribe/shareProfit",
+                                      method: "POST",
+                                      data: {
+                                        params: JSON.stringify(fenrunParm)
+                                      },
+                                      header: {
+                                        'Content-Type': 'application/x-www-form-urlencoded'
+                                      },
+                                      method: "POST",
+                                      success: function (res) {
+                                        console.log(res.data)
+                                        if (res.data.code == 0) {
+
+                    
+                                        }
+                                      }
+                                    })
+                                    }
+                                    else{
+
+                                    }
+                            
                                   var orderparms = {}
                                   var order = {}
                                   order.orderId = that.order.orderId
                                   orderparms.order = order
                                   orderparms.code = 200
-                                  orderparms.gainedpoint = Number(that.order.gainedpoint)
+                                  // orderparms.gainedpoint = Number(that.order.gainedpoint)
                                   orderparms.paymoney = that.order.orderAmount
                                   wx.request({
                                     url: globalStore.state.api + "/api/order/passOrder",
@@ -584,7 +667,8 @@ export default {
                 }
               })
             }
-        
+            }
+
           }
 
       }
@@ -664,4 +748,10 @@ export default {
 .footer .footerleft{width: 65%;text-align:right;font-size: 35rpx;padding-right: 25rpx;background: #fff;}
 .footer .footerright{width: 35%;text-align: center;background: linear-gradient(to right, #ff9003 , #ff5001);color: #ffffff;}
 .footerleft span{color: #fc6305;}
+/*zhifu*/
+.zhifu{padding-left: 20rpx;padding-right: 20rpx;padding-top: 15rpx;}
+.zhifuprice .price{font-size: 28rpx;}
+.zhifuprice{padding-top: 6rpx;}
+.zhifuprice{display:flex;justify-content: space-between;}
+.zhifutitle{font-size: 34rpx;padding-bottom: 15rpx}
 </style>

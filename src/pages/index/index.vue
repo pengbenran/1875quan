@@ -123,7 +123,7 @@ export default {
       },
       success: function (res) {
         if (res.data.code == 0) {
-          wx.setStorageSync('point', res.data.memberDO.point)
+          wx.setStorageSync('mp', res.data.memberDO.mp)
           wx.setStorageSync('memberIdlvId', res.data.memberDO.lvId)
           wx.setStorageSync('isAgent', res.data.memberDO.isAgent)
           wx.setStorageSync('name', res.data.memberDO.name)

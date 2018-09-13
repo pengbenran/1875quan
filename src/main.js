@@ -19,7 +19,7 @@ export default {
     ,'pages/quanchongzhi/main','pages/quanduihuan/main','pages/dingdaninfo/main','pages/memberconsume/main','pages/addresschange/main',
    ,'pages/putforward/main','pages/zhekouinfo/main','pages/join/main','pages/collection/main',
     'pages/collagedetails/main','pages/dingdan2/main','pages/store/main','pages/storeruzhu/main','pages/shoplist/main',
-    'pages/membermanage/main','pages/membership/main'
+    'pages/membermanage/main','pages/membership/main','pages/membershioup/main'
 
     ],
     window: {

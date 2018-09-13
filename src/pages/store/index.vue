@@ -22,9 +22,9 @@
          <div class="shoplisttitle"><image :src="jinpinimg1"></image>精品推荐<image :src="jinpinimg2"></image></div>
          <div class="shoplistwarp">
          <ul>
-            <li>
-                <div class="liimg"><image :src="shoplistimg"></image></div>
-                <div class="liinfo"><div>韩国综艺RunnimgMan同款</div><div class="price">￥20</div></div>
+            <li v-for="(item,index) in Goods" :index="index" :key="key" @click="jumpgoods(item.goodsId)">
+                <div class="liimg"><image :src="item.thumbnail"></image></div>
+                <div class="liinfo"><div>{{item.name}}</div><div class="price">￥{{item.price}}</div></div>
             </li>
          </ul>
          </div>
@@ -56,7 +56,11 @@ export default {
   },
 
   methods: {
-   
+   jumpgoods:function(goodsId){
+     wx.navigateTo({
+      url: '../shumainfo/main?goodsId='+goodsId,
+    })
+   }
   },
 
   onLoad (options) {
@@ -96,8 +100,8 @@ export default {
 </script>
 
 <style scoped>
-@import url("~mpvue-wxparse/src/wxParse.css")
-image{width: 100%;height: 100%;display: block;}
+@import url("~mpvue-wxparse/src/wxParse.css");
+image{height: 100%;width: 100%;display:block;}
 .store{background: #fff;height: 100vh;}
 .header{
   overflow: hidden;
@@ -131,7 +135,7 @@ image{width: 100%;height: 100%;display: block;}
 /*shoplistwarp*/
 .shoplistwarp ul{overflow: hidden;display: flex;align-items: center;flex-wrap: wrap;}
 .shoplistwarp li{width: 44%;margin-left: 3%;margin-right: 3%;margin-top: 10rpx;}
-.liimg{height: 340rpx;}
+.liimg{width: 340rpx; height: 340rpx; overflow: hidden;}
 .liinfo{padding-top: 10rpx;}
 .liinfo div{font-size: 26rpx;}
 .liinfo .price{color: #f69949;}
