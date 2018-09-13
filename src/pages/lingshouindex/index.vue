@@ -1,8 +1,12 @@
 <template>
   <div class="hunshaContainer">
-    <div class="hunshaImg" :style="{width:imageWidth,height:imageHeigth}">
-      <!-- <img src="https://shop.guqinet.com/html/images/shanquan/lingshou.jpg"> -->
+    <div class="tip">
+      <image src="https://shop.guqinet.com/html/images/shanquan/image/await.png"></image>
     </div>
+    <!-- <div class="hunshaImg" :style="{width:imageWidth,height:imageHeigth}">
+      <img src="https://shop.guqinet.com/html/images/shanquan/lingshou.jpg">
+    </div> -->
+
   </div>
 </template>
 
@@ -38,4 +42,5 @@ image{
   height: 100%;
   display: block;
 }
+.tip{width: 500rpx;height: 500rpx; overflow: hidden; margin:200rpx auto;}
 </style>

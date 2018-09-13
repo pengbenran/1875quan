@@ -5,12 +5,9 @@
     <div class="ordercontent">
       <div class="ordercontentlist" v-for="(orderListOut,outindex) in orderList" :index='index' :key='key'>
           <div class='complete-box1'>
-            <div class='box1-left'>
-              <image :src='boximg'></image>
-            </div>
             <div class='box1-right'>
-              <div class='box1-top'>
-                <text class='toptext1'>谷琴优品</text>
+              <!-- <div class='box1-top'>
+                <text class='toptext1'></text>
                 <block>
                   <text class='toptext2' v-if="orderListOut.status==0&orderListOut.shipStatus==0">待付款</text>
                 </block>
@@ -23,7 +20,7 @@
                 <block v-if="orderListOut.status==4||orderListOut.status == 3&orderListOut.shipStatus==2&orderListOut.payStatus==2">
                   <text class='toptext2'>已完成</text>
                 </block>
-              </div>
+              </div> -->
               <div class='times'>
                 <text class='box1-bootom'>订单编号{{orderListOut.sn}}</text>
                 <text class='box1-bootomright'>{{orderListOut.createTime}}</text>
@@ -31,7 +28,14 @@
             </div>
           </div>
           <div class='complete-box2' v-for="orderListInner in orderListOut.item"  @click="jumpgooddetail(orderListInner.goodsId)">
-            <div class='box2-left'>
+            <div class="shopName">
+              <div class='box1-left'>
+                <image :src='boximg'></image>
+              </div> 
+              <div>{{orderListInner.shopName}}</div>
+            </div>
+            <div class="complete-box2-goods">
+             <div class='box2-left'>
               <image :src='orderListInner.image'></image>
             </div>
             <div class='box2-conter'>
@@ -41,6 +45,12 @@
               <text class='rigtext1'>{{orderListInner.price}}</text>
               <text class='rigtext3'>x{{orderListInner.num}}</text>
             </div>
+
+            </div>
+          
+
+                      
+           
           </div>
           <div class='complete-box3'>
             <text class='tex01'>共件商品{{orderListOut.totalnum}}合计:</text>
@@ -541,12 +551,12 @@ image{
 }
 .complete-box1{
  padding: 10rpx;
- height: 100rpx;
+ height: 50rpx;
  display: flex;
 }
 .box1-left{
- width:25px;
- height: 25px;
+ width:20px;
+ height: 20px;
 }
 .box1-right{
   flex-grow: 1;
@@ -578,14 +588,22 @@ color: #919191;
 }
 .complete-box2{
   /* height: 260rpx; */
-  display: flex;
+ 
   align-items: center;
   padding: 20rpx;
   box-sizing: border-box;
 }
+
+.complete-box2-goods{
+  display: flex;
+}
 .box2-left{
  width: 200rpx;
  height: 200rpx;
+}
+.shopName{
+  display: flex;
+  font-size: 0.8em;
 }
 .box2-conter{
  width: 350rpx;

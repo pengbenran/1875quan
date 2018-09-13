@@ -1,6 +1,6 @@
 <template>
   <div class='shanquanindex'>
-    <swiper class="swiper_box" autoplay="true" interval="5000" duration="1000" indicator-dots='true'>    
+    <swiper class="swiper_box" autoplay="true" interval="5000" duration="1000" indicator-dots='true' :style="{width:imageWidth,height:imageHeigth}">    
       <swiper-item v-for="(item,index) in banner" :key="key" :index="index">
         <image :src="item.imageUrl" ></image>
       </swiper-item>
@@ -86,6 +86,8 @@ export default {
     shizong:globalStore.state.imgapi+"/image/homezhong.png",
     shangquan:globalStore.state.imgapi+"/image/shangquan.png",
     homexin:globalStore.state.imgapi+"/image/homexin.png",
+     imageWidth:'',
+     imageHeigth:''
     }
   },
   components: {
@@ -97,9 +99,44 @@ export default {
       var that=this;
       if(index==0){
         wx.navigateTo({
-        url:'../shoplist/main?catId='+catId
-      })
+          url:'../shoplist/main?catId='+catId
+        })
       } 
+      else if(index==1){
+        wx.navigateTo({
+          url:'../jiancaiindex/main?catId='+catId
+        })
+      }
+      else if(index==2){
+        wx.navigateTo({
+          url:'../hunshaindex/main?catId='+catId
+        })
+      }
+      else if(index==3){
+        wx.navigateTo({
+          url:'../xiemaoindex/main?catId='+catId
+        })
+      }
+      else if(index==4){
+        wx.navigateTo({
+          url:'../lvyouindex/main?catId='+catId
+        })
+      }
+      else if(index==5){
+        wx.navigateTo({
+          url:'../meirongindex/main?catId='+catId
+        })
+      }
+      else if(index==6){
+        wx.navigateTo({
+          url:'../peixunindex/main?catId='+catId
+        })
+      }
+      else{
+        wx.navigateTo({
+          url:'../lingshouindex/main?catId='+catId
+        })
+      }
     },
    //获取初始数据后期更改(暂时数据)
    getCode(callback){
@@ -260,6 +297,9 @@ export default {
   },
   },
   onLoad(){ 
+    var windWidth=(wx.getSystemInfoSync().windowWidth);
+    this.imageWidth=windWidth+"px";
+    this.imageHeigth=windWidth*9/16+'px';
    this.userLogin();
    this.getactive();
    this.getMain();
@@ -281,15 +321,9 @@ width:100%;
 .shanquanindex{
   background: #fff;
   min-height: 100vh;
-  padding: 10rpx;
   box-sizing: border-box;
 }
 /* 轮播 */
-.swiper_box{
-  width:100%;
-  height:200px;
-  box-shadow: 0px 10rpx #fdfdfd;
-}
 
 /* 菜单选项 */
 .menu{

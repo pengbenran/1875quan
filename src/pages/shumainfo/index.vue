@@ -1,7 +1,7 @@
 <template>
   <div class="sminfoContainer">
      <div class="sminfoBrand">
-          <swiper autoplay="true" interval="5000" duration="1000" indicator-dots="true">
+          <swiper autoplay="true" interval="5000" duration="1000" indicator-dots="true" :style="{width:imageWidth,height:imageHeigth}">
             <swiper-item v-for="(item,index) in Gallery" :key="item" :index="index">
               <image :src="item.original"></image>
             </swiper-item>
@@ -96,7 +96,9 @@ export default {
      showModalStatus: false,
      animationData:{},
      pic:1,
-     posts:false
+     posts:false,
+     imageWidth:'',
+     imageHeigth:''
      }
   },
 
@@ -396,6 +398,10 @@ export default {
    },
 
    onLoad:function(options){
+    var that=this
+     var windWidth=(wx.getSystemInfoSync().windowWidth);
+     that.imageWidth=windWidth+"px";
+     that.imageHeigth=windWidth*9/16+'px';
      this.geiShopinfo(options.goodsId);
   }
 }
@@ -412,14 +418,14 @@ image{
   display: block;
 }
 /*Shopinfo*/
+
 .Shopinfo{padding: 0 25rpx 15rpx;}
 .shoppir{color:#fb4901;font-size: 28rpx;}
 .shoppir label{font-size: 22rpx;}
 .shopinfotab{display: flex;justify-content: space-between;margin-top: 18rpx;}
 .shopinfotab span{color:#9e9e9e;font-size: 20rpx;}
 .shopinfotitel{font-size: 30rpx;}
-.sminfoBrand swiper{height: 500rpx;}
-.sminfoBrand image{width: 100%;}
+.sminfoBrand image{width: 100%;height: 100%;display: block;}
 /*shopcontent*/
 .shopcontent{border-top:25rpx solid #f5f5f5;margin-bottom: 110rpx;}
 .shopcontenttop{padding:15rpx 25rpx;;}

@@ -1,6 +1,9 @@
 <template>
    <div class="jcContainer">
-     <div class="jc-brand"><image src="https://shop.guqinet.com/html/images/shanquan/jcbrand.jpg"></image></div>
+    <div class="tip">
+      <image src="https://shop.guqinet.com/html/images/shanquan/image/await.png"></image>
+    </div>
+    <!--  <div class="jc-brand"><image src="https://shop.guqinet.com/html/images/shanquan/jcbrand.jpg"></image></div>
 
      <div class="jcList">
        <ul>
@@ -11,26 +14,26 @@
          <li><image src="https://shop.guqinet.com/html/images/shanquan/jcitem05.jpg"></image><span>窗帘</span></li>
        </ul>
      </div>
-     <!--jcList end-->
+     jcList end-->
 
-    <div class="jcCase">
+    <!-- <div class="jcCase">
       <div class="jcCase-item item1"><image src="https://shop.guqinet.com/html/images/shanquan/jccase01.jpg"></image>
         <div class="jcCaseInfo"><span>商家入驻</span><small>(玩转本地商圈)</small></div>
       </div>
       <div class="jcCase-item item2"><image src="https://shop.guqinet.com/html/images/shanquan/jccase02.jpg"></image>
         <div class="jcCaseInfo"><span>发布信息</span><small>(便民信息发布)</small></div></div>
-    </div>
+    </div> -->
     <!--jcCase end-->
      
-     <div class="jcCList">
+    <!--  <div class="jcCList">
         <div class="jcCList-title"><span>精品案例推荐</span><small>更多</small></div>
         <ul>
            <li><image src="https://shop.guqinet.com/html/images/shanquan/jcList.jpg"></image></li>
            <li><image src="https://shop.guqinet.com/html/images/shanquan/jcList.jpg"></image></li>
         </ul>
-     </div>
+     </div> -->
      <!--jcCList end-->
-
+<!-- 
      <div class="jcShop">
         <div class="jcCList-title"><span>商品推荐</span><small>更多</small></div>
         <ul>
@@ -47,10 +50,10 @@
             <span>这里是文案这里是文案...</span><small>￥998.00</small>
           </li>
         </ul>
-     </div>
+     </div> -->
      <!--jcShop end-->
       
-      <div class="jcTemp">
+     <!--  <div class="jcTemp">
          <div class="jcCList-title"><span>附近的装修队伍</span><small>更多</small></div>
          <ul>
             <li>
@@ -76,7 +79,7 @@
            </li>
          </ul>
       </div>
-      <div class="jccompany"><span>谷琴技术支持</span></div>
+      <div class="jccompany"><span>谷琴技术支持</span></div> -->
    </div>
  <!--jccontainer end-->
 </template>
@@ -110,6 +113,7 @@ onLoad(){
 
 <style scoped>
 image{ width: 100%;height: 100%;display: block;}
+.tip{width: 500rpx;height: 500rpx; overflow: hidden; margin:200rpx auto;}
 .jc-brand{padding-left: 5%;padding-right: 5%;height: 255rpx;}
 
 /*jcList*/

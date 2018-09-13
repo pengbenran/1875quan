@@ -17,7 +17,7 @@
             </div>
             <div class="right">
               <div class="title">{{item.name}}</div>
-              <div class="map"><img :src="listmap"><span>南昌市青山湖区顺外路699创意园</span></div>
+              <div class="map"><img :src="listmap"><span>{{item.address}}</span></div>
               <span class="care">0.5km</span>
             </div>
           </div>
@@ -79,6 +79,9 @@ export default {
         'content-type': 'application/json' // 默认值
       },
       success: function(res) {
+        for(var i in res.data.brand){
+          res.data.brand[i].address=res.data.brand[i].url.split(',')[2]
+        }
         that.brand=res.data.brand
       }
     })
