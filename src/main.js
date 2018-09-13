@@ -19,13 +19,13 @@ export default {
     ,'pages/quanchongzhi/main','pages/quanduihuan/main','pages/dingdaninfo/main','pages/memberconsume/main','pages/addresschange/main',
    ,'pages/putforward/main','pages/zhekouinfo/main','pages/join/main','pages/collection/main',
     'pages/collagedetails/main','pages/dingdan2/main','pages/store/main','pages/storeruzhu/main','pages/shoplist/main',
-    'pages/membermanage/main','pages/membership/main','pages/membershioup/main'
+    'pages/membermanage/main','pages/membership/main'
     ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#F64F57',
       navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: '#fff'
+      navigationBarTextStyle: '#fff'  
     }, 
      tabBar: {
       "selectedColor":"#e93429",
@@ -51,7 +51,7 @@ export default {
           {
             pagePath: "pages/my/main",
             iconPath: "/static/images/my.png",
-            selectedIconPath: "/static/images/my.png",
+            selectedIconPath: "/static/images/my1.png",
             text: "我的"
           }
   ]

@@ -29,6 +29,7 @@
          </ul>
          </div>
      </div>
+     <!--shoplist end-->
   </div>
 </template>
 
@@ -52,13 +53,14 @@ export default {
   },
 
   components: {
- wxParse
+   wxParse
   },
 
   methods: {
    jumpgoods:function(goodsId){
+     let that=this;
      wx.navigateTo({
-      url: '../shumainfo/main?goodsId='+goodsId,
+      url: '../shumainfo/main?goodsId='+goodsId+'&goodname='+that.brandDO.name,
     })
    }
   },
@@ -90,6 +92,7 @@ export default {
           that.Goods=res.data.Goods;
           that.address=res.data.brandDO.url.split(',')[2]
         }
+        //console.log(res.data);
         // wx.setNavigationBarTitle({
         //   title: option.titlebar//页面标题为路由参数
         // })
@@ -133,10 +136,15 @@ image{height: 100%;width: 100%;display:block;}
 .shoplisttitle image{width: 10rpx;height: 20rpx;margin-left: 10rpx;margin-right: 10rpx;}
 
 /*shoplistwarp*/
-.shoplistwarp ul{overflow: hidden;display: flex;align-items: center;flex-wrap: wrap;}
-.shoplistwarp li{width: 44%;margin-left: 3%;margin-right: 3%;margin-top: 10rpx;}
-.liimg{width: 340rpx; height: 340rpx; overflow: hidden;}
-.liinfo{padding-top: 10rpx;}
+.shoplistwarp ul{overflow: hidden;display: flex;align-items: center;flex-wrap: wrap;background: #f8f8f8;}
+.shoplistwarp li{width: 45.5%;margin-top: 15rpx;padding-top: 14rpx;background: #fff;}
+/* .shoplistwarp li:nth-child(1){
+margin-left: 3%;margin-right: 1.5%;
+} */
+.shoplistwarp li:nth-of-type(odd){margin-left: 3%;margin-right: 1.5%;}
+.shoplistwarp li:nth-of-type(even){margin-left: 1.5%;margin-right: 3%;}
+.liimg{height: 340rpx; overflow: hidden;}
+.liinfo{padding:10rpx 15rpx;}
 .liinfo div{font-size: 26rpx;}
 .liinfo .price{color: #f69949;}
 </style> 

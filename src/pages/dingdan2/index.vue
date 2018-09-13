@@ -714,15 +714,15 @@ export default {
       }
         that.isKaituan= false
     }
-    else if(that.Type="KJ"){
-      // 砍价
-      if (options.cutId == undefined) {   
-         that.cutId=wx.getStorageSync('cutId')
-      }
-      else {
-        that.cutId=options.cutId
-      }
-    }
+    // else if(that.Type="KJ"){
+    //   // 砍价
+    //   if (options.cutId == undefined) {   
+    //      that.cutId=wx.getStorageSync('cutId')
+    //   }
+    //   else {
+    //     that.cutId=options.cutId
+    //   }
+    // }
     else{
       // 限时活动
       if (options.limitId == undefined) {  
@@ -788,6 +788,7 @@ export default {
       },
       success: function (res) {
         that.productId=res.data.product.productId
+       // console.log(res.data.product)
       }
     })
   }

@@ -2,7 +2,7 @@
   <div class="ruzhu">
     <form @submit='fromsub'>
     <div class="ruzhubrand"><img :src="strongimg"></div>
-    <div class="item"><span>姓名：</span><input name='username' type="text" placeholder="请输入商家姓名" placeholder-style='#ccc'/></div>
+    <div class="item itemname"><span>姓 名：</span><input name='username' type="text" placeholder="请输入商家姓名" placeholder-style='#ccc'/></div>
     <div class="item"><span>商家名称：</span><input name='shopname' type="text" placeholder="请输入商家名称" placeholder-style='#ccc'/></div>
     <div class="listitem"><span>行业分类：</span><div class="list">
        <picker @change="changpick" :value='index' :range='listmenu'>
@@ -176,14 +176,17 @@ export default {
 .ruzhubrand img{width: 100%;height: 100%;}
 .ruzhu{background: #fff;height: 100vh;}
 .item{display: flex;align-items: center;border-bottom: 1px solid #f5f5f5;height: 90rpx;line-height: 90rpx;padding-left: 20rpx;padding-right: 20rpx;}
-.item span{font-size: 32rpx;}
-.item input{font-size: 28rpx;}
+.item span{font-size: 32rpx;width: 25%;}
+.item input{font-size: 28rpx;width: 75%;}
 
 .listitem{display: flex;align-items: center;padding-left: 20rpx;padding-right: 20rpx;border-bottom: 1px solid #f5f5f5;}
-.listitem span{font-size: 32rpx;height: 90rpx;line-height: 90rpx;}
+.listitem span{font-size: 32rpx;height: 90rpx;line-height: 90rpx;width: 25%;}
+.listitem div{width: 75%;}
+.listitem .list picker{width: 160rpx}
 .list{display: flex;justify-content: space-between;align-items: center;width: 75%;}
 .list img{width: 30rpx;height: 30rpx;}
 .list .picker{color: #666;font-size: 28rpx;}
+.itemname span{letter-spacing:18rpx;}
 
 .infoinput{padding-left: 20rpx;padding-right: 20rpx;}
 .infoinput textarea{background: #f5f5f5;border-radius: 8rpx;}

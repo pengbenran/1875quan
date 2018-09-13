@@ -1,5 +1,5 @@
 <template>
-  <div class="shopcontainer" :style="{height:sysheight,width:syswinth}">
+  <div class="shopcontainer" >
      <div class="shoptab">
        <ul>
          <li v-for="(item,index) in listTab" :index='index' :key="item" @click="changs(index)"><span :class="{'selects':item.tabstu}">{{item.name}}</span></li>
@@ -80,6 +80,8 @@ export default {
       },
       success: function(res) {
         that.brand=res.data.brand
+        console.log("=========");
+        console.log(that.brand);
       }
     })
   }
@@ -88,7 +90,7 @@ export default {
 
 <style scoped>
 img{width: 100%;height: 100%;display: block;}
-.shopcontainer{background: #fff;height: 100vh;}
+.shopcontainer{background: #fff;min-height:100vh;}
 .shoptab ul{height:85rpx;display:flex;align-items: center;border-top: 1px solid #f5f5f5;border-bottom: 1px solid #f5f5f5; }
 .shoptab li{width: 33.3%;padding-top: 15rpx;padding-bottom: 15rpx;}
 .shoptab span{display: block;text-align: center;font-size: 32rpx;border-right: 2px solid #f5f5f5;color: #666;}
