@@ -45,10 +45,10 @@ export default {
     return {
        head:globalStore.state.imgapi+'image/mybcg.jpg',
        itemlist:[
-       {name:"待付款",imgUrl:globalStore.state.imgapi+'image/qianbao.jpg',statuscount:0},
-       {name:"待发货",imgUrl:globalStore.state.imgapi+'image/shouhuo.jpg',statuscount:0},
-       {name:"待收货",imgUrl:globalStore.state.imgapi+'image/fahuo.jpg',statuscount:0},
-       {name:"已完成",imgUrl:globalStore.state.imgapi+'image/tuihuo.jpg',statuscount:0}
+       {name:"待付款",imgUrl:globalStore.state.imgapi+'image/qianbao.png',statuscount:0},
+       {name:"待发货",imgUrl:globalStore.state.imgapi+'image/shouhuo.png',statuscount:0},
+       {name:"待收货",imgUrl:globalStore.state.imgapi+'image/fahuo.png',statuscount:0},
+       {name:"已完成",imgUrl:globalStore.state.imgapi+'image/tuihuo.png',statuscount:0}
        ],
        userInfo:[],
        isUse: true,

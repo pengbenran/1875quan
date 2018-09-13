@@ -1,6 +1,6 @@
 <template>
   <div class='shanquanindex'>
-    <swiper class="swiper_box" autoplay="true" interval="5000" duration="1000">    
+    <swiper class="swiper_box" autoplay="true" interval="5000" duration="1000" indicator-dots='true'>    
       <swiper-item v-for="(item,index) in banner" :key="key" :index="index">
         <image :src="item.imageUrl" ></image>
       </swiper-item>
@@ -15,32 +15,56 @@
       </div>
     </div>
     <div class='membeintro'>
-      <image src='https://shop.guqinet.com/html/images/shanquan/memintro.jpg'></image>
+      <image :src='ggbrandimg'></image>
     </div>
     <div class='membeintrodetail' v-if="apiLimit.length!=0">
-      <div class='membeintrodetailtitle'>限时商品</div>
-      <div class='membeintrodetailcontent'>
+      <div class='membeintrodetailtitle'><image :src='shizong'></image> 限时商品</div>
+      <div class='membeintrodetailcontent homexianshi'>
         <div v-for="(item,index) in apiLimit" :index="index" :key="key" class="membeintrodetaillist" @click="jumpLimit(index)">
           <div class="groupImg">
             <image :src="item.goodsDO.thumbnail"></image>
           </div>
-          <div class="groupDetail"><span>活动价</span><span class="nowprice">￥{{item.finalAmount}}</span></div>
+          <div class="groupDetail"><span class="groupcase">活动价</span><span class="nowprice">￥{{item.finalAmount}}</span></div>
           <div class="oldprice">￥{{item.goodsPrice}}</div>
         </div>
       </div>
     </div>
     <div class='membeintrodetail' v-if="pingtuanList.length!=0">
-      <div class='membeintrodetailtitle'>商圈拼团</div>
+      <div class='membeintrodetailtitle popile'><image :src='shangquan'></image> 商圈拼团</div>
       <div class='membeintrodetailcontent'>
        <div v-for="(item,index) in pingtuanList" :index="index" :key="key" class="membeintrodetaillist" @click="jumpgroup(item.goodsId,item.collageGoodsId)">
         <div class="groupImg">
           <image :src="item.thumbnail"></image>
         </div>
-        <div class="groupDetail"><span>{{item.collagePersons}}人团</span><span class="nowprice">￥{{item.activityPrice}}</span></div>
+        <div class="groupDetail"><span class="groupcase ">{{item.collagePersons}}人团</span><span class="nowprice">￥{{item.activityPrice}}</span></div>
         <div class="oldprice">￥{{item.goodsPrice}}</div>
       </div>
     </div>
   </div>
+  
+  <div class="tuijian">
+      <div class="homexin">
+        <image :src='homexin'></image> 精品推荐
+      </div>
+           <div class="showList" v-for="(items,brandindex) in menus" :index='brandindex' :key="key">
+            <ul class="smlistUl">
+                <li v-for="(item,itemindex) in items.list" :key='item' :index='itemindex'>
+                    <a :href="'../shumainfo/main?goodid='+item.goodsId+'&catid='+item.catId+''">
+                    <div class="smlistimg"><image :src="item.thumbnail"></image></div>
+                    <div class="smlistinfo">
+                        <div class="infotitle">{{item.name}}</div>
+                        <div class="smlistpri">
+                          <small>￥{{item.price}} <label>848人购买</label></small><small class="smallLeft">....</small>
+                        </div>
+                    </div>
+                    </a>
+                </li>
+                <!--template内以上为动态代码 以下均可删除-->
+            </ul>
+            </div>
+    </div>
+    
+
 </div>
 </template>
 
@@ -57,7 +81,11 @@ export default {
     interval: 5000,    //自动切换时间间隔
     duration: 1000,    //滑动动画时长
     apiLimit:[],
-    pingtuanList:[]
+    pingtuanList:[],
+    ggbrandimg:globalStore.state.imgapi+"/image/homrguangao.png",
+    shizong:globalStore.state.imgapi+"/image/homezhong.png",
+    shangquan:globalStore.state.imgapi+"/image/shangquan.png",
+    homexin:globalStore.state.imgapi+"/image/homexin.png",
     }
   },
   components: {
@@ -214,7 +242,10 @@ export default {
         //将获取到的json数据，存在名字叫zhihu的这个数组中
         that.menus= res.data.data.menus;
         that.banner=res.data.data.imgurl
-        // that.data= res.data.data;
+
+        that.database= res.data.data;
+                console.log("=============")
+        console.log(that.database)
         // wx.setStorageSync('indexdata', res.data.data.message, )
         // 判断是否注册过
       },
@@ -232,6 +263,9 @@ export default {
    this.userLogin();
    this.getactive();
    this.getMain();
+   console.log("------------")
+   console.log(this.menus);
+   console.log("--------------")
   }
 }
 </script>
@@ -301,13 +335,14 @@ width:100%;
 /* 会员介绍 */
 .membeintro{
   width: 100%;
-  height: 34.8vw;
+  height: 35.8vw;
   box-shadow: 0px 5rpx #f1f1f1;
   margin-top: 10rpx;
 }
 .membeintrodetail{
-  box-shadow: 0px 5rpx #f1f1f1;
-  margin: 10rpx;
+padding-left: 15rpx;
+padding-right: 15rpx;
+  margin:20rpx 10rpx 10rpx;
 }
 .membeintrodetailtitle{
   height: 80rpx;
@@ -315,19 +350,22 @@ width:100%;
   font-size: 26rpx;
 }
 .membeintrodetailcontent{
-  width:100%;
+  width:94%;
+  padding-left: 3%;
+  padding-right: 3%;
   overflow: scroll;
   white-space:nowrap;
- 
+  margin-top: 10rpx;
   font-size: 0.8em;
 }
 .groupImg{
-  width: 200rpx;
-  height: 200rpx;
+  width: 180rpx;
+  height: 180rpx;
   display: inline-block;
 }
 .membeintrodetaillist{
   width: 200rpx;
+  text-align: center;
 }
 .groupDetail{
  text-align: center;
@@ -340,4 +378,31 @@ width:100%;
 .nowprice{
   color: #F64F57;
 }
+.membeintrodetailtitle{
+  display: flex;align-items: center;font-size: 32rpx;font-weight: bold;
+}
+.membeintrodetailtitle image{
+ margin-right: 20rpx;width: 42rpx;height: 45rpx;
+}
+.shanquanindex{background: #fff;height: 100%;}
+.groupcase{display: inline-block;width: 100rpx;background: linear-gradient(70deg, #e93429, #fd8f6e);border-radius: 12rpx;font-size: 24rpx;color: #fff;}
+.popile image{width: 54rpx;}
+.homexianshi{border-radius: 6rpx;box-shadow: 0 0 10px #f3f3f3;}
+
+.homexin{margin-bottom: 25rpx;margin-top: 45rpx;}
+.smlistUl{display: flex;flex-wrap: wrap;}
+.smlistUl li{width: 48.6%;}
+.smlistUl li:nth-child(1){border-right: 10rpx solid #f2f2f2;}
+.smlistUl li:nth-child(2n){border-left: 10rpx solid #f2f2f2;}
+.smlistUl li:nth-child(3n){border-right: 10rpx solid #f2f2f2;}
+.smlistimg{height:360rpx;}
+.smlistpri{display: flex;align-items: center;justify-content: space-between;margin-top: 20rpx;} 
+.smlistinfo{padding-left: 15rpx;padding-right: 15rpx;padding-bottom: 20rpx;background: #fff;}
+.infotitle{font-size: 26rpx;}
+.smlistinfo small{margin-right: 15rpx;font-size: 28rpx;color:red;}
+.smlistinfo label{color:#666;font-size: 22rpx;}
+.smlistinfo .smallLeft{color:#666;width: 30rpx;letter-spacing: 1rpx;}
+
+.homexin{text-align: center;display: flex;align-items: center;justify-content: center;color: #f6352c;font-size: 34rpx;font-weight: bold;}
+.homexin image{height: 45rpx;width: 45rpx;margin-right: 15rpx;}
 </style>
