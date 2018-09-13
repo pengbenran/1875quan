@@ -48,9 +48,9 @@
       <div class="zhifu">
         <div class="zhifutitle">支付方式</div>
         <div class="zhifuprice"><div class="price">{{quanprice}}元+{{quanquan}}圈圈</div>
-           <div class="slectico"><icon color='#e93429' type="success" size="20" v-if="selectstu" /><icon type="circle" v-else color="#DDD"   size="20" /></div>
+           <div class="slectico" @click="selectrs(1)"><icon color='#e93429' type="success" size="20" v-if="selectstu" /><icon type="circle" v-else color="#DDD"   size="20" /></div>
         </div>
-        <div class="zhifuprice"><div class="price">{{totalPrice}}元</div><div class="slectico">
+        <div class="zhifuprice"><div class="price">{{totalPrice}}元</div><div class="slectico" @click="selectrs(2)">
           <icon color='#e93429' type="success" size="20" v-if="!selectstu" /><icon type="circle" v-else color="#DDD"   size="20" />
           </div></div>
       </div>
@@ -109,6 +109,14 @@ export default {
   },
 
   methods: {
+    selectrs(index){
+      let that=this;
+      that.selectstu=!that.selectstu;
+      console.log(that.selectstu);
+      console.log(index);
+    },
+    
+
     address:function(){
       var that = this
       wx.setStorageSync('price', that.price);

@@ -129,6 +129,9 @@ image{
   height: 100%;
   display: block; 
 }
+
+.jifencontainer{background: #fff;height: 100vh;}
+
 .jifenbrand{position: relative;}
 .brandimg{height: 410rpx;}
 .brandinfo{position: absolute;left: 0;top: 20%;width: 100%;display: flex;flex-direction: column;align-items: center;}
@@ -139,7 +142,7 @@ image{
 
 .jifenlist ul{width: 94%;margin: auto;}
 .jifenlist li{border:1rpx solid #eee;margin-top: 20rpx;
-border-radius: 15rpx;display: flex;justify-content: space-between;line-height: 70rpx;padding-left: 16rpx;padding-right: 16rpx; background: #fff;}
+border-radius: 15rpx;display: flex;justify-content: space-between;line-height: 70rpx;padding-left: 16rpx;padding-right: 16rpx; }
 .jifenlist span{font-size: 30rpx;}
 .tit1{color:#666;}
 .tit2{color:#26b4ff;}
