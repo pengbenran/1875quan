@@ -19,7 +19,7 @@
         <ul>
           <li @click=jumporderdetail(index) v-for="(item,index) in itemlist" :index='index' :key='key' >
             <image :src='item.imgUrl'></image>
-            <div>{{item.name}}</div>
+            <div class="itemname">{{item.name}}</div>
             <div class='yuan' v-if="item.statuscount!=0">{{item.statuscount}}</div>
           </li>
         </ul>
@@ -253,7 +253,8 @@ export default {
 .orderItem{padding:20rpx 0rpx; background: #fff;}
 .orderItem ul{display: flex;}
 .orderItem li{width: 25%;text-align: center; position: relative;}
-.orderItem div{text-align: center;color:#666;font-size: 28rpx;}
+.orderItem div{text-align: center;color:#666;font-size: 28rpx;color: #fff;}
+.orderItem .itemname{color: #000;}
 .orderItem image{width: 62rpx;height: 62rpx;}
 .indent-img{width:15rpx;height:22rpx;margin-left: 5rpx;}
 .member{

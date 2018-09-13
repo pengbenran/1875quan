@@ -790,6 +790,7 @@ export default {
       },
       success: function (res) {
         that.productId=res.data.product.productId
+       // console.log(res.data.product)
       }
     })
   }

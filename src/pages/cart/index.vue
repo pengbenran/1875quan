@@ -11,7 +11,8 @@
               <div class="infocontent">
                 <div class="contenLeft"> 
                            <icon color='#e93429' type="success" size="20" v-if="item.selected" @click="selectList(item.cartId,index)"/>
-                           <span v-else class="iconfalse"  @click="selectList(item.cartId,index)"></span></div>
+                           <icon size="20" type='circle'  v-else color="#DDD"  @click="selectList(item.cartId,index)"/>
+                           </div>
                 <div class="contentcon"><img :src="item.image"/></div>
                 <div class="contentRight">
                   <div class="righttop"> {{item.name}}</div>

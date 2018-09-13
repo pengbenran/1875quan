@@ -20,9 +20,13 @@
      <!--userInfo end-->
      
      <div class="orderList">
+<<<<<<< HEAD
       <!-- <div class="shopTitle"><image :src='homeimg' class="img01"></image>
         <span>谷琴优品</span><image :src='titleright' class="img02"></image>
       </div> -->
+=======
+      <div class="shopTitle"><image :src='homeimg' class="img01"></image><span>{{goodname}}</span></div>
+>>>>>>> d4ca0474404aa917088f73cbe11da805fa364d8f
       <!--shopTile end-->
       <div class="orderinfo" v-for="(item,index) in list" :index='index' :key="item">
        <div class="infoimg">
@@ -89,7 +93,8 @@ export default {
      paymoney:'',
      mp:'',
      quanquan:'',
-     gooditem:[]
+     gooditem:[],
+     goodname:''
     }
   },
 
@@ -678,6 +683,7 @@ export default {
 
   onLoad: function (options) {
       this.onloads(options);   
+      this.goodname=options.goodname;//获取店铺名称
   }
 }
 </script>

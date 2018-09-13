@@ -34,7 +34,9 @@
          <div class="btncart">加入购物车</div>
          <div class="goumaibtn" @click="buy()">立即购买</div>
      </div>
+
     <!--模拟框-->
+    <div class="shoumask" v-if="showModalStatus"></div>
     <div class="shopmodel" v-if="showModalStatus" :animation="animationData">
        <div class="modelwarp">
          <div class="warpleft"><image :src="Gooddetatil.thumbnail"></image></div>
@@ -280,7 +282,7 @@ image{height: 100%;width: 100%;display:block;}
 
 /*模拟框样式*/
 .shopmodel{padding-top: 20rpx;position: fixed;bottom: 0;width: 100%;left: 0;background: #ffffff;border-top: 1px solid #f8f8f8;z-index:2;
-}
+z-index: 2;}
 .modelwarp{display: flex;padding-left: 20rpx;padding-right: 20rpx;}
 .warpleft{width: 20%;margin-right: 2%;}
 .warpleft image{width: 100%;height: 160rpx;}
@@ -305,4 +307,18 @@ image{height: 100%;width: 100%;display:block;}
 .modelbtn div{width: 50%;text-align: center;line-height:66rpx;color: #ffffff;font-size: 32rpx;}
 .modelbtn .cart{background:#feba33;line-height: 95rpx;}
 .modelbtn .buy{background:#ff4f4f;line-height: 95rpx;}
+
+.zhekou{position: relative;}
+.shoumask{width:100%;
+height:100vh;
+position:fixed;
+top:0;
+left:0;
+background:#000;
+opacity:0.2;
+overflow:hidden;
+z-index:1000;
+color:#fff;
+z-index: 1;
+}
 </style>

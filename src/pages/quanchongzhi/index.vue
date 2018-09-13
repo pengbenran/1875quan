@@ -186,7 +186,7 @@ image{width: 100%;height: 100%;display: block;}
 .header{height: 350rpx;}
 .headerbtn{padding-top: 30rpx;padding-bottom: 30rpx;text-align: center; display: flex; justify-content: space-around;}
 .price{width: 36%;margin: auto;border-top:1px solid #f5f5f5;padding-top: 16rpx;padding-bottom: 16rpx;border-radius: 10rpx;
-    box-shadow: 0 15px 30px rgba(0,0,0,0.1);}
+    box-shadow: 0 10rpx 50rpx rgba(0,0,0,0.1);}
 .price small{font-size: 26rpx;color: #c1c1c1;padding-top: 10rpx;}
 
 .tijiao{padding-top:40rpx;text-align: center;}

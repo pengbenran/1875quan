@@ -3,7 +3,7 @@
     <div class='micromemberContain'>
         <div class='micromemberhead'>
             <div class='micromemberBcg' >
-            <image :src='distribeDo.lvpicurl'></image>
+            <image :src='wfximg'></image>
             </div>
             <div class='userInfo'>
             <div class='useravator'>
@@ -19,6 +19,13 @@
             <div class='banlance'>{{distribeDo.balance}}</div>
             </div>
             <div class='putforwardbtn' @click='jumpputforward'>提现</div>
+
+            <div class="huangguan">
+                <div class="guanimg"><image v-if="lvbool" :src='hgimg01'></image>
+                  <image v-else :src='hgimg02'></image>
+                </div>
+                <div class="huangguaninfo">{{lvname}}</div>
+            </div>
         </div>
         <!-- 累计到账与资产总计 -->
         <div class="kbPanel"></div>
@@ -74,13 +81,18 @@ export default {
       { itemImg: "https://shop.guqinet.com/html/images/shanquan/icon3.jpg", itemName: '推荐', itemintro: '推荐用户/会员', url: '../memberlist/main'  },
       { itemImg: "https://shop.guqinet.com/html/images/shanquan/icon4.jpg", itemName: '账户管理', itemintro: '会员账户管理', url: '../membermanage/main'  }
       ],
+      wfximg: globalStore.state.imgapi+'image/wfxbgimg.png',
+      hgimg01: globalStore.state.imgapi+'image/jinpai.png',
+      hgimg02: globalStore.state.imgapi+'image/dazhong.png',
       ImageWidth:0,
       ImageHeight:0,
       distribeDo:[],
       memberDo:[],
       memberDOList:[],
       total:0,
-      totalAssets:0
+      totalAssets:0,
+      lvname:'',
+      lvbool:true
     }
   },
 
@@ -183,6 +195,14 @@ export default {
           that.totalAssets=res.data.totalAssets;//资产总计
           that.memberDo=res.data.memberDo; //会员信息
           that.memberDOList=res.data.memberDOList; //下级会员信息
+          that.lvname=res.data.memberDo.lvidname;
+          if(that.lvname=='金卡会员'){
+           that.lvbool=true;
+          }else{
+              that.lvbool=false;
+          }
+          console.log("-===========")
+          console.log(that.memberDo);
       }
     })
 
@@ -228,11 +248,15 @@ display:-webkit-box; -webkit-box-orient:vertical;-webkit-line-clamp:3; padding-t
 .micromemberItemIntrotitle{color: #000;font-size: 35rpx;}
 /* 会员列表 */
 .memberContain{background: #fff;margin-top:20rpx;}
-.membertitle{height: 80rpx;line-height: 80rpx;padding-left: 20rpx;box-sizing: border-box;}
+.membertitle{height: 80rpx;line-height: 80rpx;padding-left: 20rpx;box-sizing: border-box;color:#dec491;font-size: 34rpx;font-weight: bold;}
 .memberList{width: 95%;margin: 10rpx auto;border: 1rpx solid #F1F1F1;border-radius:10rpx;}
 .memberuser{display: flex;width: 95%;margin: 0 auto;border-bottom:1rpx solid #F1F1F1; }
 .memberuseravator{width: 80rpx;height: 80rpx;overflow: hidden;margin: 20rpx;border-radius:50%; }
 .memberName{height: 100rpx;line-height: 100rpx;font-size: 0.9em;}
 .membergrade{display: flex;justify-content: space-between;height: 80rpx;line-height: 80rpx;font-size: 0.9rem;color: #B0B0B0;width: 95%;margin: 0 auto;}
 .tip{height: 200rpx;line-height: 200rpx;text-align: center;color: #B0B0B0;}
+
+.huangguan{position: absolute;right: 84rpx;top: 65rpx;text-align: center;}
+.huangguaninfo{color: #fff;font-size: 26rpx;padding-top: 10rpx;}
+.guanimg{width: 65rpx;height: 65rpx;margin: auto;}
 </style>

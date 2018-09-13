@@ -8,12 +8,12 @@ export default new Vuex.Store({
         count:0,
 
        //api:"https://www.guqinjiujiang.xyz:8444/guqinzhen",
-        api:'http://192.168.2.131:8080/1875',
-        // api:"https://www.guqinjiujiang.xyz:8444/guqinzhen",
+       //api:'http://192.168.2.131:8080/1875',
+       // api:"https://www.guqinjiujiang.xyz:8444/guqinzhen",
        //api:'http://192.168.2.208/1875',
        // api:"https://www.guqinjiujiang.xyz:8444/guqinzhen",
-        //api:'http://192.168.2.208/1875',
-        //api:'http://192.168.2.131/1875',
+       //api:'http://192.168.2.208/1875',
+       api:'http://192.168.2.131/1875',
 
        imgapi:"https://shop.guqinet.com/html/images/shanquan/",
     },

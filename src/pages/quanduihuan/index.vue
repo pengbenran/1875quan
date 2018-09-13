@@ -3,7 +3,7 @@
     <div class="header"><image :src="headerimg"></image></div>
     <div class="headerbtn">
          <ul>
-           <li v-for="(item,index) in quanquanDOList" :index='index' :key='item' :class="{'select':item.liststu}" @click="change(index)"><span >{{item.quanAmount}}圈圈兑换{{item.cash}}元</span></li>
+           <li v-for="(item,index) in quanquanDOList" :index='index' :key='item' :class="{'selects':item.liststu}" @click="change(index)"><span >{{item.quanAmount}}圈圈兑换{{item.cash}}元</span></li>
          </ul>
     </div>
     <div class="tijiao" @click="exchange()"><span>兑换</span></div>
@@ -128,7 +128,7 @@ image{display: block;width: 100%;height: 100%;}
 .headerbtn li{width: 45%;margin-left: 2%;margin-right: 2%;border-top:1px solid #f8f8f8;margin-top: 35rpx;line-height: 110rpx;border-radius: 10rpx;text-align: center;    
 box-shadow: 0 10px 30px rgba(0,0,0,0.1);}
 .headerbtn li span{font-size: 25rpx;}
-.headerbtn .select{background: #f33f40;color: #fff;}
+.headerbtn .selects{background: #f33f40;color: #fff;}
 
 .tijiao{text-align: center;padding-top: 40rpx;}
 .tijiao span{display:inline-block;background: #e7213c;color: #fff;padding: 10rpx 45rpx;border-radius: 12rpx;}

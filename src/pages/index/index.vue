@@ -46,10 +46,10 @@
       <div class="homexin">
         <image :src='homexin'></image> 精品推荐
       </div>
-           <div class="showList" v-for="(items,brandindex) in menus" :index='brandindex' :key="key">
+
             <ul class="smlistUl">
-                <li v-for="(item,itemindex) in items.list" :key='item' :index='itemindex'>
-                    <a :href="'../shumainfo/main?goodid='+item.goodsId+'&catid='+item.catId+''">
+                <li v-for="(item,itemindex) in goods" :key='item' :index='itemindex'>
+                    <a :href="'../shumainfo/main?goodsId='+item.goodsId+'&catid='+item.catId+''">
                     <div class="smlistimg"><image :src="item.thumbnail"></image></div>
                     <div class="smlistinfo">
                         <div class="infotitle">{{item.name}}</div>
@@ -61,7 +61,7 @@
                 </li>
                 <!--template内以上为动态代码 以下均可删除-->
             </ul>
-            </div>
+
     </div>
     
 
@@ -82,6 +82,7 @@ export default {
     duration: 1000,    //滑动动画时长
     apiLimit:[],
     pingtuanList:[],
+    goods:[],
     ggbrandimg:globalStore.state.imgapi+"/image/homrguangao.png",
     shizong:globalStore.state.imgapi+"/image/homezhong.png",
     shangquan:globalStore.state.imgapi+"/image/shangquan.png",
@@ -281,8 +282,9 @@ export default {
         that.banner=res.data.data.imgurl
 
         that.database= res.data.data;
-                console.log("=============")
-        console.log(that.database)
+        that.goods=res.data.data.goods
+        console.log("=============")
+        console.log(that.goods);
         // wx.setStorageSync('indexdata', res.data.data.message, )
         // 判断是否注册过
       },
@@ -294,7 +296,7 @@ export default {
         wx.hideNavigationBarLoading()
       }
     })
-  },
+  }
   },
   onLoad(){ 
     var windWidth=(wx.getSystemInfoSync().windowWidth);
@@ -425,7 +427,7 @@ padding-right: 15rpx;
 
 .homexin{margin-bottom: 25rpx;margin-top: 45rpx;}
 .smlistUl{display: flex;flex-wrap: wrap;}
-.smlistUl li{width: 48.6%;}
+.smlistUl li{width: 48.6%;border-bottom: 10rpx solid #f2f2f2;}
 .smlistUl li:nth-child(1){border-right: 10rpx solid #f2f2f2;}
 .smlistUl li:nth-child(2n){border-left: 10rpx solid #f2f2f2;}
 .smlistUl li:nth-child(3n){border-right: 10rpx solid #f2f2f2;}

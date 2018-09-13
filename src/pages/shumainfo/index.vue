@@ -60,16 +60,16 @@
 
      <div class="shopbottom">
        <div class="shopbottomleft">
-         <div class="span" @click="tohome"><image src="https://shop.guqinet.com/html/images/shanquan/shumainfo/home.png"></image><small>首页</small></div>
+         <div class="span" @click="tohome"><image :src="shopimg"></image><small>首页</small></div>
          <div class="span"><image src="https://shop.guqinet.com/html/images/shanquan/shumainfo/lt.png"></image><small>客服</small></div>
          <div class="span" @click="collection">
-           <image v-if="posts" src="https://shop.guqinet.com/html/images/shanquan/shumainfo/xin1.png"></image>
-           <image v-else src="https://shop.guqinet.com/html/images/shanquan/shumainfo/xx.png"></image>
+           <image v-if="posts" :src="xin"></image>
+           <image v-else :src="selctxin"></image>
            <small>收藏</small>
          </div>
       </div>
        <div class="shopbottomright">
-         <image src="https://shop.guqinet.com/html/images/shanquan/shumainfo/btn.png"></image>
+         <image :src="shopbtnimg"></image>
          <div class="btnlist">
            <div class="btnlistleft" @click="showmodel">加入购物车</div>
            <div class="btnlistright" @click="showmodel">立即购买</div>
@@ -91,6 +91,10 @@ export default {
      tags:[],
      article:"",
      elesimg:globalStore.state.imgapi+"/image/group/10.png",
+     shopbtnimg: globalStore.state.imgapi+'image/shopbtn.png',
+     shopimg: globalStore.state.imgapi+'image/shophome01.png',
+     xin: globalStore.state.imgapi+'image/shopxin.png',
+     selctxin: globalStore.state.imgapi+'image/selectxin.png',
      gimg:globalStore.state.imgapi+"image/zhichi.jpg",
      xximg:globalStore.state.imgapi+"/image/xx.png",
      showModalStatus: false,
@@ -98,7 +102,9 @@ export default {
      pic:1,
      posts:false,
      imageWidth:'',
-     imageHeigth:''
+     imageHeigth:'',
+     goodname:''
+
      }
   },
 
@@ -298,7 +304,7 @@ export default {
          goodlist.productId = that.productId;
          goodarr[0]=goodlist;
          wx.navigateTo({//跳转并且带参数传输
-         url: "../dingdan/main?goodlist=" + JSON.stringify(goodarr)+'&cart=0'
+         url: "../dingdan/main?goodlist=" + JSON.stringify(goodarr)+'&cart=0'+'&goodname='+that.goodname
         })
        }
      }
@@ -403,6 +409,7 @@ export default {
      that.imageWidth=windWidth+"px";
      that.imageHeigth=windWidth*9/16+'px';
      this.geiShopinfo(options.goodsId);
+     this.goodname=options.goodname;
   }
 }
 </script>
@@ -487,8 +494,8 @@ image{
 .add1{display:flex;justify-content:center;align-items:center;border-top-left-radius:0px;border-bottom-left-radius:0px;border-bottom-right-radius:45%;border-top-right-radius:45%;height:50rpx;width:55rpx;border:1px solid #DDD;font-size:18px;}
 
 .modelbtn{margin-left: -20rpx;margin-right: -20rpx;}
-.modelbtn{display: flex;height: 76rpx;}
-.modelbtn div{width: 50%;text-align: center;line-height:66rpx;color: #ffffff;font-size: 32rpx;}
+.modelbtn{display: flex;height: 92rpx;}
+.modelbtn div{width: 50%;text-align: center;line-height:92rpx;color: #ffffff;font-size: 32rpx;}
 .modelbtn .cart{background:#feba33;}
 .modelbtn .buy{background:#ff4f4f;}
 
