@@ -11,14 +11,14 @@
      <!--shoptab end-->
 
      <div class="listwarp">
-           <div class="List" @click="tojump(item.brandId)" v-for="(item,index) in brand" :key="key" :index="index">
+           <div class="List" @click="tojump(item.brandId,item.juli)" v-for="(item,index) in brand" :key="key" :index="index">
             <div class="left">
               <img :src="item.logo">
             </div>
             <div class="right">
               <div class="title">{{item.name}}</div>
               <div class="map"><img :src="listmap"><span>{{item.address}}</span></div>
-              <span class="care">0.5km</span>
+              <span class="care">{{item.juli}}</span>
             </div>
           </div>
      </div>
@@ -34,6 +34,8 @@ export default {
       syswinth:0,
       sysheight:0,
       brand:[],
+      latitude:'',
+      longitude:'',
       listimg:globalStore.state.imgapi+'image/quanquanlist01.png',
       listmap:globalStore.state.imgapi+'image/listmaap.png',
       listTab:[{name:'推荐排序',tabstu:true},{name:'距您最近',tabstu:false},{name:'人气优先',tabstu:false}]
@@ -56,11 +58,26 @@ export default {
       //设置为true
       that.listTab[index].tabstu=true;
    },
-   tojump:function(brandId){
+   tojump:function(brandId,juli){
     wx.navigateTo({
-        url:'../store/main?brandId='+brandId
+        url:'../store/main?brandId='+brandId+'&juli='+juli
       })
-   }
+   },
+   getDistance: function (lat1, lng1, lat2, lng2) {
+    var rad1 = lat1 * Math.PI / 180.0;
+    var rad2 = lat2 * Math.PI / 180.0;
+    var a = rad1 - rad2;
+    var b = lng1 * Math.PI / 180.0 - lng2 * Math.PI / 180.0;
+    var r = 6378137;
+    let juli=parseInt(r * 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) + Math.cos(rad1) * Math.cos(rad2) * Math.pow(Math.sin(b / 2), 2)))) 
+    if(juli<1000){
+      return juli+'m'
+    }else{
+       return juli/1000+'km'
+    }
+   
+  }
+
   },
 
   onLoad(options){
@@ -70,23 +87,32 @@ export default {
          that.sysheight=res.windowHeight + 'px';
         }
     })
-    wx.request({
-      url: globalStore.state.api+'/api/index/getBrand',
-      data: {
-        catId:options.catId
-      },
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: function(res) {
-        for(var i in res.data.brand){
-          res.data.brand[i].address=res.data.brand[i].url.split(',')[2]
+    wx.getLocation({
+      success: function (res) {
+        if (res != undefined && res != null) {
+          console.log(res)
+          let latitude=res.latitude;
+          let longitude=res.longitude;
+          wx.request({
+            url: globalStore.state.api+'/api/index/getBrand',
+            data: {
+              catId:options.catId
+            },
+            header: {
+             'content-type': 'application/json' // 默认值
+            },
+            success: function(res) {
+              for(var i in res.data.brand){
+                res.data.brand[i].address=res.data.brand[i].url.split(',')[2]
+                res.data.brand[i].juli=that.getDistance(latitude,longitude,res.data.brand[i].url.split(',')[0],res.data.brand[i].url.split(',')[1])
+              }
+              that.brand=res.data.brand
+          }
+        })
         }
-        that.brand=res.data.brand
-        console.log("=========");
-        console.log(that.brand);
-      }
+      },
     })
+
   }
 }
 </script>

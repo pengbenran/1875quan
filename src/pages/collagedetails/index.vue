@@ -418,6 +418,9 @@ export default {
         }
       }
     })  
+  },
+   onShow:function(){
+    this.sModalStatuss=false;
   }
 }
 </script>

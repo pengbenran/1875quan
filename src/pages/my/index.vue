@@ -59,7 +59,7 @@ export default {
        isUse: true,
        kind: [{ name: '充值圈圈', imageurl:globalStore.state.imgapi+'image/chongzhi.jpg',jumpurl:'../quanchongzhi/main',menuid:1},
       { name: '圈圈兑换', imageurl: globalStore.state.imgapi+'image/duihuan.jpg', jumpurl: '../quanduihuan/main',menuid:2 },
-      { name: '签到', imageurl: globalStore.state.imgapi+'image/qiandao.jpg', jumpurl: '../jifen/main',menuid:3 },
+      { name: '我的圈圈', imageurl: globalStore.state.imgapi+'image/qiandao.jpg', jumpurl: '../jifen/main',menuid:3 },
       { name: '收货地址', imageurl: globalStore.state.imgapi+'image/address.jpg', jumpurl: '../address/main',menuid:4 },
       { name: '我的拼团', imageurl: globalStore.state.imgapi+'image/pingtuan.jpg', jumpurl: '../grouplist/main',menuid:5 },
       { name: '我的收藏', imageurl: globalStore.state.imgapi+'image/shoucang.jpg', jumpurl: '../collection/main',menuid:6 },

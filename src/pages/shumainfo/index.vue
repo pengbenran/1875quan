@@ -34,7 +34,7 @@
      </div>
      </div>
      <!--shopcontent end-->
-
+     <div class="commodity_screen"  v-if="showModalStatus" @click="colModel"></div>
      <div class="shopmodel" v-if="showModalStatus" :animation="animationData">
        <div class="modelwarp">
          <div class="warpleft"><image :src="goodDetail.thumbnail"></image></div>
@@ -63,7 +63,7 @@
          <div class="span" @click="tohome"><image :src="shopimg"></image><small>首页</small></div>
          <div class="span"><image src="https://shop.guqinet.com/html/images/shanquan/shumainfo/lt.png"></image><small>客服</small></div>
          <div class="span" @click="collection">
-           <image v-if="posts" :src="xin"></image>
+           <image v-if="!posts" :src="xin"></image>
            <image v-else :src="selctxin"></image>
            <small>收藏</small>
          </div>
@@ -410,6 +410,9 @@ export default {
      that.imageHeigth=windWidth*9/16+'px';
      this.geiShopinfo(options.goodsId);
      this.goodname=options.goodname;
+  },
+  onShow:function(){
+    this.showModalStatus=false;
   }
 }
 </script>
@@ -423,6 +426,18 @@ export default {
 
 image{
   display: block;
+}
+.commodity_screen {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000;
+  opacity: 0.2;
+  overflow: hidden;
+  z-index: 1000;
+  color: #fff;
 }
 /*Shopinfo*/
 
@@ -472,7 +487,7 @@ image{
 .bordertop{border-top:20rpx solid #f5f5f5;padding-top: 15rpx  ;}
 
 /*模拟框样式*/
-.shopmodel{padding-top: 20rpx;position: fixed;bottom: 0;width: 100%;left: 0;background: #ffffff;border-top: 1px solid #f8f8f8;z-index:2;
+.shopmodel{padding-top: 20rpx;position: fixed;bottom: 0;width: 100%;left: 0;background: #ffffff;border-top: 1px solid #f8f8f8;z-index:2000;
 }
 .modelwarp{display: flex;padding-left: 20rpx;padding-right: 20rpx;}
 .warpleft{width: 20%;margin-right: 2%;}

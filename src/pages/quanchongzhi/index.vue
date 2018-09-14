@@ -59,7 +59,7 @@ export default {
           else if(res.data.status==1){
              wx.showToast({
              title: res.data.msg,
-             icon: 'success',
+             icon: 'none',
              duration: 2000
            })
           }

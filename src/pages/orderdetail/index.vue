@@ -46,21 +46,17 @@
               <text class='rigtext3'>x{{orderListInner.num}}</text>
             </div>
 
-            </div>
-          
-
-                      
-           
+            </div>     
           </div>
           <div class='complete-box3'>
             <text class='tex01'>共件商品{{orderListOut.totalnum}}合计:</text>
-            <text class='tex02' v-if="orderListOut.shipZip==0">￥{{orderListOut.needPayMoney}}</text>
-            <text class='tex02' v-else>￥{{orderListOut.shipZip}}圈圈</text>
+            <text class='tex02' v-if="orderListOut.gainedpoint==0">￥{{orderListOut.needPayMoney}}</text>
+            <text class='tex02' v-else>￥{{orderListOut.needPayMoney}}+{{orderListOut.gainedpoint}}圈圈</text>
           </div>
           <block>
             <div class='complete-box4'  v-if="orderListOut.status==0&orderListOut.shipStatus==0">
               <div class='com-input01' @click="payoff('取消订单',orderListOut.orderId)">取消订单</div>
-              <div class='com-input02'  @click="payoff('确认付款',orderListOut.orderId,orderListOut.sn,orderListOut.needPayMoney,orderListOut.shipZip)">确认付款</div>
+              <div class='com-input02'  @click="payoff('确认付款',orderListOut.orderId,orderListOut.sn,orderListOut.needPayMoney,orderListOut.gainedpoint)">确认付款</div>
             </div>
           </block>
           <block v-if="orderListOut.status==1 || orderListOut.status == 2&orderListOut.shipStatus==0&orderListOut.payStatus==2">
@@ -231,7 +227,7 @@ export default {
   },
   // 支付
 
-  payoff: function (value,orderId,sn,total,shipzip) {
+  payoff: function (value,orderId,sn,total,gainedpoint) {
     var  that=this
     var status = 4
     var parms = {}
@@ -304,8 +300,8 @@ export default {
       title:'请稍等'
     })
     let payflag=true
-    if(shipzip!=0){
-      that.quanquan=shipzip.split("+")[1]
+    if(gainedpoint!=0){ 
+      that.quanquan=gainedpoint
       let mp=wx.getStorageSync('mp')
       if(mp<that.quanquan){
           wx.showToast({

@@ -65,13 +65,13 @@ export default {
             'Content-Type': 'application/x-www-form-urlencoded'
           },
           success: function (res) {
-            that.onLoad()
+            that.getquanquan()
           }
         })
-      that.wetoast.toast({
-        title: addpoint,
-        duration: 200
-      })
+      // that.wetoast.toast({
+      //   title: addpoint,
+      //   duration: 200
+      // })
      }
     if (that.signStatus == 2){
       wx.showModal({

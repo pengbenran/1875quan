@@ -36,7 +36,7 @@
      </div>
 
     <!--模拟框-->
-    <div class="shoumask" v-if="showModalStatus"></div>
+    <div class="shoumask" v-if="showModalStatus" @click="hidemodel"></div>
     <div class="shopmodel" v-if="showModalStatus" :animation="animationData">
        <div class="modelwarp">
          <div class="warpleft"><image :src="Gooddetatil.thumbnail"></image></div>
@@ -227,6 +227,9 @@ export default {
          },
         })
 
+    },
+    onShow:function(){
+      this.showModalStatus=false;
     }
 }
 </script>

@@ -283,8 +283,6 @@ export default {
 
         that.database= res.data.data;
         that.goods=res.data.data.goods
-        console.log("=============")
-        console.log(that.goods);
         // wx.setStorageSync('indexdata', res.data.data.message, )
         // 判断是否注册过
       },
@@ -298,16 +296,13 @@ export default {
     })
   }
   },
-  onLoad(){ 
+  onShow(){ 
     var windWidth=(wx.getSystemInfoSync().windowWidth);
     this.imageWidth=windWidth+"px";
     this.imageHeigth=windWidth*9/16+'px';
    this.userLogin();
    this.getactive();
    this.getMain();
-   console.log("------------")
-   console.log(this.menus);
-   console.log("--------------")
   }
 }
 </script>
@@ -393,14 +388,15 @@ padding-right: 15rpx;
   white-space:nowrap;
   margin-top: 10rpx;
   font-size: 0.8em;
+  display: flex;
 }
 .groupImg{
-  width: 180rpx;
-  height: 180rpx;
+  width: 250rpx;
+  height: 250rpx;
   display: inline-block;
 }
 .membeintrodetaillist{
-  width: 200rpx;
+  width: 300rpx;
   text-align: center;
 }
 .groupDetail{

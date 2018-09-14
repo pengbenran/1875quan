@@ -4,7 +4,7 @@
     <div class="headerinfo">
         <div class="title">{{brandDO.name}}</div>
         <div class="info">
-            <div class="left"><span class="leftspan1"><image :src="mapimg"></image></span><span class="leftspan2">{{address}}(距您13.2公里)</span></div>
+            <div class="left"><span class="leftspan1"><image :src="mapimg"></image></span><span class="leftspan2">{{address}}(距您{{juli}})</span></div>
             <div class="right"><image :src="fenxiangimg"></image></div>
         </div>
     </div>
@@ -48,7 +48,8 @@ export default {
       shoplistimg:globalStore.state.imgapi+'image/store05.png',
       brandDO:[],
       Goods:[],
-      address:''
+      address:'',
+      juli:''
     }
   },
 
@@ -67,6 +68,7 @@ export default {
 
   onLoad (options) {
     var that = this
+    that.juli=options.juli;
     var windWidth=(wx.getSystemInfoSync().windowWidth);
     that.imageWidth=windWidth+"px";
     that.imageHeigth=windWidth*9/16+'px';

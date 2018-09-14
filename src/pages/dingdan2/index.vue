@@ -149,7 +149,7 @@ export default {
       })
       bean.image = that.Goods.thumbnail
       bean.memberId = that.memberId
-      bean.gainedpoint=that.Goods.point
+      bean.gainedpoint=0
       bean.orderAmount = that.finalAmount
       bean.weight = that.Goods.weight
       bean.shippingAmount = 0
@@ -318,6 +318,7 @@ export default {
             else{
               bean.image = that.Goods.thumbnail
               bean.memberId = that.memberId
+              bean.gainedpoint=0
               bean.orderAmount = that.totalPrice
               bean.weight = that.Goods.weight
               bean.shippingAmount = 0
@@ -444,7 +445,7 @@ export default {
                                           }
                                           parmss = JSON.stringify(parmss)
 
-                                          wx.navigateTo({
+                                          wx.redirectTo({
                                             url: '../groupdetail/main?shops= ' + parmss,
                                           })
                                         }
@@ -506,6 +507,7 @@ export default {
     bean.orderAmount = that.totalPrice
     bean.weight = that.Goods.weight
     bean.shippingAmount = 0
+    bean.gainedpoint=0
     bean.goodsAmount = that.totalPrice
     bean.googitem = []
     goodObj.price = that.Goods.price
@@ -632,7 +634,7 @@ export default {
                                   parmss.iscollage = 2
                                 }
                                 parmss = JSON.stringify(parmss)
-                                wx.navigateTo({
+                                wx.redirectTo({
                                   url: '../groupdetail/main?shops= ' + parmss,
                                 })
 
