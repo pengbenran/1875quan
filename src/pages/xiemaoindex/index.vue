@@ -1,18 +1,21 @@
 <template>
   <div class="xiemaoContainer">
-     <div class="xmtopwarp">
+    <div class="tip">
+      <image src="https://shop.guqinet.com/html/images/shanquan/image/await.png"></image>
+    </div>
+     <!-- <div class="xmtopwarp">
        <div class="xmbrand"><image src="https://shop.guqinet.com/html/images/shanquan/xiemao/xmbrand.jpg"></image></div>
        <div class="xmtop">
           <image src="https://shop.guqinet.com/html/images/shanquan/xiemao/sras.png"></image>
        </div>
-     </div>
+     </div> -->
      <!--xmtopwarp end-->
-     <div class="xmbrand02">
+     <!-- <div class="xmbrand02">
        <image src="https://shop.guqinet.com/html/images/shanquan/xiemao/xmxuanc.jpg"></image>
-     </div>
+     </div> -->
     <!--brand02 end-->
     
-    <div class="xmitem">
+    <!-- <div class="xmitem">
       <ul>
         <li><image src="https://shop.guqinet.com/html/images/shanquan/xiemao/xmitem01.jpg"></image>
            <span>短裙</span>
@@ -27,10 +30,10 @@
            <span>帽类</span>
         </li>
       </ul>
-    </div>
+    </div> -->
     <!--xmitem end-->
 
-    <div class="xmbrand03">
+   <!--  <div class="xmbrand03">
       <div class="xmtitle01"><image src="https://shop.guqinet.com/html/images/shanquan/xiemao/xmtitle01.jpg"></image></div>
       <div class="brand03"><image src="https://shop.guqinet.com/html/images/shanquan/xiemao/xmbrand02.jpg"></image></div>
       <div class="xmbrand03info"><div class="tit">整套出游装备#</div>
@@ -44,9 +47,9 @@
       <div class="xmbrand03info"><div class="tit">整套出游装备#</div>
         <div class="pir"><label>￥380</label><span>￥380</span></div>
       </div>
-    </div>
+    </div> -->
     <!--xmbrand03 end-->
-
+<!-- 
     <div class="xmcase">
       <ul>
         <li>
@@ -71,9 +74,9 @@
         </li>
       </ul>
     </div>
-    <!--xmcase end-->
+    xmcase end-->
 
-    <div class="xmcommp"><span>谷琴技术支持</span></div>
+    <!-- <div class="xmcommp"><span>谷琴技术支持</span></div> -->
   </div>
 </template>
 
@@ -108,7 +111,8 @@ image{
   height: 100%;
   display: block;
 }
-.xiemaoContainer{background: #f2f2f2;}
+.tip{width: 500rpx;height: 500rpx; overflow: hidden; margin:200rpx auto;}
+/*.xiemaoContainer{background: #f2f2f2;}*/
 .xmtopwarp{position: relative;}
 .xmbrand{height: 400rpx;}
 .xmtop{display: flex;position: absolute;top: 0;left: 0;width: 100%;height: 65rpx;}

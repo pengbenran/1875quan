@@ -1,6 +1,9 @@
 <template>
   <div class="lvyouContainer">
-    <div class="head">
+    <div class="tip">
+      <image src="https://shop.guqinet.com/html/images/shanquan/image/await.png"></image>
+    </div>
+    <!-- <div class="head">
       <image src="https://shop.guqinet.com/html/images/shanquan/lvyou/banner.jpg"></image>
     </div>
     <div class="floor"> 
@@ -76,7 +79,7 @@
           桂林三天三两夜游
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -112,6 +115,7 @@ image{
   height: 100%;
   display: block;
 }
+.tip{width: 500rpx;height: 500rpx; overflow: hidden; margin:200rpx auto;}
 .head{
   width: 100%;
   height: 350rpx;

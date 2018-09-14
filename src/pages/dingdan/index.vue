@@ -6,8 +6,8 @@
          <img :src="heademapimg" >
        </div>
        <div class="dingright">
-         <div class="title"><span>收货人：{{addr.name}}</span><span>15623140205</span></div>
-         <div class="topdizhi">收货地址：{{addr.province}}{{addr.city}}{{addr.region}}{{addr.addr}}</div>
+         <div class="title"><span>收货人：{{addr.name}}</span><span>{{addr.mobile}}</span></div>
+         <div class="topdizhi">收货地址：{{addr.addr}}</div>
          <div class="dingtip">(收货不便时，您可以自选投放地点及自取)</div>
        </div>
        <div class="dingrightimg"><img :src="headerrightimg" ></div>
@@ -20,7 +20,13 @@
      <!--userInfo end-->
      
      <div class="orderList">
+<<<<<<< HEAD
+      <!-- <div class="shopTitle"><image :src='homeimg' class="img01"></image>
+        <span>谷琴优品</span><image :src='titleright' class="img02"></image>
+      </div> -->
+=======
       <div class="shopTitle"><image :src='homeimg' class="img01"></image><span>{{goodname}}</span></div>
+>>>>>>> d4ca0474404aa917088f73cbe11da805fa364d8f
       <!--shopTile end-->
       <div class="orderinfo" v-for="(item,index) in list" :index='index' :key="item">
        <div class="infoimg">
@@ -95,8 +101,12 @@ export default {
      ],
      select:false,
      isAddr:true,
+<<<<<<< HEAD
      selectbtnbool:false,
      addr:[],
+=======
+     addr:'',
+>>>>>>> a5d8935e6643117feceab11151e211f16d848f0a
      point:0,
      point_price:0,
      goodsAmount:0,
@@ -310,7 +320,7 @@ export default {
       },
       toast(){
           var that = this
-          if (that.addr == undefined) {
+          if (that.addr == '') {
             wx.showToast({
               title: '请添加地址',
             })

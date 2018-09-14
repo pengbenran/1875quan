@@ -1,6 +1,9 @@
 <template>
    <div class="meirongContainer">
-      <div class="floor">
+    <div class="tip">
+      <image src="https://shop.guqinet.com/html/images/shanquan/image/await.png"></image>
+    </div>
+     <!--  <div class="floor">
         <div class="title">
             店铺介绍
         </div>
@@ -31,8 +34,8 @@
           </span>
         </div>
       </div>
-      <!-- 店主推荐 -->
-      <div class="floor2">
+       店主推荐 -->
+     <!--  <div class="floor2">
         <div class="title abbrtitle">店长推荐</div>
           <ul class="tuijianlist">
             <li><image src="https://shop.guqinet.com/html/images/shanquan/meirong/tuijian1.jpg"></image></li>
@@ -40,9 +43,9 @@
             <li><image src="https://shop.guqinet.com/html/images/shanquan/meirong/tuijian1.jpg"></image></li>
             <li><image src="https://shop.guqinet.com/html/images/shanquan/meirong/tuijian2.jpg"></image></li>
           </ul>
-      </div>
+      </div> -->
       <!-- 体验区 -->
-       <div class="floor3">
+       <!-- <div class="floor3">
         <div class="title abbrtitle">体验区</div>
           <ul class="tuijianlist">
             <li><image src="https://shop.guqinet.com/html/images/shanquan/meirong/tiyan.jpg"></image></li>
@@ -50,9 +53,9 @@
             <li><image src="https://shop.guqinet.com/html/images/shanquan/meirong/tiyan.jpg"></image></li>
             <li><image src="https://shop.guqinet.com/html/images/shanquan/meirong/tiyan2.jpg"></image></li>
           </ul>
-      </div>
+      </div> -->
       <!-- 店铺详情 -->
-      <div class="floor4">
+      <!-- <div class="floor4">
         <div class="title">店铺详情</div>
         <div class="storeintro">
           <ul>
@@ -69,7 +72,7 @@
             本店美容与养生相结合。主要项目:主要是延续细胞衰老的生物多态主要是延续细胞衰老的生物多态主要是延续细胞衰老的生物多态主要是延续细胞衰老的生物多态主要是延续细胞衰老的生物多态
           </div>
         </div>
-      </div>
+      </div> --> 
   </div>
 </template>
 
@@ -100,10 +103,11 @@ export default {
 </script>
 
 <style scoped>
-.meirongContainer{
+.tip{width: 500rpx;height: 500rpx; overflow: hidden; margin:200rpx auto;}
+/*.meirongContainer{
 background: #F5F6FA;
 min-height: 100vh;
-}
+}*/
 image{
   width: 100%;
   height: 100%;

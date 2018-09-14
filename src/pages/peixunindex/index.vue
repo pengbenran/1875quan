@@ -1,8 +1,11 @@
 <template>
    <div class="peixunContainer">
-     <div class="pxBrand"><image src="https://shop.guqinet.com/html/images/shanquan/peixun/pxbrand.jpg"></image></div>
+    <div class="tip">
+      <image src="https://shop.guqinet.com/html/images/shanquan/image/await.png"></image>
+    </div>
+     <!-- <div class="pxBrand"><image src="https://shop.guqinet.com/html/images/shanquan/peixun/pxbrand.jpg"></image></div> -->
      <!--pxBrand end-->
-     <div class="pxitemwap">
+     <!-- <div class="pxitemwap">
        <div class="title"><span>推荐乐器</span></div>
        <div class="pxitem">
          <ul>
@@ -12,10 +15,10 @@
            <li><image src="https://shop.guqinet.com/html/images/shanquan/peixun/pxitem04.jpg"></image></li> 
          </ul>
        </div>
-     </div>
+     </div> -->
      <!--pxitemwap end-->
 
-     <div class="pxcase"> 
+     <!-- <div class="pxcase"> 
        <div class="pxcasetitle"><span>课程培训</span></div>
        <div class="top">
          <div class="topleft"></div>
@@ -32,10 +35,10 @@
          </ul>
        </div>
        <div class="pxcasemoor"><image src="https://shop.guqinet.com/html/images/shanquan/peixun/moor.jpg"></image></div>
-     </div>
+     </div> -->
      <!--pxcase end-->
 
-
+<!-- 
      <div class="pxShop">
        <ul>
          <li><image src="https://shop.guqinet.com/html/images/shanquan/peixun/pxshop.jpg"></image>
@@ -65,9 +68,9 @@
        </ul>
      <div class="pxcasemoor"><image src="https://shop.guqinet.com/html/images/shanquan/peixun/moor.jpg"></image></div>
      </div>
-     <!--pxShop end-->
+     pxShop end-->
     
-     <div class="pxcommp"><span>谷琴技术支持</span></div>
+     <!-- <div class="pxcommp"><span>谷琴技术支持</span></div> --> 
   </div>
 </template>
 
@@ -103,8 +106,8 @@ image{
   height: 100%;
   display: block;
 }
-
-.peixunContainer{background: #f2f2f2;}
+.tip{width: 500rpx;height: 500rpx; overflow: hidden; margin:200rpx auto;}
+/*.peixunContainer{background: #f2f2f2;}*/
 .pxBrand{height: 400rpx;}
 
 /*pxitem*/

@@ -1,20 +1,23 @@
 <template>
   <div class="hsContainer">
-      <div class="hsBrand">
+    <div class="tip">
+      <image src="https://shop.guqinet.com/html/images/shanquan/image/await.png"></image>
+    </div>
+      <!-- <div class="hsBrand">
         <image src="https://shop.guqinet.com/html/images/shanquan/hsbrand.jpg"></image>
-      </div>
+      </div> -->
       <!--hsBrand end-->
-
+<!-- 
       <div class="hsTab">
         <ul>
           <li><span>首页</span></li>
           <li><span>鉴赏</span></li>
           <li><span>活动</span></li>
         </ul>
-      </div>
+      </div> -->
       <!--hsTab end-->
 
-     <div class="hsItem">
+    <!--  <div class="hsItem">
         <div class="hsItmetitle"><span class="hsItemtit">风格鉴赏</span><span class="itemimg"><image src="https://shop.guqinet.com/html/images/shanquan/hsfanhui.jpg"></image></span></div>
         <div class="hsitemList">
           <ul>
@@ -23,10 +26,10 @@
             <li><image src="https://shop.guqinet.com/html/images/shanquan/hsitem01.jpg"></image></li>
           </ul>
         </div>
-     </div>
+     </div> -->
     <!--hsTabe end-->
 
-    <div class="hsCase">
+   <!--  <div class="hsCase">
      <div class="hsItmetitle"><span class="hsItemtit">近期活动</span><span class="itemimg"><image src="https://shop.guqinet.com/html/images/shanquan/hsfanhui.jpg"></image></span></div>
      <div class="hsCaselist">
          <ul>
@@ -34,18 +37,18 @@
            <li><image src="https://shop.guqinet.com/html/images/shanquan/hscase02.jpg"></image></li>  
          </ul>          
      </div>   
-    </div>
+    </div> -->
     <!--hsCase end-->
 
-    <div class="hsfrom">
+    <!-- <div class="hsfrom">
       <div class="hsfromitem"><span>您的称呼：</span><input type="text" placeholder="请输入你的称呼"></div>
       <div class="hsfromitem"><span>联系方式：</span><input type="text" placeholder="请输入联系方式"></div>
       <div class="hsfromitem"><span>咨询详情：</span><input type="text" placeholder="请输入咨询详情"></div>
       <div class="hsbtn"><span>提交</span></div>
-    </div>
+    </div> -->
     <!--hsfrom end-->
 
-    <div class="hscompany"><span>技术支持：谷琴电子信息</span></div>
+    <!-- <div class="hscompany"><span>技术支持：谷琴电子信息</span></div> -->
   </div>
 </template>
 
@@ -78,7 +81,7 @@ image{
   height: 100%;
   display: block;
 }
-
+.tip{width: 500rpx;height: 500rpx; overflow: hidden; margin:200rpx auto;}
 /*hsBrand*/
 .hsBrand{padding-left: 20rpx;padding-right: 20rpx;height: 455rpx;}
 .hsTab{margin-top: 30rpx;}

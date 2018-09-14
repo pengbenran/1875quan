@@ -6,8 +6,8 @@
          <img :src="heademapimg" >
        </div>
        <div class="dingright">
-         <div class="title"><span>收货人：{{addr.name}}</span><span>15623140205</span></div>
-         <div class="topdizhi">收货地址：{{addr.province}}{{addr.city}}{{addr.region}}{{addr.addr}}</div>
+         <div class="title"><span>收货人：{{addr.name}}</span><span>{{addr.mobile}}</span></div>
+         <div class="topdizhi">收货地址：{{addr.addr}}</div>
          <div class="dingtip">(收货不便时，您可以自选投放地点及自取)</div>
        </div>
        <div class="dingrightimg"><img :src="headerrightimg" ></div>
@@ -20,7 +20,8 @@
      <!--userInfo end-->
      
      <div class="orderList">
-      <div class="shopTitle"><image :src='homeimg' class="img01"></image><span>谷琴优品</span><image :src='titleright' class="img02"></image></div>
+      <!-- <div class="shopTitle"><image :src='homeimg' class="img01">
+      </image><span>谷琴优品</span><image :src='titleright' class="img02"></image></div> -->
       <!--shopTile end-->
       <div class="orderinfo">
        <div class="infoimg">
@@ -45,7 +46,7 @@
           <div class="Summaryitem"><span>运费</span><span>￥0</span></div>
         </div>
     </div>
-      <div class="zhifu">
+      <!-- <div class="zhifu">
         <div class="zhifutitle">支付方式</div>
         <div class="zhifuprice"><div class="price">{{quanprice}}元+{{quanquan}}圈圈</div>
            <div class="slectico" @click="selectrs(1)"><icon color='#e93429' type="success" size="20" v-if="selectstu" /><icon type="circle" v-else color="#DDD"   size="20" /></div>
@@ -53,7 +54,7 @@
         <div class="zhifuprice"><div class="price">{{totalPrice}}元</div><div class="slectico" @click="selectrs(2)">
           <icon color='#e93429' type="success" size="20" v-if="!selectstu" /><icon type="circle" v-else color="#DDD"   size="20" />
           </div></div>
-      </div>
+      </div> -->
       <div class="footer"><div class="footerleft">合计：<span>￥{{totalPrice}}</span></div>
 
       <div class="footerright" @click="kaituan" v-if="Type=='K'">
@@ -93,7 +94,7 @@ export default {
       quanprice:900,
       quanquan:98,
       isAddr:false,
-      addr:{},
+      addr:'',
       memberCollageId:'',
       finalAmount:'',
       memberCollageId:'',
@@ -135,7 +136,7 @@ export default {
      //信息提交
     xianshi:function(){
     var that = this
-    if (that.addr == undefined) {
+    if (that.addr == '') {
       wx.showToast({
         title: '请添加地址',
       })
@@ -287,7 +288,7 @@ export default {
   },
   cantuan:function(){
     var that = this
-    if (that.addr == undefined) {
+    if (that.addr == '') {
       wx.showToast({
         title: '请添加地址',
       })
@@ -310,7 +311,7 @@ export default {
               })
               setTimeout(function(){
                 wx.switchTab({
-                  url: '../active/active',
+                  url: '../index/main',
                 })
               },1000)          
             }
@@ -355,9 +356,9 @@ export default {
                 success: function (res) {
                   wx.hideLoading()
                   var parms = {}
-                  that.setData({
-                    order: res.data.order
-                  })
+                  
+                  that.order=res.data.order
+                  
                   parms.orderid = res.data.order.orderId
                   parms.sn = that.order.sn
                   parms.total_fee = that.totalPrice * 100
@@ -442,8 +443,9 @@ export default {
                                             parmss.iscollage = 2
                                           }
                                           parmss = JSON.stringify(parmss)
+
                                           wx.navigateTo({
-                                            url: '../cantuan/cantuan?shops= ' + parmss,
+                                            url: '../groupdetail/main?shops= ' + parmss,
                                           })
                                         }
                                       })
@@ -676,7 +678,6 @@ export default {
   },
 
   onLoad: function (options) {
-    console.log(options)
     var that = this
     console.log(wx.getStorageSync('addr') )
     if (options.price == undefined || options.pic == undefined || options.goodsId == undefined || options.Type == undefined){
@@ -695,6 +696,7 @@ export default {
     that.memberId= wx.getStorageSync('memberId')
     that.indexdata=wx.getStorageSync('indexdata') 
     that.totalPrice= Number(totalPrice).toFixed(2)
+    console.log(that.Type)
     if (that.Type == 'K') {
       // 开团
       if(options.collagePersons==undefined){
