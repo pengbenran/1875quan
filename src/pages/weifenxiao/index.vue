@@ -7,7 +7,7 @@
               <div class="caretitle"> <span><img :src="care03" /> 开通会员</span></div>
           <div v-if="!isSubmit">
               <div class="list" v-for="(item,index) in memberLvList" :index='index' :key='item'>
-              <div class="careimg"><img :src="item.lvpicurl">
+              <div class="careimg"><img :src="lvpicurl">
                   <div class="careinfo">
                       <div class="infotitle"><span>{{item.name}}</span><span class="tip">享受百分二的提成</span></div>
                       <div class="carebtn" @click="jump(item.lvId)">立即开通 ></div>
@@ -37,6 +37,7 @@ export default {
       care01:globalStore.state.imgapi + '/image/card1.jpg', 
       care02:globalStore.state.imgapi + '/image/card2.jpg', 
       care03:globalStore.state.imgapi + '/image/cart03.jpg', 
+      lvpicurl:globalStore.state.imgapi + '/image/weifensrc.jpg', 
       disabled:false,
       memberLvList:[], 
       isSubmit:true,

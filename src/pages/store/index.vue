@@ -5,7 +5,7 @@
         <div class="title">{{brandDO.name}}</div>
         <div class="info">
             <div class="left"><span class="leftspan1"><image :src="mapimg"></image></span><span class="leftspan2">{{address}}(距您13.2公里)</span></div>
-            <div class="right"><image :src="fenxiangimg"></image></div>
+            <div class="right" @click="fenxiaoimg"><image :src="fenxiangimg"></image></div>
         </div>
     </div>
     <!--store end-->
@@ -30,6 +30,8 @@
          </div>
      </div>
      <!--shoplist end-->
+
+     <div class="ruzhubtn" @click="ruzhubtn"><img :src="ruzhuimg"></div>
   </div>
 </template>
 
@@ -46,6 +48,7 @@ export default {
       jinpinimg1:globalStore.state.imgapi+'image/store03.png',
       jinpinimg2:globalStore.state.imgapi+'image/store04.png',
       shoplistimg:globalStore.state.imgapi+'image/store05.png',
+      ruzhuimg:globalStore.state.imgapi+'image/ruzhubtn.png',
       brandDO:[],
       Goods:[],
       address:''
@@ -62,7 +65,13 @@ export default {
      wx.navigateTo({
       url: '../shumainfo/main?goodsId='+goodsId+'&goodname='+that.brandDO.name,
     })
-   }
+   },
+    ruzhubtn(){
+      wx.navigateTo({ url: '../../pages/storeruzhu/main' });
+    },
+    fenxiaoimg(){
+      wx.navigateTo({ url: '../../pages/storeruzhu/main' });
+    }
   },
 
   onLoad (options) {
@@ -105,7 +114,7 @@ export default {
 <style scoped>
 @import url("~mpvue-wxparse/src/wxParse.css");
 image{height: 100%;width: 100%;display:block;}
-.store{background: #fff;height: 100vh;}
+.store{background: #fff;height: 100vh;position: relative;}
 .header{
   overflow: hidden;
 }
@@ -147,4 +156,7 @@ margin-left: 3%;margin-right: 1.5%;
 .liinfo{padding:10rpx 15rpx;}
 .liinfo div{font-size: 26rpx;}
 .liinfo .price{color: #f69949;}
+
+.ruzhubtn{position:fixed;top: 50%;width: 100rpx;height: 100rpx;right:20rpx;}
+.ruzhubtn img{border-radius: 100%;}
 </style> 

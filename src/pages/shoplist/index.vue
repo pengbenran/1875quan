@@ -103,7 +103,7 @@ img{width: 100%;height: 100%;display: block;}
 .left img{height: 150rpx;}
 .map{display: flex;align-items: center;}
 .right{width: 76%;border-bottom:1px solid #f6f6f6;}
-.right img{width:30rpx;height: 36rpx;margin-right: 10rpx;}
+.right img{width:28rpx;height: 36rpx;margin-right: 10rpx;}
 .map span{color: #6f6f6f;font-size:28rpx}
 .care{display: inline-block;padding-left: 15rpx;padding-right: 15rpx;height: 38rpx;line-height: 38rpx;background: #fe7d77;color: #fff;font-size: 26rpx;border-radius: 8rpx;}
 .tip{padding-top: 30rpx;color: #6f6f6f;text-align: center;font-size: 34rpx;}

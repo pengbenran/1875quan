@@ -714,7 +714,7 @@ export default {
       }
         that.isKaituan= false
     }
-    // else if(that.Type="KJ"){
+    // else if(that.Type="KJ"){ //此处为设置砍价的事件
     //   // 砍价
     //   if (options.cutId == undefined) {   
     //      that.cutId=wx.getStorageSync('cutId')

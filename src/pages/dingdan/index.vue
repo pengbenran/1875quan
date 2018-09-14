@@ -58,11 +58,27 @@
     <div class="footer" v-for="(item,index) in payway" :index="index" :key="key" v-if="item.isthisway">
       <div class="footerleft" >合计：<span>￥{{item.way}}</span></div><div class="footerright" @click="toast()">提交订单</div>
     </div>
+    <!--footer end-->
+
+    <!-- <div class="showmodel" v-if="selectbtnbool"></div>
+    <div class="itemmask" :class="{'selectbtn':selectbtnbool}">
+      <div class="itemleft" @click="dingjidong">点击</div>
+      <div class="bntlistt">
+        <div class="btn1" v-for="(item,index) in lisbtn" :index='index' :key="key" @click="toclick(item.url)">
+          <div class="btnimg"><img :src="item.btnimg"></div>
+          <div class="titless">{{item.btnname}}</div>
+        </div>
+      </div>
+    </div> -->
+
+    <showbtn :lisbtn_s='lisbtn' :selectbtnbool_s='selectbtnbool'/>
+    <!--itemmask end-->
   </div>
 </template>
 
 <script>
 import globalStore from "../../stores/global-store"; 
+import showbtn from '../../components/showBtn';
 
 export default {
   data () {
@@ -72,8 +88,14 @@ export default {
      heademapimg:globalStore.state.imgapi +"/image/order04.png",
      headerrightimg:globalStore.state.imgapi +"/image/order03.png",
      headertopimgbg:globalStore.state.imgapi +"/image/order01.jpg",
+     lisbtn:[{btnname:'首页',btnimg:globalStore.state.imgapi +"/image/listbtn02.png",url:'../index/main'},
+             {btnname:'我的',btnimg:globalStore.state.imgapi +"/image/listbtn03.png",url:'../my/main'},
+             {btnname:'收藏',btnimg:globalStore.state.imgapi +"/image/listbtn01.png",url:'../collection/main'},
+             {btnname:'充值',btnimg:globalStore.state.imgapi +"/image/listbtn04.png",url:'../quanchongzhi/main'},
+     ],
      select:false,
      isAddr:true,
+     selectbtnbool:false,
      addr:[],
      point:0,
      point_price:0,
@@ -93,7 +115,7 @@ export default {
   },
 
   components: {
-
+   showbtn
   },
 
   methods: {
@@ -108,6 +130,17 @@ export default {
       clickd(e){
         console.log("留言填写");
         this.clickd=e.target.value
+      },
+      dingjidong(){
+       this.selectbtnbool=!this.selectbtnbool;
+      },
+      toclick(url){
+        console.log(url);
+        if(url=='../my/main'||url=='../index/main'){
+          wx.switchTab({ url: url });
+        }else{
+          wx.navigateTo({ url: url});
+        }
       },
       /*新增地址*/
       address(){
@@ -678,6 +711,9 @@ export default {
   onLoad: function (options) {
       this.onloads(options);   
       this.goodname=options.goodname;//获取店铺名称
+  },
+  onShow(){
+    this.selectbtnbool=false;
   }
 }
 </script>
@@ -756,4 +792,17 @@ export default {
 .zhifuprice{padding-top: 6rpx;}
 .zhifuprice{display:flex;justify-content: space-between;}
 .zhifutitle{font-size: 34rpx;padding-bottom: 15rpx}
+
+/*itemmask*/
+.itemmask{position: fixed;z-index: 3;right:-415rpx;bottom: 140rpx;display:flex;align-items: center;transition: all 0.4s;}
+.bntlistt{display: flex;align-items:center;}
+.selectbtn{right:15rpx;}
+.itemleft{font-size: 26rpx;color: #fff;background: #000;opacity: 0.2;width: 85rpx;height: 85rpx;text-align: center;line-height: 85rpx;
+border-top-left-radius: 10rpx;border-bottom-left-radius: 10rpx;}
+.showmodel{position: fixed;z-index: 2;height: 100vh;width: 100%;top: 0;left: 0;;background:#000;opacity:0.2;}
+.btnimg{text-align: center;height: 54rpx;}
+.btnimg img{width: 54rpx;height: 54rpx;margin: auto;}
+.bntlistt  .titless{color: #666;font-size: 26rpx;display: block;text-align: center;}
+.btn1{padding:15rpx 25rpx;}
+.bntlistt{background: #fff;border-radius: 6rpx;}
 </style>

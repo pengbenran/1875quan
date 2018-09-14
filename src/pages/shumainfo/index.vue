@@ -34,7 +34,7 @@
      </div>
      </div>
      <!--shopcontent end-->
-
+    <div class="shoumask" v-if="showModalStatus"></div>
      <div class="shopmodel" v-if="showModalStatus" :animation="animationData">
        <div class="modelwarp">
          <div class="warpleft"><image :src="goodDetail.thumbnail"></image></div>
@@ -61,7 +61,7 @@
      <div class="shopbottom">
        <div class="shopbottomleft">
          <div class="span" @click="tohome"><image :src="shopimg"></image><small>首页</small></div>
-         <div class="span"><image src="https://shop.guqinet.com/html/images/shanquan/shumainfo/lt.png"></image><small>客服</small></div>
+         <div class="span"><image :src="kefu"></image><small>客服</small></div>
          <div class="span" @click="collection">
            <image v-if="posts" :src="xin"></image>
            <image v-else :src="selctxin"></image>
@@ -97,6 +97,7 @@ export default {
      selctxin: globalStore.state.imgapi+'image/selectxin.png',
      gimg:globalStore.state.imgapi+"image/zhichi.jpg",
      xximg:globalStore.state.imgapi+"/image/xx.png",
+     kefu:globalStore.state.imgapi+"/image/weixing02.png",
      showModalStatus: false,
      animationData:{},
      pic:1,
@@ -399,7 +400,10 @@ export default {
       })
     }
    },
-
+   onShow(){
+     let that=this;
+     that.showModalStatus=false;
+   },
    onLoad:function(options){
      this.geiShopinfo(options.goodsId);
      this.goodname=options.goodname;
@@ -424,7 +428,7 @@ image{
 .shopinfotab{display: flex;justify-content: space-between;margin-top: 18rpx;}
 .shopinfotab span{color:#9e9e9e;font-size: 20rpx;}
 .shopinfotitel{font-size: 30rpx;}
-.sminfoBrand swiper{height: 500rpx;}
+.sminfoBrand swiper{height: 460rpx;}
 .sminfoBrand image{width: 100%;}
 /*shopcontent*/
 .shopcontent{border-top:25rpx solid #f5f5f5;margin-bottom: 110rpx;}
@@ -492,5 +496,6 @@ image{
 .modelbtn .cart{background:#feba33;}
 .modelbtn .buy{background:#ff4f4f;}
 
-
+.sminfoContainer{position: relative;}
+.shoumask{width:100%;height:100vh;position:fixed;top:0;left:0;background:#000;opacity:0.2;overflow:hidden;z-index:1000;color:#fff;z-index: 1;}
 </style>
