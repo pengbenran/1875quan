@@ -7,6 +7,12 @@
         <div class='membershiptitle'>微分销详细信息提交</div>
         <form @submit='btnform'>
         <div class='membershipFormList'>
+            <input placeholder='姓名' name="name"></input>
+        </div>
+        <div class='membershipFormList'>
+            <input type='number' placeholder='电话' name="mobile"></input>
+        </div>
+        <div class='membershipFormList'>
             <input placeholder='身份证号码' name="IDcard"></input>
         </div>
         <div class='membershipFormList'>
@@ -48,6 +54,16 @@ export default {
         title: '身份证格式错误',
         icon: 'loading'
       })
+    }else if(e.detail.value.name==''){
+      wx.showToast({
+        title: '姓名不能为空',
+        icon: 'loading'
+      })
+    }else if(e.detail.value.mobile==''){
+       wx.showToast({
+        title: '电话不能为空',
+        icon: 'loading'
+      })
     }
     else if (e.detail.value.bankcard == "") {
       wx.showToast({
@@ -65,12 +81,16 @@ export default {
         title: '请稍等',
       })
       var parms = {}
+      parms.name= e.detail.value.name
+      parms.mobile= e.detail.value.mobile
+      parms.referrer= ''
+       parms.lvid= that.memberIdlvId;
       parms.memberId = that.memberId
       parms.midentity = e.detail.value.IDcard
       parms.cardno = e.detail.value.bankcard
       parms.depositBank = e.detail.value.depositBlank
       wx.request({
-        url: globalStore.state.api + '/api/distribe/submitDistribe',
+        url: globalStore.state.api + '/api/distribe/submitDistribeApply',
         data: {
           params: JSON.stringify(parms)
         },
@@ -155,8 +175,17 @@ export default {
   onLoad:function(options){
     var that=this;
       var memberId = wx.getStorageSync('memberId');
+      var memberIdlvId=wx.getStorageSync('memberIdlvId');
       that.money=options.money;
       that.memberId=memberId;
+      that.memberIdlvId=memberIdlvId;
+
+      console.log("============")
+      console.log(options)
+      console.log(that.memberIdlvId);
+      
+
+
   }
 
 

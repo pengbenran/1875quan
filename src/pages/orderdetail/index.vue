@@ -555,8 +555,9 @@ image{
  display: flex;
 }
 .box1-left{
- width:20px;
- height: 20px;
+ width:18px;
+ height: 18px;
+ margin-right: 10rpx;
 }
 .box1-right{
   flex-grow: 1;
@@ -609,9 +610,12 @@ color: #919191;
  width: 350rpx;
  padding-left:20rpx;
  box-sizing: border-box; 
+ display: flex;
+ align-items: center;
 }
 .context1{
- font-size: 14px;
+ font-size: 14px;font-size: 26rpx;height: 72rpx;text-overflow:ellipsis;overflow: hidden;word-break:break-all;
+display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
 }
 .context2{
   font-size: 14px;

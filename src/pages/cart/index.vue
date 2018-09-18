@@ -187,7 +187,8 @@ export default {
               that.totalPrice = 0.0;
               that.indexdata = indexdata;
             //res代表success函数的事件对，data是固定的
-            console.log("------------------");
+            console.log("--------购物车里的数据----------");
+            console.log(that.cartgoods)
           }
           if (res.data.code == 1) {
             that.indexdata = indexdata;
@@ -197,6 +198,8 @@ export default {
             that.indexdata = indexdata;
             that.hasList = true;
           }
+
+          
         }
       });
     },

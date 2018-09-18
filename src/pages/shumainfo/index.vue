@@ -39,7 +39,7 @@
        <div class="modelwarp">
          <div class="warpleft"><image :src="goodDetail.thumbnail"></image></div>
          <div class="warpright">
-           <div class="warprighttop"><span>{{goodDetail.name}}</span><div class="col-img"><image :src="xximg" @click="colModel"></image></div></div>
+           <div class="warprighttop"><span class="spantitle">{{goodDetail.name}}</span><div class="col-img"><image :src="xximg" @click="colModel"></image></div></div>
           <div class="warprightbottom"><span>￥{{goodDetail.price}}</span><span>库存{{goodDetail.enableStore}}件</span></div>
          </div>
        </div>
@@ -436,12 +436,9 @@ image{
 .shopinfotab{display: flex;justify-content: space-between;margin-top: 18rpx;}
 .shopinfotab span{color:#9e9e9e;font-size: 20rpx;}
 .shopinfotitel{font-size: 30rpx;}
-<<<<<<< HEAD
 .sminfoBrand swiper{height: 460rpx;}
-.sminfoBrand image{width: 100%;}
-=======
 .sminfoBrand image{width: 100%;height: 100%;display: block;}
->>>>>>> a5d8935e6643117feceab11151e211f16d848f0a
+
 /*shopcontent*/
 .shopcontent{border-top:25rpx solid #f5f5f5;margin-bottom: 110rpx;}
 .shopcontenttop{padding:15rpx 25rpx;;}
@@ -491,6 +488,8 @@ image{
 .warpright{width: 78%;}
 .warpright span{font-size: 30rpx;}
 .warprighttop{display: flex;justify-content: space-between;}
+.warprighttop .spantitle{font-size: 26rpx;height: 72rpx;text-overflow:ellipsis;overflow: hidden;word-break:break-all;
+display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
 .warprightbottom{display: flex;justify-content: space-between;margin-top: 25rpx;border-bottom: 1px solid #f8f8f8;}
 .warprightbottom span:nth-child(1){color:red;}
 .warprightbottom span:nth-child(2){color:#666;}

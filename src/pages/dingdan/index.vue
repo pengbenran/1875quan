@@ -20,13 +20,9 @@
      <!--userInfo end-->
      
      <div class="orderList">
-<<<<<<< HEAD
-      <!-- <div class="shopTitle"><image :src='homeimg' class="img01"></image>
-        <span>谷琴优品</span><image :src='titleright' class="img02"></image>
-      </div> -->
-=======
+
       <div class="shopTitle"><image :src='homeimg' class="img01"></image><span>{{goodname}}</span></div>
->>>>>>> d4ca0474404aa917088f73cbe11da805fa364d8f
+
       <!--shopTile end-->
       <div class="orderinfo" v-for="(item,index) in list" :index='index' :key="item">
        <div class="infoimg">
@@ -101,12 +97,10 @@ export default {
      ],
      select:false,
      isAddr:true,
-<<<<<<< HEAD
+
      selectbtnbool:false,
-     addr:[],
-=======
+     //addr:[],
      addr:'',
->>>>>>> a5d8935e6643117feceab11151e211f16d848f0a
      point:0,
      point_price:0,
      goodsAmount:0,
@@ -804,7 +798,7 @@ export default {
 .zhifutitle{font-size: 34rpx;padding-bottom: 15rpx}
 
 /*itemmask*/
-.itemmask{position: fixed;z-index: 3;right:-415rpx;bottom: 140rpx;display:flex;align-items: center;transition: all 0.4s;}
+.itemmask{position: fixed;z-index: 3;right:-415rpx;bottom: 286rpx;display:flex;align-items: center;transition: all 0.4s;}
 .bntlistt{display: flex;align-items:center;}
 .selectbtn{right:15rpx;}
 .itemleft{font-size: 26rpx;color: #fff;background: #000;opacity: 0.2;width: 85rpx;height: 85rpx;text-align: center;line-height: 85rpx;

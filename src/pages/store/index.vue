@@ -24,7 +24,7 @@
          <ul>
             <li v-for="(item,index) in Goods" :index="index" :key="key" @click="jumpgoods(item.goodsId)">
                 <div class="liimg"><image :src="item.thumbnail"></image></div>
-                <div class="liinfo"><div>{{item.name}}</div><div class="price">￥{{item.price}}</div></div>
+                <div class="liinfo"><div class="liinfolist">{{item.name}}</div><div class="price">￥{{item.price}}</div></div>
             </li>
          </ul>
          </div>
@@ -48,6 +48,7 @@ export default {
       jinpinimg1:globalStore.state.imgapi+'image/store03.png',
       jinpinimg2:globalStore.state.imgapi+'image/store04.png',
       shoplistimg:globalStore.state.imgapi+'image/store05.png',
+      ruzhuimg:globalStore.state.imgapi+'image/ruzhubtn.png',
       ruzhuimg:globalStore.state.imgapi+'image/ruzhubtn.png',
       brandDO:[],
       Goods:[],
@@ -137,7 +138,8 @@ image{height: 100%;width: 100%;display:block;}
 .shopinfo{border-top: 15rpx solid #f4f5f9;padding-bottom: 25rpx;}
 .infotitle{padding-left: 20rpx;font-size: 35rpx;height: 80rpx;line-height: 80rpx;border-bottom: 1px solid #f4f5f9;}
 .shopontent{padding-left: 20rpx;padding-right: 20rpx;font-size: 30rpx;padding-top: 10rpx;color: #666;}
-
+.liinfolist{font-size: 26rpx;height: 72rpx;text-overflow:ellipsis;overflow: hidden;word-break:break-all;
+display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
 /*shoplist*/
 .shoplist{background: #fff;}
 .shoplist{border-top: 15rpx solid #f4f5f9;}
