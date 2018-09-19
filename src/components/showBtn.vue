@@ -19,7 +19,7 @@ export default {
   props: ['selectbtnbool_s','lisbtn_s'],
   data () {
     return {
-    	tip:'展开'
+    	tip:'快速导航'
     }
     },
     methods: {
@@ -31,9 +31,14 @@ export default {
           wx.navigateTo({ url: url});
         }
       },
-            dingjidong(){
+      dingjidong(){
        this.selectbtnbool_s=!this.selectbtnbool_s;
+       if(this.selectbtnbool_s){
        this.tip='收缩'
+       }
+       else{
+        this.tip='快速导航'
+       }
       },
     }
 }
@@ -41,11 +46,11 @@ export default {
 
 <style>
 /*itemmask*/
-.itemmask{position: fixed;z-index: 3;right:-415rpx;bottom: 140rpx;display:flex;align-items: center;transition: all 0.4s;}
+.itemmask{position: fixed;z-index: 3;right:-415rpx;bottom: 285rpx;display:flex;align-items: center;transition: all 0.4s;}
 .bntlistt{display: flex;align-items:center;}
 .selectbtn{right:15rpx;}
-.itemleft{font-size: 26rpx;color: #fff;background: #000;opacity: 0.2;width: 85rpx;height: 85rpx;text-align: center;line-height: 85rpx;
-border-top-left-radius: 10rpx;border-bottom-left-radius: 10rpx;word-wrap : break-word}
+.itemleft{font-size: 26rpx;color: #fff;background: #000;opacity: 0.2;width: 60rpx;height: 85rpx;text-align: center;
+border-top-left-radius: 10rpx;border-bottom-left-radius: 10rpx;padding-left:18rpx;padding-right:18rpx;display: flex;align-items: center;justify-content: center;}
 .showmodel{position: fixed;z-index: 2;height: 100vh;width: 100%;top: 0;left: 0;;background:#000;opacity:0.2;}
 .btnimg{text-align: center;height: 54rpx;}
 .btnimg img{width: 54rpx;height: 54rpx;margin: auto;}

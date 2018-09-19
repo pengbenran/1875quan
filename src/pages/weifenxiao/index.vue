@@ -10,7 +10,7 @@
               <div class="careimg"><img :src="lvpicurl">
                   <div class="careinfo">
                       <div class="infotitle"><span>{{item.name}}</span><span class="tip">享受百分二的提成</span></div>
-                      <div class="carebtn" @click="jump(item.lvId)">立即开通 ></div>
+                      <div class="carebtn" @click="jump(item.lvId)"><span>立即开通</span><img :src="left03" /></div>
                   </div>
               </div>
               </div>
@@ -37,6 +37,7 @@ export default {
       care01:globalStore.state.imgapi + '/image/card1.jpg', 
       care02:globalStore.state.imgapi + '/image/card2.jpg', 
       care03:globalStore.state.imgapi + '/image/cart03.jpg', 
+      left03:globalStore.state.imgapi + '/image/rightimg.png', 
       lvpicurl:globalStore.state.imgapi + '/image/weifensrc.jpg', 
       disabled:false,
       memberLvList:[], 
@@ -86,13 +87,13 @@ export default {
             'Content-Type': 'application/json'
             },
             success: function (res) {
-                console.log("检测是否请求-----+++------")
-                   
                 if(res.data.code==0){
                     that.memberLvList=res.data.memberLvList
                   console.log(that.memberLvList);
                   console.log("---------------")
                 }
+                console.log("检测是否请求-----+++------")
+                console.log(that.memberLvList);
             }
         })
         }
@@ -121,9 +122,8 @@ export default {
                 that.isPass=true,
                 that.money=res.data.money
             }
-            
             }
-        })
+         })
         }
 
     }
@@ -154,8 +154,10 @@ img{width: 100%;height: 100%;display: block;}
 .careimg{position: relative;height: 376rpx;margin-top: 30rpx;}
 .careinfo{position: absolute;top: 0;width: 90%;height: 78%;left: 0;display: flex;flex-direction: column;justify-content: space-between;padding:4% 5%;}
 .careinfo span{color: #fff;}
-.carebtn{text-align: right;font-size: 28rpx;color:#fff;}
-.tip{font-size: 32rpx;text-align: center;}
+.carebtn{display: flex;align-items: center;justify-content: flex-end;font-size: 28rpx;color:#fff;}
+.carebtn img{height: 30rpx;width: 22rpx;margin-left: 16rpx;}
+.tip{font-size: 32rpx;text-align:left;}
+.list{padding-bottom: 50rpx;}
 
 .indexContainer{height: 100vh;background: #fff;}
 .tipconten{text-align: center;font-size: 34rpx;}

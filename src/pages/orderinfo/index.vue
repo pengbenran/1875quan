@@ -107,7 +107,8 @@ image{
 .shopleft{width: 26%;padding: 0 20rpx}
 .shopleft img{height: 168rpx;}
 .shopright{width: 65%;display: flex;justify-content: space-between;height: 165rpx;}
-.infos .zi{font-size: 28rpx;color: #666;}
+.infos .zi{color: #666;font-size: 26rpx;height: 72rpx;text-overflow:ellipsis;overflow: hidden;word-break:break-all;
+display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
 .infos .num{color:#a4a4a4;font-size: 26rpx;padding-top: 35rpx;}
 .pirce span{display:block;font-size: 28rpx;text-align: right;padding-top: 10rpx;}
 .pirce span:nth-child(1){color:#ff6d6d;}

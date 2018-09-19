@@ -3,16 +3,10 @@
     <form @submit='fromsub'>
     <div class="ruzhubrand"><img :src="headerimg"></div>
     <div class="item itemname"><span>姓 名：</span><input name='username' type="text" placeholder="请输入商家姓名" placeholder-style='#ccc'/></div>
-    <div class="item"><span>商家名称：</span><input name='shopname' type="text" placeholder="请输入商家名称" placeholder-style='#ccc'/></div>
-    <div class="listitem"><span class="hangye">行业分类：</span><div class="list">
-       <picker @change="changpick" :value='index' :range='listmenu'>
-          <div class="picker"><span v-if="pickerbool">请选择</span><span v-else>{{listmenu[index]}}</span></div>
-       </picker>
-      <img style="transform:rotate(-90deg)" :src="downimg"></div></div>
+    <div class="item"><span>公司名称：</span><input name='shopname' type="text" placeholder="请输入公司名称" placeholder-style='#ccc'/></div>
     <div class="item"><span>联系电话：</span><input name='phone' type="text" placeholder="请输入您的电话" placeholder-style='#ccc'/></div>
-    <div class="item"><span>详细地址：</span><input name='aress' type="text" placeholder="请输入详细地址" placeholder-style='#ccc'/></div>
-    
-    <div class="btn"><button form-type='submit'>申请入驻</button></div>      
+    <div class="item itemname"><span>区  域：</span><input name='aress' type="text" placeholder="请输入区域地址" placeholder-style='#ccc'/></div>
+    <div class="btn "><button form-type='submit'>申请入驻</button></div>      
     </form>  
   </div>
   </template>
@@ -25,10 +19,6 @@ export default {
     return {
        downimg:globalStore.state.imgapi+'image/down.png', 
        headerimg:globalStore.state.imgapi+'image/guanggaowei.jpg', 
-       pickerbool:true,
-       index:0,
-       menus:[],
-       listmenu:[]
     }
   },   
 
@@ -38,13 +28,7 @@ export default {
   },
 
   methods: {
-     changpick(e){
-       let that=this;
-       that.pickerbool=false;
-      console.log(e); 
-      console.log(e.mp.detail.value);
-      that.index=e.mp.detail.value;
-  },
+
 
   fromsub(s){
     let that=this;
@@ -57,11 +41,10 @@ export default {
     // var mobile=e.detail.value.phone;
     // var address=e.detail.value.aress;
     // var state=2;
-    params.name=e.detail.value.username;
-    params.shopName=e.detail.value.shopname;
-    params.shopType=that.listmenu[that.index];
+    params.promoterName=e.detail.value.username;
+    params.companyName=e.detail.value.shopname;
+    params.areaType=e.detail.value.aress;
     params.mobile=e.detail.value.phone;
-    params.address=e.detail.value.aress;
     params.state=2;
     var memberId=wx.getStorageSync('memberId');
     // console.log("===========");
@@ -91,7 +74,7 @@ export default {
             })
       }else{
           wx.request({
-          url:globalStore.state.api + '/api/index/shopApply', 
+          url:globalStore.state.api + '/api/index/companyApply', 
             data: {
             param:params
             },
@@ -134,41 +117,12 @@ export default {
   
   
   },
-  fenlei(){
-     // 获取商品详情
-    var that = this;
-    wx.request({
-      url: globalStore.state.api + '/api/index/main',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      success: function (res) {
-        //将获取到的json数据，存在名字叫zhihu的这个数组中
-         that.menus= res.data.data.menus;
-         console.log(that.menus.length);
-          var arr=[];
-          for(var i=0;i<that.menus.length;i++){
-            arr.push(that.menus[i].name);
-           }
-          console.log(arr);
-          that.listmenu=arr;
-      },
-      fail: function () {
-        wx.showToast({
-          title: '网络异常',
-        })
-
-      }
-    })
-
-
-  }
+  
 
   },
 
  onLoad(){
-    let that=this;
-    that.fenlei();
+
  }
 }
 </script>

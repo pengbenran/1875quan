@@ -34,6 +34,11 @@
         </div>
       </div>
     </div>
+   
+   <div class="footer">
+     <div class="item"></div>
+   </div>
+
   </div>
 </template>
 
@@ -48,7 +53,8 @@ export default {
        {name:"待付款",imgUrl:globalStore.state.imgapi+'image/qianbao.png',statuscount:0},
        {name:"待发货",imgUrl:globalStore.state.imgapi+'image/shouhuo.png',statuscount:0},
        {name:"待收货",imgUrl:globalStore.state.imgapi+'image/fahuo.png',statuscount:0},
-       {name:"已完成",imgUrl:globalStore.state.imgapi+'image/tuihuo.png',statuscount:0}
+       {name:"已完成",imgUrl:globalStore.state.imgapi+'image/tuihuo.png',statuscount:0},
+       {name:"售后",imgUrl:globalStore.state.imgapi+'image/souhuo.jpg',statuscount:0}
        ],
        userInfo:[],
        isUse: true,
@@ -57,6 +63,7 @@ export default {
        isMember:true,
        hasmemberId: false,
        isUse: true,
+<<<<<<< HEAD
        kind: [{ name: '充值圈圈', imageurl:globalStore.state.imgapi+'image/chongzhi.jpg',jumpurl:'../quanchongzhi/main',menuid:1},
       { name: '圈圈兑换', imageurl: globalStore.state.imgapi+'image/duihuan.jpg', jumpurl: '../quanduihuan/main',menuid:2 },
       { name: '我的圈圈', imageurl: globalStore.state.imgapi+'image/qiandao.jpg', jumpurl: '../jifen/main',menuid:3 },
@@ -65,6 +72,22 @@ export default {
       { name: '我的收藏', imageurl: globalStore.state.imgapi+'image/shoucang.jpg', jumpurl: '../collection/main',menuid:6 },
       { name: '微分销', imageurl: globalStore.state.imgapi+'image/weifenxiao.jpg', jumpurl: '../weifenxiao/main',menuid:7 },
       { name: '商家入驻', imageurl: globalStore.state.imgapi+'image/ruzhu.jpg', jumpurl: '../storeruzhu/main',menuid:8 }],
+=======
+       kind: [
+      { name: '我的拼团', imageurl: globalStore.state.imgapi+'image/pingtuan.jpg', jumpurl: '../grouplist/main',menuid:1 },
+      { name: '签到有礼', imageurl: globalStore.state.imgapi+'image/qiandao.png', jumpurl: '../jifen/main',menuid:2 },
+      { name: '我的收藏', imageurl: globalStore.state.imgapi+'image/shoucang.png', jumpurl: '../collection/main',menuid:3 },
+      { name: '收货地址', imageurl: globalStore.state.imgapi+'image/address.png', jumpurl: '../address/main',menuid:4 },
+      { name: '成为推广商', imageurl: globalStore.state.imgapi+'image/weifenxiao.png', jumpurl: '../membershipdetail/main',menuid:5 },
+      { name: '充值圈圈', imageurl:globalStore.state.imgapi+'image/chongzhi.png',jumpurl:'../quanchongzhi/main',menuid:6},
+      { name: '商家入驻', imageurl: globalStore.state.imgapi+'image/ruzhu.jpg', jumpurl: '../storeruzhu/main',menuid:7 },
+      { name: '招募代理商', imageurl: globalStore.state.imgapi+'image/tuikuangshang.png', jumpurl: '../dailishang/main',menuid:8 },
+      { name: '圈圈兑换', imageurl: globalStore.state.imgapi+'image/duihuan.jpg', jumpurl: '../quanduihuan/main',menuid:9 },
+      { name: '邀请好友', imageurl: globalStore.state.imgapi+'image/haoyou.png', jumpurl: '../haoyou/main',menuid:10 },
+      { name: '联系我们', imageurl: globalStore.state.imgapi+'image/kefu.png', jumpurl: '../storeruzhu/main',menuid:11 },
+      { name: '关于我们', imageurl: globalStore.state.imgapi+'image/women.png', jumpurl: '../women/main',menuid:12 },
+      ],
+>>>>>>> 544d0760838816522359c3e857c83ff6dba929a9
       }
   },
 
@@ -123,7 +146,7 @@ export default {
     var that = this;
     // that.onShow();
     if (that.hasmemberId && that.isUse) {
-         if(menuid==7){
+         if(menuid==5){
             //当点击微分销的时候
               wx.request({
               url: globalStore.state.api + '/api/distribe/whetherDistribe',
@@ -134,9 +157,13 @@ export default {
                 'Content-Type': 'application/json'
               },
               success: function (res) {
-                if(res.data.code==1){
+                if(res.data.code==0){
                   wx.navigateTo({
+<<<<<<< HEAD
                     url: url,
+=======
+                        url: url+'?money='+res.data.money,
+>>>>>>> 544d0760838816522359c3e857c83ff6dba929a9
                   })
                 }
                 else{
@@ -146,8 +173,17 @@ export default {
                 }
               }
             })
+          }else if(menuid==11){
+              wx.makePhoneCall({
+                phoneNumber: '15623140205', //仅为示例，并非真实的电话号码
+                success:function(){
+                  console.log("拨打成功")
+                },
+                fail:function(){
+                  console.log("拨打失败")
+                }
+              })
           }
-
           else{
             wx.navigateTo({
               url: url ,
