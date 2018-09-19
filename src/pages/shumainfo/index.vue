@@ -11,6 +11,7 @@
 
      <div class="Shopinfo">
          <div class="shoppir"><label>￥</label>{{goodDetail.price}}</div>
+        <div class="shoppir"><label>￥</label>{{goodDetail.cost}}+{{goodDetail.memberPoint}}圈圈</div>
          <div class="shopinfotitel">{{goodDetail.name}}</div>
          <div class="shopinfotab"><span>快递：免运费</span><span>库存：{{goodDetail.enableStore}}</span></div>
      </div>
@@ -34,15 +35,27 @@
      </div>
      </div>
      <!--shopcontent end-->
+
      <div class="commodity_screen"  v-if="showModalStatus" @click="colModel"></div>
      <div class="shopmodel" v-if="showModalStatus" :animation="animationData">
        <div class="modelwarp">
          <div class="warpleft"><image :src="goodDetail.thumbnail"></image></div>
          <div class="warpright">
            <div class="warprighttop"><span>{{goodDetail.name}}</span><div class="col-img"><image :src="xximg" @click="colModel"></image></div></div>
+           <div class="warprightbottom"><span>￥{{goodDetail.cost}}+{{goodDetail.memberPoint}}</span></div>
           <div class="warprightbottom"><span>￥{{goodDetail.price}}</span><span>库存{{goodDetail.enableStore}}件</span></div>
          </div>
        </div>
+        <!--规格  -->
+        <div class='commodity-box2' v-for="(spaceOut,spaceValueindex) in spaceValue" :index="index" :key="key">
+            <text>{{spaceOut.specName}}</text>
+            <div class='spebox'>
+              <div class='specification' v-for=' (spaceInner, spaceInnerindex) in spaceOut.value' @click='chooseSpace(spaceValueindex,spaceInnerindex)'>
+                <button class="spebtn" v-bind:class="{active:spaceInner.isSelect}">{{spaceInner.specvalue}}</button>
+              <!--   <button class="spebtn {{current == item.specValueId?'active':''}}" data-text='{{item.specvalue}}' data-id="{{item.specValueId}}" wx:for-index="index" wx:for-item="j" bindtap='changs'>{{item.specvalue}}</button> -->
+              </div>
+            </div>
+        </div>
        <div class="modelNum">
           <span>购买数量</span>
           <div class="btn">
@@ -51,17 +64,20 @@
             <div class="add1"  @click="plus">+</div>
           </div>
        </div>
+       <div>
+       
+       </div>
        <div class="modelbtn">
          <div class="cart" @click="toCart">加入购物车</div>
          <div class="buy" @click="next">立即购买</div>
        </div>
      </div>
-     <!--model end-->
+
 
      <div class="shopbottom">
        <div class="shopbottomleft">
          <div class="span" @click="tohome"><image :src="shopimg"></image><small>首页</small></div>
-         <div class="span"><image src="https://shop.guqinet.com/html/images/shanquan/shumainfo/lt.png"></image><small>客服</small></div>
+         <div class="span"><image :src="kefu"></image><small>客服</small></div>
          <div class="span" @click="collection">
            <image v-if="!posts" :src="xin"></image>
            <image v-else :src="selctxin"></image>
@@ -87,6 +103,7 @@ export default {
   data () {
     return {
      goodDetail:[],
+     spaceValue:[],
      Gallery:[],
      tags:[],
      article:"",
@@ -97,13 +114,19 @@ export default {
      selctxin: globalStore.state.imgapi+'image/selectxin.png',
      gimg:globalStore.state.imgapi+"image/zhichi.jpg",
      xximg:globalStore.state.imgapi+"/image/xx.png",
+     kefu:globalStore.state.imgapi+"/image/weixing02.png",
      showModalStatus: false,
      animationData:{},
      pic:1,
      posts:false,
      imageWidth:'',
      imageHeigth:'',
-     goodname:''
+     goodname:'',
+     specValueId:'',
+     goodsId:'',
+     space:'',
+     count:0,
+
 
      }
   },
@@ -113,8 +136,61 @@ export default {
   },
 
   methods: {
+    chooseSpace:function(spaceValueindex,spaceInnerindex){
+      var that =this;
+ 
+      for(var i in that.spaceValue){
+        for(var j in that.spaceValue[i].value){
+          that.spaceValue[spaceValueindex].value[j].isSelect=false
+        }
+      }
+      that.spaceValue[spaceValueindex].value[spaceInnerindex].isSelect=true
+ 
+      let count=0;
+      // 遍历数组，如果所有规格都有选项则发起请求拿到商品详情
+      for(var i in that.spaceValue){
+        for(var j in that.spaceValue[i].value){
+          if(that.spaceValue[i].value[j].isSelect==true){
+            count++
+          }
+        }
+      }
+      that.count=count;
+      if(count==that.spaceValue.length){  
+       that.specValueId=""
+       that.space=""
+       for(var i in that.spaceValue){
+        for(var j in that.spaceValue[i].value){
+          if(that.spaceValue[i].value[j].isSelect==true){
+            that.specValueId+=that.spaceValue[i].value[j].specValueId+','
+            that.space+=that.spaceValue[i].value[j].specvalue
+          }
+        }
+       }
+      let goodparms={}
+      //that.memberId=wx.getStorageSync('memberId');//此处定义了memberId
+      goodparms.goodsId=that.goodsId;
+      goodparms.specs= that.specValueId.slice(0,-1);
+       wx.request({
+        url: globalStore.state.api  + '/api/Goods/getProduct',
+        data: {
+          parms: goodparms
+        },
+        header: {
+          'Content-Type': 'json'
+        },
+        success: function (res) {
+            that.productId=res.data.product.productId
+            that.goodDetail.price=res.data.product.price;
+            that.goodDetail.cost=res.data.product.cost;
+            that.goodDetail.memberPoint=res.data.product.isPack;
+            that.goodDetail.enableStore=res.data.product.enableStore;
+        }
+      })
+      }
+    },
     //请求页面初始数据
-    geiShopinfo(goodid){
+    getShopinfo(goodid){
       let that=this;
       wx.showLoading({
       title: '加载中',
@@ -123,7 +199,7 @@ export default {
       that.memberId=wx.getStorageSync('memberId');//此处定义了memberId
       goodparms.goodsId=goodid;
       goodparms.memberId= that.memberId;//此为变量为异步缓存过来的参数
-      console.log(goodparms)
+   
      wx.request({
         url:  globalStore.state.api +'/api/Goods/getGoods',
         data: {
@@ -144,34 +220,50 @@ export default {
            that.goodDetail=res.data.Goods;
            that.Gallery=res.data.Gallery;
            that.tags=res.data.tags;
+           // 判断是否有规格
+           if(res.data.Goods.haveSpec!=0){
+            let adjuncts=JSON.parse(res.data.Goods.adjuncts)
+            for(var i in adjuncts){
+              for(var j in adjuncts[i].value){
+                adjuncts[i].value[j].isSelect=false
+              }
+
+            }
+            that.spaceValue = adjuncts;
+
+          }else{
+             wx.request({
+              url: globalStore.state.api  + '/api/Goods/getProduct',
+              data: {
+                parms: goodparms
+              },
+              header: {
+                'Content-Type': 'json'
+              },
+              success: function (res) {
+                  that.productId=res.data.product.productId
+              }
+            })
+            that.spaceValue = [];
           }
+         
+          }
+    
           that.article = res.data.Goods.intro;
           
-          console.log(res.data)
+
         }
       })
       //请求获取productId
-      wx.request({
-        url: globalStore.state.api  + '/api/Goods/getProduct',
-        data: {
-          parms: goodparms
-        },
-        header: {
-          'Content-Type': 'json'
-        },
-        success: function (res) {
-            that.productId=res.data.product.productId
-
-        }
-      })
+      
     },
 
      showmodel(){
-      console.log("55555")
+
       this.showModle();
     },
     colModel(){
-         console.log("9666")
+
       this.hidemodel();
     },
     //显示模拟框
@@ -247,7 +339,9 @@ export default {
             cartparms.name = that.goodDetail.name,
             cartparms.price = that.goodDetail.price,
             cartparms.cart = 1//判断购物车订单
-            wx.request({
+            if(that.goodDetail.haveSpec==0){
+             cartparms.specvalue=null;
+             wx.request({
               url: globalStore.state.api + '/api/shoppingCart/save',
               method: 'POST',
               header: {
@@ -258,13 +352,47 @@ export default {
               },
               success: function (res) {
                 wx.showToast({
-                title: "添加成功",
-                icon: "success",
-                durantion: 2000
-              })
-               that.colModel()
+                  title: "添加成功",
+                  icon: "success",
+                  durantion: 2000
+                })
+                that.colModel()
               }
             })
+            }else{
+              if(that.count==that.spaceValue.length){
+               cartparms.specvalue=that.space;
+               wx.request({
+                url: globalStore.state.api + '/api/shoppingCart/save',
+                method: 'POST',
+                header: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                data: {
+                  parms: JSON.stringify(cartparms)
+                },
+                success: function (res) {
+                  wx.showToast({
+                    title: "添加成功",
+                    icon: "success",
+                    durantion: 2000
+                  })
+                  that.colModel()
+                }
+              })
+              }else{
+               wx.showToast({
+                title:"请选择规格",
+                icon:'none',
+                duration:1000
+              })
+              }
+            }
+
+
+
+            
+           
         }
       }
      },
@@ -273,7 +401,7 @@ export default {
     next(){
      let that=this;
      if(wx.getStorageSync("memberId")=='00'){
-       console.log("555");
+
       wx.showModal({
         title:'提示',
         content: '你还未登录，是否登录',
@@ -300,12 +428,38 @@ export default {
          let goodarr=[];
          let goodlist={};
          goodlist.pic = that.pic;
+         goodlist.num=that.pic;
+         goodlist.name=that.goodDetail.name;
          goodlist.goodsId = that.goodDetail.goodsId;
          goodlist.productId = that.productId;
-         goodarr[0]=goodlist;
-         wx.navigateTo({//跳转并且带参数传输
-         url: "../dingdan/main?goodlist=" + JSON.stringify(goodarr)+'&cart=0'+'&goodname='+that.goodname
-        })
+         goodlist.price=that.goodDetail.price;
+         goodlist.cost=that.goodDetail.cost;
+         goodlist.memberPoint=that.goodDetail.memberPoint;
+         goodlist.image=that.goodDetail.thumbnail
+         if(that.goodDetail.haveSpec==0){
+           goodlist.specvalue=null
+           goodarr[0]=goodlist;
+            wx.navigateTo({//跳转并且带参数传输
+             url: "../dingdan/main?goodlist=" + JSON.stringify(goodarr)+'&cart=0'+'&goodname='+that.goodname
+            })
+         }
+         else{
+            if(that.count==that.spaceValue.length){
+              goodlist.specvalue=that.space
+              goodarr[0]=goodlist;
+      
+              wx.navigateTo({//跳转并且带参数传输
+               url: "../dingdan/main?goodlist=" + JSON.stringify(goodarr)+'&cart=0'+'&goodname='+that.goodname
+              })
+            }
+            else{
+              wx.showToast({
+                title:"请选择规格",
+                icon:'none',
+                duration:1000
+              })
+            }
+         }    
        }
      }
     },
@@ -330,7 +484,7 @@ export default {
         favorite.memberId=that.memberId;
         favorite.goodsId=that.goodDetail.goodsId;
         parms.favorite=favorite;
-        console.log(favorite);
+  
         parms=JSON.stringify(parms);
         if(that.posts==false){//若未收藏点击则收藏
           wx.request({
@@ -349,7 +503,7 @@ export default {
                 icon:'success',
                 durantion:2000
               })
-              console.log("收藏已经执行")
+   
             }
           })
         }else{//若已收藏则点击取消收藏
@@ -369,7 +523,7 @@ export default {
                 icon:'success',
                 durantion:2000
               })
-              console.log("取消收藏已经执行")
+            
             }
           })
         }
@@ -402,17 +556,19 @@ export default {
       })
     }
    },
-
    onLoad:function(options){
     var that=this
-     var windWidth=(wx.getSystemInfoSync().windowWidth);
+    var windWidth=(wx.getSystemInfoSync().windowWidth);
      that.imageWidth=windWidth+"px";
      that.imageHeigth=windWidth*9/16+'px';
-     this.geiShopinfo(options.goodsId);
-     this.goodname=options.goodname;
+     that.getShopinfo(options.goodsId);
+     that.goodsId=options.goodsId;
+     that.goodname=options.goodname;
   },
   onShow:function(){
-    this.showModalStatus=false;
+    var that=this;
+    that.showModalStatus=false;
+    
   }
 }
 </script>
@@ -439,6 +595,39 @@ image{
   z-index: 1000;
   color: #fff;
 }
+
+/*规格*/
+.commodity-box2{
+ font-size:32rpx;
+ padding-top: 20rpx;
+ padding-left: 20rpx;
+ box-sizing: border-box;
+}
+.spebtn{
+text-align:center;
+height: 60rpx;
+line-height: 60rpx;
+display:inline-table;
+padding:5px 10px;
+font-size:30rpx;
+border-radius:5rpx;
+background: #f2f2f2;
+color: #000;
+box-sizing: border-box; 
+}
+.spebox{display: flex;
+  flex-wrap: wrap;
+
+}
+.specification{
+ margin-top: 10rpx;
+ margin-right: 10rpx;
+}
+/* 规格被选中 */
+.active{
+  color:#fff;
+  background: #F64F57;
+}
 /*Shopinfo*/
 
 .Shopinfo{padding: 0 25rpx 15rpx;}
@@ -447,7 +636,12 @@ image{
 .shopinfotab{display: flex;justify-content: space-between;margin-top: 18rpx;}
 .shopinfotab span{color:#9e9e9e;font-size: 20rpx;}
 .shopinfotitel{font-size: 30rpx;}
+
+.sminfoBrand swiper{height: 460rpx;}
+.sminfoBrand image{width: 100%;}
+
 .sminfoBrand image{width: 100%;height: 100%;display: block;}
+
 /*shopcontent*/
 .shopcontent{border-top:25rpx solid #f5f5f5;margin-bottom: 110rpx;}
 .shopcontenttop{padding:15rpx 25rpx;;}
@@ -514,5 +708,6 @@ image{
 .modelbtn .cart{background:#feba33;}
 .modelbtn .buy{background:#ff4f4f;}
 
-
+.sminfoContainer{position: relative;}
+.shoumask{width:100%;height:100vh;position:fixed;top:0;left:0;background:#000;opacity:0.2;overflow:hidden;z-index:1000;color:#fff;z-index: 1;}
 </style>

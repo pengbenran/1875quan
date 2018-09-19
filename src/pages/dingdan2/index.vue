@@ -368,13 +368,15 @@ export default {
                       if (res.code) {
                         //发起网络请求
                         wx.request({
-                          url: globalStore.state.api + "/api/pay/prepay",
+                          url: globalStore.state.api + "/api/pay/prepayCollage",
                           data: {
                             code: res.code,
                             parms: parms,
+                            memberCollageId:that.memberCollageId
                           },
                           method: 'GET',
                           success: function (res) {
+                            if(res.data.status=='success'){
                             var pay = res.data
                             wx.requestPayment({
                               timeStamp: pay.timeStamp,
@@ -457,9 +459,19 @@ export default {
                               fail: function (res) {
                                 // fail   
                                 wx.showToast({
-                                  title: '登录失败',
+                                  title: '支付失败',
                                   icon: 'success',
                                   duration: 2000
+                                })
+                                wx.request({
+                                  url: globalStore.state.api + "/api/collage/payCancel",
+                                  data: {
+                                    memberCollageId:that.memberCollageId
+                                  },
+                                  method: 'GET',
+                                  success: function (res) {
+
+                                  }
                                 })
 
                               },
@@ -467,20 +479,29 @@ export default {
 
                               }
                             })
-                          },
-                          fail: function () {
+                            }
+                            else{
+                              wx.showToast({
+                                title:'已成团',
+                                icon:'none',
+                                duration:1000
+                              })
+                            }
 
-                          },
-                          complete: function () {
+                        },
+                         fail: function () {
 
-                          }
+                        },
+                        complete: function () {
+
+                        }
                         })
 
-                      } else {
+                        } else {
 
-                      }
-                    }
-                  });
+                        }
+                        }
+                        });
                 }
               })
             }
@@ -718,7 +739,7 @@ export default {
       }
         that.isKaituan= false
     }
-    // else if(that.Type="KJ"){
+    // else if(that.Type="KJ"){ //此处为设置砍价的事件
     //   // 砍价
     //   if (options.cutId == undefined) {   
     //      that.cutId=wx.getStorageSync('cutId')

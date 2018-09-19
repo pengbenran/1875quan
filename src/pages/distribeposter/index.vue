@@ -147,7 +147,7 @@ export default {
         'Content-Type': 'application/json'
       },
       data: {
-        page: 'pages/index',
+        page: 'pages/index/index',
         scene: options.distribeId
       },
       success: function (res) {

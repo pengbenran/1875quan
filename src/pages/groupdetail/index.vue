@@ -52,6 +52,9 @@
 <div class='Offered' v-if="pingtuandetail.iscollage==2">
   <button class='btn' open-type='share'>邀请好友参团</button>
 </div>
+<!-- <div class='Offered'>
+  <button class='btn' @click="jumpindex">返回首页</button>
+</div> -->
 <!--拼团玩法 -->
 <div class='paly'>
   <div class='paly-left'>
@@ -78,24 +81,35 @@
   <text class='open'>{{item.entertime}}参团</text>
   </div>
 </div> -->
-  
+   <showbtn :lisbtn_s='lisbtn' :selectbtnbool_s='selectbtnbool'/>
   </div>
 </template>
 
 <script>
-import globalStore from "../../stores/global-store"
+import globalStore from "../../stores/global-store";
+import showbtn from '../../components/showBtn';
 export default {
   data () {
     return {
       pingtuandetail:{},
-      collageSucceed:[]
+      collageSucceed:[],
+      lisbtn:[{btnname:'首页',btnimg:globalStore.state.imgapi +"/image/listbtn02.png",url:'../index/main'},
+             {btnname:'我的',btnimg:globalStore.state.imgapi +"/image/listbtn03.png",url:'../my/main'},
+             {btnname:'收藏',btnimg:globalStore.state.imgapi +"/image/listbtn01.png",url:'../collection/main'},
+             {btnname:'充值',btnimg:globalStore.state.imgapi +"/image/listbtn04.png",url:'../quanchongzhi/main'},
+     ],
      }
     },
   components: {
-  
+  showbtn
   },
 
   methods: {
+    jumpindex:function(){
+      wx.switchTab({
+        url: '../index/main',
+      })
+    }
  
   },
    onShareAppMessage: function () {

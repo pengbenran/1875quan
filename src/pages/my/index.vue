@@ -136,7 +136,7 @@ export default {
               success: function (res) {
                 if(res.data.code==1){
                   wx.navigateTo({
-                        url: url,
+                    url: url,
                   })
                 }
                 else{

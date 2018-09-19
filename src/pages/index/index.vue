@@ -48,8 +48,8 @@
       </div>
 
             <ul class="smlistUl">
-                <li v-for="(item,itemindex) in goods" :key='item' :index='itemindex'>
-                    <a :href="'../shumainfo/main?goodsId='+item.goodsId+'&catid='+item.catId+''">
+                <li v-for="(item,itemindex) in goods" :key='item' :index='itemindex' @click="toshopinfo(item.goodsId,item.catId)">
+       
                     <div class="smlistimg"><image :src="item.thumbnail"></image></div>
                     <div class="smlistinfo">
                         <div class="infotitle">{{item.name}}</div>
@@ -57,7 +57,7 @@
                           <small>￥{{item.price}} <label>848人购买</label></small><small class="smallLeft">....</small>
                         </div>
                     </div>
-                    </a>
+      
                 </li>
                 <!--template内以上为动态代码 以下均可删除-->
             </ul>
@@ -138,6 +138,11 @@ export default {
           url:'../lingshouindex/main?catId='+catId
         })
       }
+    },
+    toshopinfo:function(goodsId,catId){
+      let that=this;
+      console.log(goodsId)
+      wx.navigateTo({ url: '../shumainfo/main?goodsId='+goodsId+'&catid='+catId });
     },
    //获取初始数据后期更改(暂时数据)
    getCode(callback){
@@ -384,6 +389,8 @@ padding-right: 15rpx;
   width:94%;
   padding-left: 3%;
   padding-right: 3%;
+  display: flex;
+  
   overflow: scroll;
   white-space:nowrap;
   margin-top: 10rpx;
@@ -398,6 +405,7 @@ padding-right: 15rpx;
 .membeintrodetaillist{
   width: 300rpx;
   text-align: center;
+  margin-right: 38rpx;
 }
 .groupDetail{
  text-align: center;

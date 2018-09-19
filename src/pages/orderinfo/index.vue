@@ -17,8 +17,7 @@
         <div class="shopleft"><img :src="item.image"/></div>
         <div class="shopright">
           <div class="infos">
-            <div class="zi">{{item.name}}</div>
-            <div class="num">20只/一盒</div>  
+            <div class="zi">{{item.name}}</div> 
           </div>
           <div class="pirce">
             <span>￥{{item.price}}</span>
@@ -46,8 +45,8 @@ import globalStore from "../../stores/global-store"
 export default {
   data () {
     return {
-        headerimg:globalStore.state.imgapi+'image/order04.png',
-        orderimg:globalStore.state.imgapi+'image/order01.jpg',
+        headerimg:globalStore.state.imgapi+'/image/order04.png',
+        orderimg:globalStore.state.imgapi+'/image/order01.jpg',
         shopimg:globalStore.state.imgapi+'image/quanquanlist01.png',
         OrderList:{},
         goodItem:{},

@@ -18,7 +18,8 @@
             <div class="right">
               <div class="title">{{item.name}}</div>
               <div class="map"><img :src="listmap"><span>{{item.address}}</span></div>
-              <span class="care">{{item.juli}}</span>
+              <span class="care"v-if="item.juli<1000">{{item.juli}}m</span> 
+              <span class="care"v-else>{{item.juli/1000}}km</span> 
             </div>
           </div>
      </div>
@@ -57,6 +58,9 @@ export default {
       }
       //设置为true
       that.listTab[index].tabstu=true;
+      if(that.listTab[1].tabstu==true){
+
+      }
    },
    tojump:function(brandId,juli){
     wx.navigateTo({
@@ -69,13 +73,8 @@ export default {
     var a = rad1 - rad2;
     var b = lng1 * Math.PI / 180.0 - lng2 * Math.PI / 180.0;
     var r = 6378137;
-    let juli=parseInt(r * 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) + Math.cos(rad1) * Math.cos(rad2) * Math.pow(Math.sin(b / 2), 2)))) 
-    if(juli<1000){
-      return juli+'m'
-    }else{
-       return juli/1000+'km'
-    }
-   
+    return parseInt(r * 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) + Math.cos(rad1) * Math.cos(rad2) * Math.pow(Math.sin(b / 2), 2)))) 
+
   }
 
   },
@@ -132,7 +131,7 @@ img{width: 100%;height: 100%;display: block;}
 .left img{height: 150rpx;}
 .map{display: flex;align-items: center;}
 .right{width: 76%;border-bottom:1px solid #f6f6f6;}
-.right img{width:30rpx;height: 36rpx;margin-right: 10rpx;}
+.right img{width:28rpx;height: 36rpx;margin-right: 10rpx;}
 .map span{color: #6f6f6f;font-size:28rpx}
 .care{display: inline-block;padding-left: 15rpx;padding-right: 15rpx;height: 38rpx;line-height: 38rpx;background: #fe7d77;color: #fff;font-size: 26rpx;border-radius: 8rpx;}
 .tip{padding-top: 30rpx;color: #6f6f6f;text-align: center;font-size: 34rpx;}

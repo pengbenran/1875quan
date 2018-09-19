@@ -352,7 +352,7 @@ export default {
                     duration: 2000
                   })
 
-                  if(shipzip!=0){
+                  if(gainedpoint!=0){
                     // 选择圈圈加现金支付
                     let fenrunParm = {}
                     fenrunParm.memberId = that.memberId
