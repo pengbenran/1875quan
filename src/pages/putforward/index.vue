@@ -7,7 +7,7 @@
       </div>
       <div class='putforwardnum'>
         <div class='title'>提现金额</div>
-        <div class='putforwardinpt'>￥ <input placeholder='请输入提现金额' @input="bindKeyInput" auto-focus :value='inputValue'></input></div>
+        <div class='putforwardinpt'>￥ <input placeholder='请输入提现金额' placeholder-style='font-weight: inherit;color:rgb(163, 163, 163);font-size:28rpx;' @input="bindKeyInput" auto-focus :value='inputValue'></input></div>
       </div>
       <div class='tip'>当前账号余额为{{balance}}元,<text class='allforward' @click='allforward()'>全部提现</text></div>
       <div class='putforwardbtn' @click='putforwardbtn()'>立即提现</div>
@@ -40,7 +40,7 @@ export default {
    bindKeyInput(e){
      console.log(e);
     var that=this;
-    that.inputValue=e.detail.value 
+    that.inputValue=e.mp.detail.value 
    },
    putforwardbtn(){
     var that=this;
@@ -54,6 +54,7 @@ export default {
       var parms = {}
       parms.memberId = that.memberId
       parms.amount = that.inputValue
+
       wx.request({
         url: globalStore.state.api + '/api/distribe/withdraw',
         data: {
@@ -111,7 +112,7 @@ export default {
 .putforwardcard{display: flex;height: 80rpx;line-height: 80rpx;font-size: 32rpx;}
 .title{font-size: 32rpx; margin-right: 20rpx;height: 80rpx;line-height: 80rpx;}
 .putforwardinpt{height: 100rpx;border-bottom:1rpx solid #ddd; width: 90%;display:flex;align-items: center;}
-.putforwardinpt input{height: 100%;font-size: 32rpx;}
+.putforwardinpt input{height: 100%;font-size: 40rpx;font-weight: bold;}
 .tip{height: 80rpx;line-height: 80rpx;}
 .putforwardbtn{width: 80%;margin: 30rpx auto;color: #fff;background: #F5E698;height: 100rpx;line-height: 100rpx;text-align: center;border-radius: 50rpx;}
 </style>

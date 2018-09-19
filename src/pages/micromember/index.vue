@@ -21,7 +21,7 @@
             <div class='putforwardbtn' @click='jumpputforward'>提现</div>
 
             <div class="huangguan">
-                <div class="guanimg"><image v-if="lvbool" :src='hgimg01'></image>
+                <div class="guanimg"><image v-if="!lvbool" :src='hgimg01'></image>
                   <image v-else :src='hgimg02'></image>
                 </div>
                 <div class="huangguaninfo">{{lvname}}</div>
@@ -63,7 +63,7 @@
             </div>
             </div>  
             <div v-if="!hasmember" class='tip'>
-            还没有会员哦
+              还没有会员哦
             </div> 
         </div>
     </div>
@@ -220,6 +220,9 @@ image{
   height: 100%;
   display: block;
 }
+
+.fenxiaouser{background: #fff;min-height: 100vh;}
+
 .micromemberBcg{padding-right: 30rpx;padding-left: 30rpx;height: 345rpx;}
 .micromemberBcg{position: absolute;width: 90%;padding-left: 5%;padding-right: 5%;top:28rpx;}
 .kbPanel{width: 100%;height: 100rpx;background: #fff;}
@@ -232,6 +235,7 @@ image{
 .useravator{height: 100rpx;width: 100rpx;overflow: hidden;border-radius: 50%;}
 .username{color: #fff;font-size: 32rpx;height: 60rpx;line-height: 60rpx;width: 240rpx;text-align: left;padding-left: 20rpx;box-sizing: border-box;}
 .userbanlance{position: absolute;right: 60rpx;bottom: -60rpx;color: #fff;font-size: 32rpx;}
+.userbanlance div{font-size: 28rpx;}
 .putforwardbtn{position: absolute;left: 60rpx;bottom: -45rpx;color: #fff;height: 70rpx;line-height: 70rpx;border: 1rpx solid #fff;width: 150rpx;text-align: center;}
 .banlance{font-size: 50rpx;}
 .micromemberPanel{display: flex; text-align: center;color:#B0B0B0;background: #fff;height: 150rpx;padding:20rpx 0;box-sizing: border-box; border-bottom: 1px solid #F1F1F1;}
@@ -239,20 +243,23 @@ image{
 .micromemberPanelLeft{width: 49.5%;}
 .panelBalance{color: #DBC590;font-size: 40rpx;}
 .micromemberdomain{display: flex;flex-wrap: wrap;background: #fff;}
+/* .micromemberdomain div:nth-child(1){border-right: 1rpx solid #F1F1F1} */
+
 .domainLine{height: 340rpx;border: 0.5rpx solid #F1F1F1;}
 .micromemberdomainLeft{width: 49.5%;text-align: center;font-size: 32rpx;}
 .micromemberIcom{width: 100rpx;height: 100rpx;overflow: hidden;margin: 24rpx 13rpx 29rpx 19rpx;}
-.micromemberItem{display: flex;width: 50%;height: 180rpx;border-bottom:1rpx solid #F1F1F1; justify-content: space-between;}
+.micromemberItem{display: flex;width: 50%;height: 160rpx;border-bottom:1rpx solid #F1F1F1; justify-content: space-between;}
 .micromemberItemIntro{flex-grow:1; padding-right:10rpx;box-sizing: border-box; color: #B0B0B0;overflow:hidden; text-overflow:ellipsis;
 display:-webkit-box; -webkit-box-orient:vertical;-webkit-line-clamp:3; padding-top: 38rpx;box-sizing: border-box;font-size: 32rpx;}
 .micromemberItemIntrotitle{color: #000;font-size: 35rpx;}
+
 /* 会员列表 */
-.memberContain{background: #fff;margin-top:20rpx;}
+.memberContain{background: #fff;border-top: 15rpx solid #f3f3f3; padding-bottom: 20rpx;}
 .membertitle{height: 80rpx;line-height: 80rpx;padding-left: 20rpx;box-sizing: border-box;color:#dec491;font-size: 34rpx;font-weight: bold;}
-.memberList{width: 95%;margin: 10rpx auto;border: 1rpx solid #F1F1F1;border-radius:10rpx;}
-.memberuser{display: flex;width: 95%;margin: 0 auto;border-bottom:1rpx solid #F1F1F1; }
+.memberList{width: 95%;margin: 20rpx auto 0rpx;border: 1rpx solid #F1F1F1;border-radius:10rpx;}
+.memberuser{display: flex;width: 95%;margin: 0 auto;}
 .memberuseravator{width: 80rpx;height: 80rpx;overflow: hidden;margin: 20rpx;border-radius:50%; }
-.memberName{height: 100rpx;line-height: 100rpx;font-size: 0.9em;}
+.memberName{height: 100rpx;line-height: 100rpx;font-size: 30rpx;color: #666;}
 .membergrade{display: flex;justify-content: space-between;height: 80rpx;line-height: 80rpx;font-size: 0.9rem;color: #B0B0B0;width: 95%;margin: 0 auto;}
 .tip{height: 200rpx;line-height: 200rpx;text-align: center;color: #B0B0B0;}
 

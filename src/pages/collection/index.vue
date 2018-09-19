@@ -8,6 +8,8 @@
       <text @click='changeMode'>管理</text>
     </div>
   </div>
+
+<div class="warp">
   <div class="spell-down"  v-for="(item,index) in FavoriteList">
       <div class="spell-left">
         <div class='spellimg'>
@@ -17,12 +19,13 @@
     </div>
     <div class="spell-right">
       <div class="spell-top">
-        <text class='name'>{{item.goodsDO.name}}</text>
+        <text class='name'>{{item.goodsDO.name}}你好世界你好世界你好世界你好世界你好世界你好世界</text>
       </div>
       <div class=" spell-bottom">
         <div class="spe-left">
           <text class=" spetext-one">￥{{item.goodsDO.price}}</text>
           <!-- <text class=" spetext-two">￥{{item.goodsPrice}}</text> -->
+           <span class="shopinfo" @click="toshopinfo(item.goodsId)">商品详情</span>
         </div>
         <!-- <div class="spell-btn" >
           <image src='https://shop.yogain.cn/simages/image/treeyiqi/tuan.png'></image>
@@ -34,6 +37,8 @@
       <icon v-if="!item.selected" type="circle"  @click="selectList(index)" />
     </div>
   </div>
+</div>
+
   <div class="footers" v-if="inEditMode">
     <div class="cart-foot">
       <div class="foot-left">
@@ -70,6 +75,10 @@ export default {
   },
 
   methods: {
+   //跳转至商品详情页
+   toshopinfo:function(goodsId){
+     wx.navigateTo({ url:  '../shumainfo/main?goodsId='+goodsId });
+   },
    changeMode:function(){
     var that=this;
     that.inEditMode=!that.inEditMode
@@ -141,6 +150,9 @@ export default {
          }
          that.FavoriteList=res.data.FavoriteList
          that.haslist=true
+
+         console.log("查看数据")
+         console.log(that.FavoriteList)
        } 
        else{
         that.haslist=false
@@ -165,8 +177,17 @@ image{
   height: 100%;
   display: block;
 }
+
+.warp{padding-left: 25rpx;padding-right: 25rpx;}
+
+.spell-down{position: relative;box-shadow:rgb(201, 201, 201) 0 0 10px;border-radius: 20rpx;}
+
+.orderinfoContainer{
+  background: #fff;min-height: 100vh;
+}
 .spellRightIcon{
   width: 70rpx;
+  position: absolute;top: 35%;right: 0;
 }
 .collect-head{
 height:40rpx;
@@ -210,9 +231,11 @@ color: #9e9e9e;
 display: flex;
 justify-content: center;
 align-items: center;
-width:300rpx;
+width:220rpx;
 position: relative;
-height: 300rpx;
+height: 220rpx;
+margin-left: 20rpx;
+
 }
 .spellimg {
   width: 100%;
@@ -251,6 +274,8 @@ height: 300rpx;
     overflow: hidden;
     -webkit-box-orient: vertical;
     -webkit-line-clamp:2;
+    color: #666;
+    font-size: 34rpx;font-weight: 100;
 }
 .spell-conten{
   width: 30%;
@@ -258,16 +283,16 @@ height: 300rpx;
   color: #2f96fd;
 }
 .spell-bottom{
-  height: 80rpx;
-  line-height: 80rpx;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-top: 25rpx;
 }
 .spetext-one{
  font-size: 34rpx;
  color: red;
+ line-height: 55rpx;
 }
 .spetext-two{
   margin-left:10rpx;
@@ -322,4 +347,6 @@ height: 300rpx;
   align-items: center;
   font-size: 30rpx;
 }
+.spe-left{display: flex;justify-content: space-between;width: 90%;height:55rpx;}
+.shopinfo{display: inline-block;line-height: 55rpx;font-size: 26rpx;padding-left: 26rpx;padding-right: 26rpx;background: #fa4f57;color: #fff;border-radius: 45rpx;}
 </style>

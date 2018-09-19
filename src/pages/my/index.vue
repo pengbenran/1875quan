@@ -22,6 +22,12 @@
             <div class="itemname">{{item.name}}</div>
             <div class='yuan' v-if="item.statuscount!=0">{{item.statuscount}}</div>
           </li>
+          <li>
+            <button class='shouhoubtn' open-type="contact" session-from="weapp"> 
+             <image :src='shouhouimg'></image>
+             <div class="itemname">售后</div>
+             </button>
+          </li>
         </ul>
       </div>
    </div>
@@ -49,12 +55,13 @@ export default {
   data () {
     return {
        head:globalStore.state.imgapi+'image/mybcg.jpg',
+       shouhouimg:globalStore.state.imgapi+'image/souhuo.jpg',
        itemlist:[
        {name:"待付款",imgUrl:globalStore.state.imgapi+'image/qianbao.png',statuscount:0},
        {name:"待发货",imgUrl:globalStore.state.imgapi+'image/shouhuo.png',statuscount:0},
        {name:"待收货",imgUrl:globalStore.state.imgapi+'image/fahuo.png',statuscount:0},
-       {name:"已完成",imgUrl:globalStore.state.imgapi+'image/tuihuo.png',statuscount:0},
-       {name:"售后",imgUrl:globalStore.state.imgapi+'image/souhuo.jpg',statuscount:0}
+       {name:"已完成",imgUrl:globalStore.state.imgapi+'image/tuihuo.png',statuscount:0}
+      //  {name:"售后",imgUrl:globalStore.state.imgapi+'image/souhuo.jpg',statuscount:0}
        ],
        userInfo:[],
        isUse: true,
@@ -63,16 +70,6 @@ export default {
        isMember:true,
        hasmemberId: false,
        isUse: true,
-<<<<<<< HEAD
-       kind: [{ name: '充值圈圈', imageurl:globalStore.state.imgapi+'image/chongzhi.jpg',jumpurl:'../quanchongzhi/main',menuid:1},
-      { name: '圈圈兑换', imageurl: globalStore.state.imgapi+'image/duihuan.jpg', jumpurl: '../quanduihuan/main',menuid:2 },
-      { name: '我的圈圈', imageurl: globalStore.state.imgapi+'image/qiandao.jpg', jumpurl: '../jifen/main',menuid:3 },
-      { name: '收货地址', imageurl: globalStore.state.imgapi+'image/address.jpg', jumpurl: '../address/main',menuid:4 },
-      { name: '我的拼团', imageurl: globalStore.state.imgapi+'image/pingtuan.jpg', jumpurl: '../grouplist/main',menuid:5 },
-      { name: '我的收藏', imageurl: globalStore.state.imgapi+'image/shoucang.jpg', jumpurl: '../collection/main',menuid:6 },
-      { name: '微分销', imageurl: globalStore.state.imgapi+'image/weifenxiao.jpg', jumpurl: '../weifenxiao/main',menuid:7 },
-      { name: '商家入驻', imageurl: globalStore.state.imgapi+'image/ruzhu.jpg', jumpurl: '../storeruzhu/main',menuid:8 }],
-=======
        kind: [
       { name: '我的拼团', imageurl: globalStore.state.imgapi+'image/pingtuan.jpg', jumpurl: '../grouplist/main',menuid:1 },
       { name: '签到有礼', imageurl: globalStore.state.imgapi+'image/qiandao.png', jumpurl: '../jifen/main',menuid:2 },
@@ -87,7 +84,6 @@ export default {
       { name: '联系我们', imageurl: globalStore.state.imgapi+'image/kefu.png', jumpurl: '../storeruzhu/main',menuid:11 },
       { name: '关于我们', imageurl: globalStore.state.imgapi+'image/women.png', jumpurl: '../women/main',menuid:12 },
       ],
->>>>>>> 544d0760838816522359c3e857c83ff6dba929a9
       }
   },
 
@@ -159,11 +155,7 @@ export default {
               success: function (res) {
                 if(res.data.code==0){
                   wx.navigateTo({
-<<<<<<< HEAD
-                    url: url,
-=======
                         url: url+'?money='+res.data.money,
->>>>>>> 544d0760838816522359c3e857c83ff6dba929a9
                   })
                 }
                 else{
@@ -175,7 +167,7 @@ export default {
             })
           }else if(menuid==11){
               wx.makePhoneCall({
-                phoneNumber: '15623140205', //仅为示例，并非真实的电话号码
+                phoneNumber: '13767842228', //仅为示例，并非真实的电话号码
                 success:function(){
                   console.log("拨打成功")
                 },
@@ -200,7 +192,12 @@ export default {
     jumporderdetail(e){
        var that = this;
        let id=e+1;
-       let url = '../orderdetail/main?currentTarget=' + id
+       var url;
+       if(id==5){
+          url='../souhou/main'
+       }else{
+          url = '../orderdetail/main?currentTarget=' + id
+       }
        that.jump(url)
     },
     getUserInfo(e){//获取用户信息
@@ -359,4 +356,6 @@ export default {
   -webkit-tap-highlight-color: transparent;
 }
 
+.shouhoubtn{background: #fff;line-height: 44rpx;padding: 0;margin: 0;}
+.shouhoubtn::after{border: none;}
 </style>

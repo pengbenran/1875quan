@@ -21,15 +21,9 @@
      
      <div class="orderList">
 
-<<<<<<< HEAD
-      <!-- <div class="shopTitle"><image :src='homeimg' class="img01"></image>
-        <span>谷琴优品</span><image :src='titleright' class="img02"></image>
-      </div> -->
 
       <!-- <div class="shopTitle"><image :src='homeimg' class="img01"></image><span>{{goodname}}</span></div> -->
-=======
-      <div class="shopTitle"><image :src='homeimg' class="img01"></image><span>{{goodname}}</span></div>
->>>>>>> 544d0760838816522359c3e857c83ff6dba929a9
+
 
       <!--shopTile end-->
       <div class="orderinfo" v-for="(item,index) in list" :index='index' :key="item">
@@ -106,13 +100,7 @@ export default {
      ],
      select:false,
      isAddr:true,
-<<<<<<< HEAD
      selectbtnbool:false,
-=======
-
-     selectbtnbool:false,
-     //addr:[],
->>>>>>> 544d0760838816522359c3e857c83ff6dba929a9
      addr:'',
      point:0,
      point_price:0,

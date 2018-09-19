@@ -86,7 +86,11 @@
             </ul>
 
     </div>
-    
+
+    <div class="bottom">
+      <div class="btninfo">谷琴提供技术支持</div>
+      <div class="btn"><span @click="tomask">我也要做小程序</span></div>
+    </div>
 
 </div>
 </template>
@@ -170,6 +174,9 @@ export default {
         wx.navigateTo({
           url:'../storeruzhu/main'
         })
+    },
+    tomask:function(){
+       wx.navigateTo({ url: '../make/main' });
     },
     tosearch:function(){
       let that=this;
@@ -490,7 +497,7 @@ display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
 .homexin image{height: 45rpx;width: 45rpx;margin-right: 15rpx;}
 
 .search{display: flex;align-items: center;justify-content: center;}
-.search{position: fixed;z-index: 3;top: 30rpx;margin-left: 8%;border:1px solid #adadad;background: #adadad;opacity: 0.4;;border-radius: 20rpx;height: 52rpx;width: 84%;}
+.search{position:absolute;z-index: 3;top: 30rpx;margin-left: 8%;border:1px solid #adadad;background: #adadad;opacity: 0.4;;border-radius: 20rpx;height: 52rpx;width: 84%;}
 .search icon{margin-right: 20rpx;}
 .search span{font-size: 30rpx;color: #fff;}
 
@@ -503,5 +510,11 @@ display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
 .gonggao swiper div{font-size: 30rpx;}
 /* .infoitem{width:100%;position:relative;}
 .info{font-size: 28rpx;white-space:nowrap;position:absolute;top:0;} */
+
+.btninfo{text-align: center;font-size: 28rpx;color: rgb(190, 190, 190)}
+.bottom{padding-top: 25rpx;padding-bottom: 20rpx;}
+.btn{text-align: center;}
+.btn span{display: inline-block;padding-left: 25rpx;padding-right: 25rpx;
+border:1px solid #F64F57;border-radius: 15rpx;color: #F64F57;font-size: 24rpx;height: 30rpx;line-height: 30rpx;}
 </style>
 
