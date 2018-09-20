@@ -475,7 +475,7 @@ image {
 
 
 /*warp*/
-.warp{position: absolute;top: 15rpx;width: 100%;margin-bottom: 125rpx;}
+.warp{position: absolute;top: 15rpx;width: 100%;padding-bottom: 125rpx;background: #fff;}
 
 /*infowarp*/
 .infowarp {display: flex;flex-direction: column;}
@@ -506,7 +506,7 @@ image {
 /*infocontent*/
 .infocontent {display: flex;justify-content: space-between;padding: 20rpx 12rpx;}
 .contenLeft {display: flex;justify-content: center;align-items: center;}
-.righttop {font-size: 28rpx;color: #ccc;height: 75rpx;text-overflow:ellipsis;overflow: hidden;word-break:break-all;
+.righttop {font-size: 28rpx;color: #ccc;height: 75rpx;padding-right: 10rpx;text-overflow:ellipsis;overflow: hidden;word-break:break-all;
 display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
 .contentcon {display: flex;align-items: center;border-radius: 25rpx;padding-left: 15rpx;margin-right: 10rpx;margin-left: 10rpx;}
 .contentcon img {width: 160rpx;height: 160rpx;margin-right: 15rpx;}
