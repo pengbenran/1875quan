@@ -19,6 +19,9 @@
             <div class="shoppir"><label>￥</label>{{goodDetail.price}}</div>
             <div class="shoppir"><label>￥</label>{{goodDetail.cost}}+{{goodDetail.memberPoint}}圈圈</div>
           </div>
+          <div class="sharing" @click="sharemodel">
+            <image :src='shaimg'></image>
+          </div>
         </div>
         <div class="shopinfotab"><span>快递：免运费</span><span>库存：{{goodDetail.enableStore}}</span></div>
      </div>
@@ -42,7 +45,25 @@
      </div>
      </div>
      <!--shopcontent end-->
-
+     <!-- 分享模态框 -->
+  <div class="commodity_screen" @click="hideshareModal" v-if="showshareModal"></div>
+  <div :animation="animationData" class="sharemodel" v-if="showshareModal">  
+     <div class='sharemodel-left'>
+      <button open-type='share' class="sharebtn">
+       <div class='sharicon'>
+          <image src='/static/images/wetchat.png'></image>
+        </div>
+        分享好友
+      </button>    
+     </div>
+      <div class='sharemodel-right' @click='jumpshare(goodDetail.thumbnail,goodDetail.name,goodDetail.goodsId,goodDetail.price)'>
+      <div class='sharicon'>
+          <image src='/static/images/postshare.png'></image>
+        </div>
+        生成海报
+     </div>
+    </div>
+     <!-- 立即购买模态框 -->
      <div class="commodity_screen"  v-if="showModalStatus" @click="colModel"></div>
      <div class="shopmodel" v-if="showModalStatus" :animation="animationData">
        <div class="modelwarp">
@@ -115,6 +136,7 @@ export default {
      Gallery:[],
      tags:[],
      article:"",
+     shaimg:"https://shop.guqinet.com/html/images/guqinzhen/image/group/5.png",
      elesimg:globalStore.state.imgapi+"/image/group/10.png",
      shopbtnimg: globalStore.state.imgapi+'image/shopbtn.png',
      shopimg: globalStore.state.imgapi+'image/shophome01.png',
@@ -134,7 +156,7 @@ export default {
      goodsId:'',
      space:'',
      count:0,
-
+     showshareModal:false
 
      }
   },
@@ -144,6 +166,103 @@ export default {
   },
 
   methods: {
+    jumpshare:function(thumbnail,name,goodsId,price){
+    var that=this;
+    if (wx.getStorageSync('memberId')=="00"){
+      wx.showModal({
+        title: '提示',
+        content: '你还未登录，是否登录',
+        success: function (res) {
+          if (res.confirm) {
+            wx.switchTab({
+              url: '../my/my',
+            })
+          } else if (res.cancel) {
+            that.hideshareModal()
+          }         
+        }
+      })
+    }else{
+      wx.getSetting({
+        success: function (res) {
+          if (res.authSetting['scope.userInfo']) {
+            wx.request({
+              url: globalStore.state.api + '/api/distribe/whetherDistribe',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              data: {
+                memberId: wx.getStorageSync('memberId')
+              },
+              success: function (res) {
+                console.log(res.data)
+                if (res.data.code == 1) {
+                  wx.navigateTo({
+                  url: '../postersharing/main?goodid=' + goodsId + '&goodimg=' +thumbnail + '&goodname=' + name + '&goodprice=' + price+'&distribeId='+res.data.distribeId,
+                  })
+                }
+                else {
+                wx.navigateTo({
+                   url: '../postersharing/main?goodid=' + goodsId + '&goodimg=' +thumbnail + '&goodname=' + name + '&goodprice=' + price+'&distribeId=null',
+                  })
+                }
+                // wx.navigateTo({
+                //   url: '../postersharing/postersharing?goodid=' + e.currentTarget.dataset.goodid + '&goodimg=' + e.currentTarget.dataset.goodimg + '&goodname=' + e.currentTarget.dataset.goodname + '&goodprice=' + e.currentTarget.dataset.goodprice,'
+                // })
+              }
+            })
+          }
+          else {
+            wx.showModal({
+              title: '提示',
+              content: '你还未登录，是否登录',
+              success: function (res) {
+                if (res.confirm) {
+                  wx.switchTab({
+                    url: '../my/my',
+                  })
+                } else if (res.cancel) {
+                  that.hideshareModal()
+                }
+              }
+            })
+          }
+        }
+      })
+    }  
+  },
+    hideshareModal:function(){
+    var that=this;
+    var animation = wx.createAnimation({
+      duration: 200,
+      timingFunction: "linear",
+      delay: 0
+    })
+    that.animation = animation
+    animation.translateY(300).step()
+    that.animationData=animation.export()
+    setTimeout(function () {
+      animation.translateY(0).step()  
+      that.animationData=animation.export()
+      that.showshareModal=false
+    }, 200)
+    },
+    sharemodel:function(){
+    var that=this
+    var animation = wx.createAnimation({
+      duration: 200,
+      timingFunction: "linear",
+      delay: 0
+    })
+    that.animation = animation
+    animation.translateY(300).step()    
+    that.animationData= animation.export()
+    that.showshareModal = true
+    setTimeout(function () {
+      animation.translateY(0).step() 
+      that.animationData=animation.export()
+    }, 200)
+    },
     chooseSpace:function(spaceValueindex,spaceInnerindex){
       var that =this;
  
@@ -583,7 +702,10 @@ export default {
     var that=this;
     that.showModalStatus=false;
     
-  }
+  },
+ onShareAppMessage: function () {
+   withShareTicket: true
+ },
 }
 </script>
 
@@ -596,6 +718,7 @@ export default {
 
 image{
   display: block;
+  width: 100%;height: 100%;
 }
 .price{
   display: flex;
@@ -609,6 +732,9 @@ image{
   padding-right: 20rpx;
   box-sizing: border-box;
 }
+.priceright{
+  flex-grow: 1;
+}
 .commodity_screen {
   width: 100%;
   height: 100vh;
@@ -620,6 +746,12 @@ image{
   overflow: hidden;
   z-index: 1000;
   color: #fff;
+}
+.sharebtn{
+  background: #fff;
+}
+.sharebtn::after{
+  border: none;
 }
 
 /*规格*/
@@ -653,6 +785,44 @@ box-sizing: border-box;
 .active{
   color:#fff;
   background: #F64F57;
+}
+
+/*分享*/
+.sharing{
+  width: 60rpx;
+  height: 60rpx;
+  overflow: hidden;
+}
+.sharemodel{
+  display: flex;
+  justify-content: space-around;
+  height: 300rpx;
+  width: 100%;
+  overflow: hidden;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 2000;
+  background: #fff;
+  text-align: center;
+}
+.sharemodel-left{
+  width: 50%;
+  
+}
+.sharemodel-right{
+width: 50%;
+}
+.sharicon{
+  width: 150rpx;
+  height: 150rpx;
+  overflow: hidden;
+  margin: 20rpx auto;
+}
+.sharicon image{
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 /*Shopinfo*/
 

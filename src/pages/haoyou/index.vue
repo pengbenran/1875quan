@@ -57,22 +57,11 @@ export default {
                     url: '../distribeposter/main?distribeId=null',
                   })
                 }
-                else{         
-                 wx.request({
-                  url: globalStore.state.api + '/api/distribe/distribe',
-                  headers: {
-                    'Content-Type': 'application/json'
-                  },
-                  data: {
-                    memberId: memberId
-                  },
-                  success: function (res) {
+                else{                
                     // that.distribeDo=res.data.distribeDo; 
                     wx.navigateTo({
-                    url: '../distribeposter/main?distribeId='+res.data.distribeDo.distribeId,
+                    url: '../distribeposter/main?distribeId='+res.data.distribeId,
                     }) 
-                  }
-                })
 
                 }
               }

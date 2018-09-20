@@ -9,7 +9,7 @@
           <div class="member" :hidden="!isMember">{{lvidname}}</div>
         </div>
       </div>
-     <div class="mybrand"  v-else> <button  open-type="getUserInfo" @click="getUserInfo"> 点击授权登录 </button></div>
+     <div class="mybrand"  v-else> <button  open-type="getUserInfo" @click="getUserInfo" @getuserinfo="bindGetUserInfo"> 点击授权登录 </button></div>
     </div>
     <!--myBrand end-->
    
@@ -69,7 +69,6 @@ export default {
        lvidname:"",
        isMember:true,
        hasmemberId: false,
-       isUse: true,
        kind: [
       { name: '我的拼团', imageurl: globalStore.state.imgapi+'image/pingtuan.jpg', jumpurl: '../grouplist/main',menuid:1 },
       { name: '签到有礼', imageurl: globalStore.state.imgapi+'image/qiandao.png', jumpurl: '../jifen/main',menuid:2 },
@@ -92,6 +91,16 @@ export default {
   },
 
   methods: {
+    bindGetUserInfo:function(e){
+      var that=this;
+    if (e.mp.detail.rawData){
+        //用户按了允许授权按钮
+        that.getInfo();
+      } else {
+        //用户按了拒绝按钮
+        console.log('用户按了拒绝按钮')
+      }
+    },
     geiMemberInfo:function(memberId){//获取会员信息例如代付款，已付款
       let that=this;
       if(memberId=="00"){//meberid未00及是未登陆状态
@@ -112,8 +121,6 @@ export default {
             'Content-Type': 'application/json'
           },
           success: function(res) {
-            console.log("获取用户待款信息已执行")
-            console.log(res.data);
             if(res.data.code==0){
               if(res.data.memberDO.mp==null){
                 var mp=0;
@@ -131,7 +138,6 @@ export default {
               wx.setStorageSync("point",mp);
               wx.setStorageSync("lvname",that.lvidname);
             }
-            console.log(that.lvidname)
           }
         })
       }
@@ -197,6 +203,7 @@ export default {
     },
     getUserInfo(e){//获取用户信息
        let that=this;
+       that.getInfo();
        if(that.memberId=="00"){
          wx.login({//登陆获取code
            success:res=>{

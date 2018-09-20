@@ -179,8 +179,16 @@ export default {
     var goodarr = []
     var goodlist = {}
     goodlist.pic = that.buynum
+    goodlist.num=that.buynum;
     goodlist.goodsId = that.goodsId
     goodlist.productId = that.productId
+   goodlist.name=that.Goods.name;
+   goodlist.price=that.Goods.price;
+   goodlist.cost=that.Goods.cost;
+   goodlist.memberPoint=that.Goods.memberPoint;
+   goodlist.image=that.Goods.thumbnail
+
+
     goodarr[0] = goodlist
     wx.navigateTo({
       url: "../dingdan/main?goodlist=" + JSON.stringify(goodarr) + '&cart=0'
