@@ -106,7 +106,8 @@ export default {
     hidden: false,
     collageSucceed:[],
     sModalStatus:false,
-    buynum:1
+    buynum:1,
+    joinmemberId:''
    }
   },
 
@@ -132,13 +133,13 @@ export default {
     }
   },
 
-   //  next: function (e) {
-   //  var that=this
-   //  wx.setStorageSync('memberId', that.data.joinmemberId )
-   //  wx.navigateTo({
-   //    url: "../dingdan2/dingdan2?pic=" + that.data.pic + '&goodsId=' + that.data.joinData.goodsId + '&price=' + that.data.joinData.activityPrice + '&memberCollageId=' + that.data.joinData.memberCollageId + '&Type=C',
-   //     }) 
-   // },
+    next: function (e) {
+    var that=this
+    wx.setStorageSync('memberId', that.joinmemberId )
+    wx.navigateTo({
+      url: "../dingdan2/main?pic=" + that.buynum + '&goodsId=' + that.joinData.goodsId + '&price=' + that.joinData.activityPrice + '&memberCollageId=' + that.joinData.memberCollageId + '&Type=C',
+       }) 
+   },
     hModal: function () {
     // 隐藏遮罩层
     var that=this

@@ -118,7 +118,6 @@ export default {
     fenxiangpingtuan = that.pingtuandetail
     fenxiangpingtuan.memberId = that.memberId
     fenxiangpingtuan = JSON.stringify(fenxiangpingtuan)
-    console.log(fenxiangpingtuan);
     return {
       path: '/pages/join/main?fenxiangpingtuan=' + fenxiangpingtuan,
     }

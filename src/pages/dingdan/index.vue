@@ -172,6 +172,7 @@ export default {
         wx.setStorageSync('select', that.select);
         wx.setStorageSync('orderAmount', that.orderAmount);
         wx.setStorageSync('pars', that.pars);
+        wx.setStorageSync('goodname',that.goodname)
         wx.navigateTo({
           url: '../address/main',
         })
@@ -188,6 +189,7 @@ export default {
           // var point_price = Number(point / indexdata.pointCash).toFixed(2)
           if (options.cart==undefined){that.cart=wx.getStorageSync('cart')}
           else{that.cart=options.cart}
+
 
           if(options.pars!=undefined){
             //  说明用了优惠劵
@@ -751,7 +753,12 @@ export default {
 
   onLoad: function (options) {
       this.onloads(options);   
+      if(options.goodname==undefined){
+        this.goodname=wx.getStorageSync('goodname')
+      }
+      else{      
       this.goodname=options.goodname;//获取店铺名称
+      }
   },
   onShow(){
     this.selectbtnbool=false;
