@@ -48,11 +48,8 @@
        <div class="modelwarp">
          <div class="warpleft"><image :src="goodDetail.thumbnail"></image></div>
          <div class="warpright">
-<<<<<<< HEAD
            <div class="warprighttop"><span class="spantitle">{{goodDetail.name}}</span><div class="col-img"><image :src="xximg" @click="colModel"></image></div></div>
-=======
-           <div class="warprighttop"><span>{{goodDetail.name}}</span><div class="col-img"><image :src="xximg" @click="colModel"></image></div></div>
->>>>>>> a0db76b28cab07368e8c1c43533d915ccf69c7ce
+
            <div class="warprightbottom"><span>￥{{goodDetail.cost}}+{{goodDetail.memberPoint}}</span></div>
           <div class="warprightbottom"><span>￥{{goodDetail.price}}</span><span>库存{{goodDetail.enableStore}}件</span></div>
          </div>
@@ -664,14 +661,9 @@ box-sizing: border-box;
 .shoppir label{font-size: 22rpx;}
 .shopinfotab{display: flex;justify-content: space-between;margin-top: 18rpx;}
 .shopinfotab span{color:#9e9e9e;font-size: 20rpx;}
-<<<<<<< HEAD
 .shopinfotitel{ width:100%;font-size: 30rpx; height: 80rpx;line-height: 80rpx; white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;}
-=======
-.shopinfotitel{font-size: 30rpx;height: 80rpx;text-overflow:ellipsis;overflow: hidden;word-break:break-all;
-display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
->>>>>>> a0db76b28cab07368e8c1c43533d915ccf69c7ce
 .sminfoBrand swiper{height: 460rpx;}
 .sminfoBrand image{width: 100%;height: 100%;display: block;}
 /*shopcontent*/

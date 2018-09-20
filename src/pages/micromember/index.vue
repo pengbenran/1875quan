@@ -255,11 +255,9 @@ display:-webkit-box; -webkit-box-orient:vertical;-webkit-line-clamp:3; padding-t
 .micromemberItemIntrotitle{color: #000;font-size: 35rpx;}
 
 /* 会员列表 */
-<<<<<<< HEAD
-.memberContain{background: #fff;margin-top:20rpx; min-height: 38vh;}
-=======
+
 .memberContain{background: #fff;border-top: 15rpx solid #f3f3f3; padding-bottom: 20rpx;}
->>>>>>> a0db76b28cab07368e8c1c43533d915ccf69c7ce
+
 .membertitle{height: 80rpx;line-height: 80rpx;padding-left: 20rpx;box-sizing: border-box;color:#dec491;font-size: 34rpx;font-weight: bold;}
 .memberList{width: 95%;margin: 20rpx auto 0rpx;border: 1rpx solid #F1F1F1;border-radius:10rpx;}
 .memberuser{display: flex;width: 95%;margin: 0 auto;}
