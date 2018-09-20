@@ -11,7 +11,7 @@
      <!--shoptab end-->
 
      <div class="listwarp">
-           <div class="List" @click="tojump(item.brandId,item.juli)" v-for="(item,index) in brand" :key="key" :index="index">
+           <div class="List" @click="tojump(item.brandId)" v-for="(item,index) in brand" :key="key" :index="index">
             <div class="left">
               <img :src="item.logo">
             </div>
@@ -64,7 +64,7 @@ export default {
    },
    tojump:function(brandId,juli){
     wx.navigateTo({
-        url:'../store/main?brandId='+brandId+'&juli='+juli
+        url:'../store/main?brandId='+brandId
       })
    },
    getDistance: function (lat1, lng1, lat2, lng2) {
@@ -74,7 +74,6 @@ export default {
     var b = lng1 * Math.PI / 180.0 - lng2 * Math.PI / 180.0;
     var r = 6378137;
     return parseInt(r * 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) + Math.cos(rad1) * Math.cos(rad2) * Math.pow(Math.sin(b / 2), 2)))) 
-
   }
 
   },

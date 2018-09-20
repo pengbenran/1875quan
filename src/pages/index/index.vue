@@ -8,7 +8,7 @@
  
 
     <swiper class="swiper_box" autoplay="true" interval="5000" duration="1000" indicator-dots='true' :style="{width:imageWidth,height:imageHeigth}">    
-      <swiper-item v-for="(item,index) in banner" :key="key" :index="index">
+      <swiper-item v-for="(item,index) in banner" :key="key" :index="index" @click="tojump(item.houseId)">
         <image :src="item.imageUrl" ></image>
       </swiper-item>
     </swiper>
@@ -66,10 +66,8 @@
       <div class="homexin">
         <image :src='homexin'></image> 精品推荐
       </div>
-
             <ul class="smlistUl">
                 <li v-for="(item,itemindex) in goods" :key='item' :index='itemindex' @click="toshopinfo(item.goodsId,item.catId)">
-       
                     <div class="smlistimg"><image :src="item.thumbnail"></image></div>
                     <div class="smlistinfo">
                         <div class="infotitle">{{item.name}}</div>
@@ -166,6 +164,15 @@ export default {
           url:'../lingshouindex/main?catId='+catId
         })
       }
+    },
+    tojump:function(brandId){
+      console.log("-----")
+      console.log(brandId)
+     if(brandId!=-1){
+          wx.navigateTo({
+            url:'../store/main?brandId='+brandId
+          })
+     }
     },
     ruzhu:function(){
         wx.navigateTo({
