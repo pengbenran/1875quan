@@ -7,7 +7,7 @@
       </div>
       <div class='putforwardnum'>
         <div class='title'>提现金额</div>
-        <div class='putforwardinpt'>￥ <input placeholder='请输入提现金额' @input="bindKeyInput" auto-focus :value='inputValue'></input></div>
+        <div class='putforwardinpt'>￥ <input placeholder='请输入提现金额' v-model="inputValue" auto-focus></input></div>
       </div>
       <div class='tip'>当前账号余额为{{balance}}元,<text class='allforward' @click='allforward()'>全部提现</text></div>
       <div class='putforwardbtn' @click='putforwardbtn()'>立即提现</div>
@@ -36,11 +36,6 @@ export default {
    allforward(){
       var that=this;  
       that.inputValue=that.balance
-   },
-   bindKeyInput(e){
-     console.log(e);
-    var that=this;
-    that.inputValue=e.detail.value 
    },
    putforwardbtn(){
     var that=this;

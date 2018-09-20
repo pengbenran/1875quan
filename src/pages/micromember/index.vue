@@ -11,7 +11,7 @@
             </div>
             <div class='username'>
                 <view>{{distribeDo.wechat}}</view>
-                <view @click='distribeposter'>我的推广海报</view>
+                <!-- <view @click='distribeposter'>我的推广海报</view> -->
             </div>
             </div>
             <div class='userbanlance'>
@@ -108,44 +108,45 @@ export default {
         })
     },
     jumpfenrungood(url){
-         var that=this;
-        if (url =="../membershioup/main"){
-        wx.request({
-            url: globalStore.state.api + '/api/distribe/memberLvList',
-            headers: {
-            'Content-Type': 'application/json'
-            },
-            success: function (res) {
-            if (res.data.code == 0) {
-                var flag=true;
-                for (var i = 0; i < res.data.memberLvList.length;i++){
-                if (res.data.memberLvList[i].discount > that.distribeDo.discount) {
-                    flag=true
-                }
-                else{
-                    flag=false
-                }
-                }
-                if (flag) {
-                wx.redirectTo({
-                    url: '../membershioup/main?name=' + that.distribeDo.name + '&face=' + that.memberDo.face,
-                })
-                }
-                else {
-                wx.showToast({
-                    title: '您已是最高等级',
-                    icon:"none"
-                })
-                }
-            }
-            }
-        })
-        }
-        else{
-        wx.navigateTo({
+         // var that=this;
+         wx.navigateTo({
             url: url,
         })
-        }  
+        // if (url =="../membershioup/main"){
+        // wx.request({
+        //     url: globalStore.state.api + '/api/distribe/memberLvList',
+        //     headers: {
+        //     'Content-Type': 'application/json'
+        //     },
+        //     success: function (res) {
+        //     if (res.data.code == 0) {
+        //         var flag=true;
+        //         for (var i = 0; i < res.data.memberLvList.length;i++){
+        //         if (res.data.memberLvList[i].discount > that.distribeDo.discount) {
+        //             flag=true
+        //         }
+        //         else{
+        //             flag=false
+        //         }
+        //         }
+        //         if (flag) {
+        //         wx.redirectTo({
+        //             url: '../membershioup/main?name=' + that.distribeDo.name + '&face=' + that.memberDo.face,
+        //         })
+        //         }
+        //         else {
+        //         wx.showToast({
+        //             title: '您已是最高等级',
+        //             icon:"none"
+        //         })
+        //         }
+        //     }
+        //     }
+        // })
+        // }
+        // else{
+        
+        // }  
     },
     //提现事件触发
     jumpputforward(){
@@ -247,7 +248,7 @@ image{
 display:-webkit-box; -webkit-box-orient:vertical;-webkit-line-clamp:3; padding-top: 38rpx;box-sizing: border-box;font-size: 32rpx;}
 .micromemberItemIntrotitle{color: #000;font-size: 35rpx;}
 /* 会员列表 */
-.memberContain{background: #fff;margin-top:20rpx;}
+.memberContain{background: #fff;margin-top:20rpx; min-height: 38vh;}
 .membertitle{height: 80rpx;line-height: 80rpx;padding-left: 20rpx;box-sizing: border-box;color:#dec491;font-size: 34rpx;font-weight: bold;}
 .memberList{width: 95%;margin: 10rpx auto;border: 1rpx solid #F1F1F1;border-radius:10rpx;}
 .memberuser{display: flex;width: 95%;margin: 0 auto;border-bottom:1rpx solid #F1F1F1; }

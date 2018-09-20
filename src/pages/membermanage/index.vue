@@ -138,7 +138,7 @@ export default {
 .list1{width: 95%;height: 125rpx;line-height: 125rpx;margin: 7rpx auto;background: #fff;display: flex;justify-content: space-between;border-radius: 10rpx;padding: 0 40rpx;box-sizing: border-box;}
 .downicon{width: 50rpx;height: 50rpx;overflow: hidden;margin-top:38rpx; }
 image{width: 100%;height: 100%;display: block;}
-.detail{width: 95%;margin: 0 auto;background: #fff;margin-top: -20rpx;transition:transform 1s linear;transition:height 1s;overflow: hidden;font-size:0.8rem;}
+.detail{width: 95%;margin: 0 auto;background: #fff;margin-top: -20rpx;transition:transform 1s linear;transition:height 1s;overflow: hidden;font-size:0.8em;}
 .detailtitle,.detaillist{display: flex;justify-content: space-around;border-bottom:1px solid #ddd;height: 80rpx;line-height: 80rpx; }
 
 .detail{border-radius: 10rpx;margin-top: 5rpx;}

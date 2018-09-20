@@ -118,7 +118,7 @@ export default {
           duration: 1000
         })
         wx.request({
-          url: 'https://www.guqinet.com:8444/upload/delFile',
+          url: 'https://www.guqinet.com:8444/uploadEtuetf/delFile',
           headers: {
             'Content-Type': 'application/json'
           },
@@ -142,12 +142,12 @@ export default {
       icon: 'loading '
     })
     wx.request({
-      url: 'https://www.guqinet.com:8444/upload/getShare',
+      url: 'https://www.guqinet.com:8444/uploadEtuetf/getShare',
       headers: {
         'Content-Type': 'application/json'
       },
       data: {
-        page: 'pages/index/index',
+        page: 'pages/index/main',
         scene: options.distribeId
       },
       success: function (res) {

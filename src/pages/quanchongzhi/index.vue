@@ -10,7 +10,7 @@
     <!-- <div class="tijiao" @click="next()"><span>微信支付</span> <div class="info">提示：一次性消费1元等于1圈圈</div> </div> -->
      <div class="tip">
        <p>充值规则</p>
-       <p>1、充值对象为商圈会员</p>
+       <p>1、充值对象为商圈所有会员</p>
        <p>2、当圈圈数量大于500不能再次充值</p>
      </div>
   </div>
@@ -49,14 +49,7 @@ export default {
            'content-type': 'application/json' 
          },
          success: function (res) {
-          if(res.data.status==2){
-           wx.showToast({
-             title: '请先成为会员',
-             icon: 'success',
-             duration: 2000
-           })
-          }
-          else if(res.data.status==1){
+         if(res.data.status==1){
              wx.showToast({
              title: res.data.msg,
              icon: 'none',
@@ -64,7 +57,7 @@ export default {
            })
           }
           else{
-               let payParms={}
+          let payParms={}
           var  sn = Date.parse(new Date())
            payParms.orderid = Date.parse(new Date())
            payParms.total_fee = paymoney*100 

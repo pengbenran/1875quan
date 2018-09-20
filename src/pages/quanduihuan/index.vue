@@ -65,15 +65,16 @@ export default {
                       })
                     },2000)
                  }
+                 else{
+                  wx.showToast({
+                    title: res.data.msg,
+                    icon:'none',
+                  })
+                 }
                }
              })
             }
-            else{
-               wx.showToast({
-                title: '圈圈数量不足',
-                icon:'none'
-              })
-            }
+          
           }
         })
     }

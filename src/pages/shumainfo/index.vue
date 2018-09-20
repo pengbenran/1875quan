@@ -10,10 +10,17 @@
      <!--sminfoBrand end-->
 
      <div class="Shopinfo">
-         <div class="shoppir"><label>￥</label>{{goodDetail.price}}</div>
-        <div class="shoppir"><label>￥</label>{{goodDetail.cost}}+{{goodDetail.memberPoint}}圈圈</div>
-         <div class="shopinfotitel">{{goodDetail.name}}</div>
-         <div class="shopinfotab"><span>快递：免运费</span><span>库存：{{goodDetail.enableStore}}</span></div>
+        <div class="shopinfotitel">{{goodDetail.name}}</div>
+        <div class="price"> 
+          <div class="priceleft">
+              会员价
+          </div>
+          <div class="priceright">
+            <div class="shoppir"><label>￥</label>{{goodDetail.price}}</div>
+            <div class="shoppir"><label>￥</label>{{goodDetail.cost}}+{{goodDetail.memberPoint}}圈圈</div>
+          </div>
+        </div>
+        <div class="shopinfotab"><span>快递：免运费</span><span>库存：{{goodDetail.enableStore}}</span></div>
      </div>
      <!--Shopinfo end-->
 
@@ -41,12 +48,8 @@
        <div class="modelwarp">
          <div class="warpleft"><image :src="goodDetail.thumbnail"></image></div>
          <div class="warpright">
-<<<<<<< HEAD
-           <div class="warprighttop"><span>{{goodDetail.name}}</span><div class="col-img"><image :src="xximg" @click="colModel"></image></div></div>
-           <div class="warprightbottom"><span>￥{{goodDetail.cost}}+{{goodDetail.memberPoint}}</span></div>
-=======
            <div class="warprighttop"><span class="spantitle">{{goodDetail.name}}</span><div class="col-img"><image :src="xximg" @click="colModel"></image></div></div>
->>>>>>> 544d0760838816522359c3e857c83ff6dba929a9
+           <div class="warprightbottom"><span>￥{{goodDetail.cost}}+{{goodDetail.memberPoint}}</span></div>
           <div class="warprightbottom"><span>￥{{goodDetail.price}}</span><span>库存{{goodDetail.enableStore}}件</span></div>
          </div>
        </div>
@@ -184,11 +187,17 @@ export default {
           'Content-Type': 'json'
         },
         success: function (res) {
+           if(res.data.code==0){
             that.productId=res.data.product.productId
             that.goodDetail.price=res.data.product.price;
             that.goodDetail.cost=res.data.product.cost;
             that.goodDetail.memberPoint=res.data.product.isPack;
             that.goodDetail.enableStore=res.data.product.enableStore;
+           }
+           else{
+             that.goodDetail.enableStore=0;
+           }
+        
         }
       })
       }
@@ -444,7 +453,7 @@ export default {
            goodlist.specvalue=null
            goodarr[0]=goodlist;
             wx.navigateTo({//跳转并且带参数传输
-             url: "../dingdan/main?goodlist=" + JSON.stringify(goodarr)+'&cart=0'+'&goodname='+that.goodname
+             url: "../dingdan/main?goodlist=" + JSON.stringify(goodarr)+'&cart=0'+'&goodname='+that.goodDetail.brandName
             })
          }
          else{
@@ -453,7 +462,7 @@ export default {
               goodarr[0]=goodlist;
       
               wx.navigateTo({//跳转并且带参数传输
-               url: "../dingdan/main?goodlist=" + JSON.stringify(goodarr)+'&cart=0'+'&goodname='+that.goodname
+               url: "../dingdan/main?goodlist=" + JSON.stringify(goodarr)+'&cart=0'+'&goodname='+that.goodDetail.brandName
               })
             }
             else{
@@ -587,6 +596,18 @@ export default {
 image{
   display: block;
 }
+.price{
+  display: flex;
+}
+.priceleft{
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 0.8em;
+/*  width: 150rpx;
+  text-align: center;*/
+  padding-right: 20rpx;
+  box-sizing: border-box;
+}
 .commodity_screen {
   width: 100%;
   height: 100vh;
@@ -639,17 +660,11 @@ box-sizing: border-box;
 .shoppir label{font-size: 22rpx;}
 .shopinfotab{display: flex;justify-content: space-between;margin-top: 18rpx;}
 .shopinfotab span{color:#9e9e9e;font-size: 20rpx;}
-.shopinfotitel{font-size: 30rpx;}
-<<<<<<< HEAD
-
+.shopinfotitel{ width:100%;font-size: 30rpx; height: 80rpx;line-height: 80rpx; white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;}
 .sminfoBrand swiper{height: 460rpx;}
-.sminfoBrand image{width: 100%;}
-
-=======
-.sminfoBrand swiper{height: 460rpx;}
->>>>>>> 544d0760838816522359c3e857c83ff6dba929a9
 .sminfoBrand image{width: 100%;height: 100%;display: block;}
-
 /*shopcontent*/
 .shopcontent{border-top:25rpx solid #f5f5f5;margin-bottom: 110rpx;}
 .shopcontenttop{padding:15rpx 25rpx;;}

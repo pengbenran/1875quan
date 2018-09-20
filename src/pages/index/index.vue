@@ -29,11 +29,8 @@
       <div class="left"><img :src="gonggao"/></div>
       <div class="right">
         <swiper duration='1000' autoplay='true' interval='3000' vertical='true'>
-           <swiper-item>
-              <div>本商场正在测试阶段</div>
-           </swiper-item>
-           <swiper-item>
-              <div>本商场正在测试阶段</div>
+           <swiper-item v-for="(item,index) in indexNotice" :key="key" :index="index">
+              <div>{{item.title}}</div>
            </swiper-item>
         </swiper>
       </div>
@@ -77,7 +74,7 @@
                     <div class="smlistinfo">
                         <div class="infotitle">{{item.name}}</div>
                         <div class="smlistpri">
-                          <small>￥{{item.price}} <label>848人购买</label></small><small class="smallLeft">....</small>
+                          <small>￥{{item.price}}</small><small class="smallLeft">....</small>
                         </div>
                     </div>
       
@@ -106,6 +103,7 @@ export default {
     apiLimit:[],
     pingtuanList:[],
     goods:[],
+    indexNotice:[],
     ggbrandimg:globalStore.state.imgapi+"/image/homrguangao.png",
     shizong:globalStore.state.imgapi+"/image/homezhong.png",
     shangquan:globalStore.state.imgapi+"/image/shangquan.png",
@@ -321,10 +319,10 @@ export default {
         //将获取到的json数据，存在名字叫zhihu的这个数组中
         that.menus= res.data.data.menus;
         that.banner=res.data.data.imgurl
-
         that.database= res.data.data;
-        that.goods=res.data.data.goods
-        // wx.setStorageSync('indexdata', res.data.data.message, )
+        that.goods=res.data.data.goods;
+        that.indexNotice=res.data.data.indexNotice
+        wx.setStorageSync('indexdata', res.data.data.message)
         // 判断是否注册过
       },
       fail: function () {
@@ -336,6 +334,15 @@ export default {
       }
     })
   }
+  },
+  onLoad:function(options){
+     var that = this
+    if (options.scene == undefined) {
+      wx.setStorageSync('distribeId', null)
+    }
+    else {
+      wx.setStorageSync('distribeId', decodeURIComponent(options.scene))
+    }
   },
   onShow(){ 
     var windWidth=(wx.getSystemInfoSync().windowWidth);

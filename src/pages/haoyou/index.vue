@@ -9,7 +9,12 @@
     <div class="title"><image :src='haoyou02'></image><span>朋友圈中央文案库</span></div>
     <div class='downicon'  :style="{transform:'rotate('+rot[1]+'deg)'}"><image :src='downimg'></image></div>
   </div>
-
+  <div class="tip">
+    <p id="tiptitle">推广商邀请好友成为会员获得奖励:</p>
+    <p>1、会员消费圈圈你将获得一定数量圈圈</p>
+    <p>2、会员升级成为推广商你将获取33元佣金</p>
+    <p class="notice">注：会员邀请好友成功无法获得以上奖励</p>
+  </div>
 </div>
 </template>
 
@@ -34,7 +39,47 @@ export default {
   },
 
   methods: {
- 
+    change:function(index){
+      var that=this;
+      var memberId = wx.getStorageSync('memberId')
+      if(index==0){
+          wx.request({
+              url: globalStore.state.api + '/api/distribe/whetherDistribe',
+              data: {
+                memberId: memberId
+              },
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              success: function (res) {
+                if(res.data.code==0){
+                  wx.navigateTo({
+                    url: '../distribeposter/main?distribeId=null',
+                  })
+                }
+                else{         
+                 wx.request({
+                  url: globalStore.state.api + '/api/distribe/distribe',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  data: {
+                    memberId: memberId
+                  },
+                  success: function (res) {
+                    // that.distribeDo=res.data.distribeDo; 
+                    wx.navigateTo({
+                    url: '../distribeposter/main?distribeId='+res.data.distribeDo.distribeId,
+                    }) 
+                  }
+                })
+
+                }
+              }
+        })
+      }
+
+    }
   },
 
   onLoad:function(options){
@@ -45,7 +90,9 @@ export default {
 
 <style scoped>
 .membermanage{margin-top: 20rpx;}
-
+.tip{font-size: 0.8em;padding: 20rpx;box-sizing: border-box;position: absolute;bottom: 50rpx; left: 100rpx;}
+.notice{color: #F64F57}
+#tiptitle{font-size: 1.2em;height: 80rpx;line-height: 80rpx;}
 .list1{width: 95%;height: 160rpx;line-height: 160rpx;margin: 20rpx auto;background: #fff;display: flex;justify-content: space-between;border-radius: 10rpx;padding: 0 40rpx;box-sizing: border-box;}
 .downicon{width: 50rpx;height: 50rpx;overflow: hidden;margin-top:38rpx; }
 image{width: 100%;height: 100%;display: block;}

@@ -21,33 +21,36 @@
      
      <div class="orderList">
 
-<<<<<<< HEAD
-      <!-- <div class="shopTitle"><image :src='homeimg' class="img01"></image>
-        <span>谷琴优品</span><image :src='titleright' class="img02"></image>
-      </div> -->
+      <block v-for="(item,index) in list" :index='index' :key="item">
+        <div class="shopTitle" v-if="cart==1"><image :src='homeimg' class="img01"></image>
+          <span>{{item.shopname}}</span><image :src='titleright' class="img02"></image>
+        </div>
+        <div class="shopTitle" v-else><image :src='homeimg' class="img01"></image>
+          <span>{{goodname}}</span><image :src='titleright' class="img02"></image>
+        </div>
 
-      <!-- <div class="shopTitle"><image :src='homeimg' class="img01"></image><span>{{goodname}}</span></div> -->
-=======
-      <div class="shopTitle"><image :src='homeimg' class="img01"></image><span>{{goodname}}</span></div>
->>>>>>> 544d0760838816522359c3e857c83ff6dba929a9
+        <!-- <div class="shopTitle"><image :src='homeimg' class="img01"></image><span>{{goodname}}</span></div> -->
 
-      <!--shopTile end-->
-      <div class="orderinfo" v-for="(item,index) in list" :index='index' :key="item">
-       <div class="infoimg">
-         <div class="infoleft"><img :src="item.image"></div>
-         <div class="inforight">
-           <div class="inforighttitle">{{item.name}}</div>
-           <div class="infoguige" v-if="item.specvalue!=null">
-             <!-- <span class="infocase">正品发货</span> -->
-             规格:{{item.specvalue}}
-           </div>
-           <div class="infobottom">
-             <div class="infoprice"><span>￥{{item.price}}</span><span></span></div>
-             <div class="infonum">X{{item.num}}</div>
+
+        <!--shopTile end-->
+        <div class="orderinfo">
+         <div class="infoimg">
+           <div class="infoleft"><img :src="item.image"></div>
+           <div class="inforight">
+             <div class="inforighttitle">{{item.name}}</div>
+             <div class="infoguige" v-if="item.specvalue!=null">
+               <!-- <span class="infocase">正品发货</span> -->
+               规格:{{item.specvalue}}
+             </div>
+             <div class="infobottom">
+               <div class="infoprice"><span>￥{{item.price}}</span><span></span></div>
+               <div class="infonum">X{{item.num}}</div>
+             </div>
            </div>
          </div>
        </div>
-      </div>
+      </block>
+  
         <!--orderinfo end-->
         <div class="listitem listinput"><span>买家留言：</span> <input  type="text" placeholder="点击填写留言" @input="clickd($event)" placeholder-style="color:#8d8d8d;"/></div>
 
@@ -106,15 +109,10 @@ export default {
      ],
      select:false,
      isAddr:true,
-<<<<<<< HEAD
      selectbtnbool:false,
-=======
-
-     selectbtnbool:false,
-     //addr:[],
->>>>>>> 544d0760838816522359c3e857c83ff6dba929a9
      addr:'',
      point:0,
+     cart:0,
      point_price:0,
      goodsAmount:0,
      orderAmount:0,
@@ -352,15 +350,21 @@ export default {
               title: '请稍等',
             })
             let canflag=true;
-            
             if(that.payway[0].isthisway==true){
               bean.orderAmount = that.paymoney
               if(that.mp<that.quanquan){
-                wx.showToast({
-                title: '圈圈不足',
-                icon: 'success',
-                duration: 2000
-              })
+                  wx.hideLoading()
+                  wx.showModal({
+                    title:'提示',
+                    content:'圈圈不足，是否充值',
+                    success:function(res){
+                    if(res.confirm){//点击确定是直接跳转到用用户页进行登录
+                      wx.navigateTo({
+                       url:'../quanchongzhi/main'
+                      })
+                    }else if(res.cancel){}
+                   }
+                 })
                canflag=false
               }
               else{

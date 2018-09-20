@@ -78,7 +78,7 @@ image{
   height: 100%;
   overflow: hidden;
 }
-.memberContain{background: #fff;padding-top:20rpx;box-sizing: border-box;}
+.memberContain{background: #fff;padding-top:20rpx;box-sizing: border-box;min-height: 100vh;}
 .membertitle{height: 80rpx;line-height: 80rpx;padding-left: 20rpx;box-sizing: border-box;}
 .memberList{width: 95%;margin: 10rpx auto;border: 1rpx solid #F1F1F1;border-radius:10rpx;}
 .memberuser{display: flex;width: 95%;margin: 0 auto;border-bottom:1rpx solid #F1F1F1;   }
