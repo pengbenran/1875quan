@@ -72,9 +72,9 @@ export default {
         }
         })
 },
-fanhui(){
- wx.navigateTo({ url: '../address/main' });
-},
+  fanhui(){
+  wx.navigateTo({ url: '../address/main' });
+  },
    add(){
      var that = this
      var parms = {}
