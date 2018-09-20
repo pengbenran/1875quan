@@ -15,7 +15,7 @@
           <div class="stutitle"><span>货物状态</span><span class="spanr">{{shopstu}}</span></div>
           <div class="stuyuan"><span>退款原因</span><div class="spandiv spanr"> 
                <picker @change='changpick' :value='index' :range='selectData'>
-                    <div class="picker">{{selectData[index]}} ></div>
+                    <div class="picker">{{selectData[index]}}</div>
                 </picker>
               </div></div>
           <div class="price"><span>退款金额：</span><small class="stuprice">￥{{tuikuandetail.orderAmount}}</small></div>
@@ -42,6 +42,7 @@ export default {
       tuikuanreson:'',
       shopstu:'申请退款',
       index:0,
+      yunfei:0,
       show:false
      }
   },
@@ -173,7 +174,8 @@ image{
 .header{display: flex;align-items: center;padding: 16rpx 0;border-top: 10rpx solid #f1f1f1;background: #fff;border-bottom: 13rpx solid #f1f1f1;}
 .header .left{height: 155rpx;width: 25%;padding-left: 20rpx;padding-right: 20rpx;}
 .header .right{width: 75%;height: 165rpx;}
-.title{font-size: 30rpx;}
+.title{font-size: 30rpx;height: 72rpx;text-overflow:ellipsis;overflow: hidden;word-break:break-all;
+display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
 .right span{color: #666;font-size: 30rpx;padding-top: 30rpx;display: inline-block;margin-right: 28rpx;}
 .right .price{color: #F64F57;font-size: 32rpx;}
 

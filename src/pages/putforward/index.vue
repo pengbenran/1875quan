@@ -49,6 +49,7 @@ export default {
       var parms = {}
       parms.memberId = that.memberId
       parms.amount = that.inputValue
+
       wx.request({
         url: globalStore.state.api + '/api/distribe/withdraw',
         data: {
@@ -106,7 +107,7 @@ export default {
 .putforwardcard{display: flex;height: 80rpx;line-height: 80rpx;font-size: 32rpx;}
 .title{font-size: 32rpx; margin-right: 20rpx;height: 80rpx;line-height: 80rpx;}
 .putforwardinpt{height: 100rpx;border-bottom:1rpx solid #ddd; width: 90%;display:flex;align-items: center;}
-.putforwardinpt input{height: 100%;font-size: 32rpx;}
+.putforwardinpt input{height: 100%;font-size: 40rpx;font-weight: bold;}
 .tip{height: 80rpx;line-height: 80rpx;}
 .putforwardbtn{width: 80%;margin: 30rpx auto;color: #fff;background: #F5E698;height: 100rpx;line-height: 100rpx;text-align: center;border-radius: 50rpx;}
 </style>

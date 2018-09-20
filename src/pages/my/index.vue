@@ -22,6 +22,12 @@
             <div class="itemname">{{item.name}}</div>
             <div class='yuan' v-if="item.statuscount!=0">{{item.statuscount}}</div>
           </li>
+          <li>
+            <button class='shouhoubtn' open-type="contact" session-from="weapp"> 
+             <image :src='shouhouimg'></image>
+             <div class="itemname">售后</div>
+             </button>
+          </li>
         </ul>
       </div>
    </div>
@@ -49,12 +55,13 @@ export default {
   data () {
     return {
        head:globalStore.state.imgapi+'image/mybcg.jpg',
+       shouhouimg:globalStore.state.imgapi+'image/souhuo.jpg',
        itemlist:[
        {name:"待付款",imgUrl:globalStore.state.imgapi+'image/qianbao.png',statuscount:0},
        {name:"待发货",imgUrl:globalStore.state.imgapi+'image/shouhuo.png',statuscount:0},
        {name:"待收货",imgUrl:globalStore.state.imgapi+'image/fahuo.png',statuscount:0},
-       {name:"已完成",imgUrl:globalStore.state.imgapi+'image/tuihuo.png',statuscount:0},
-       {name:"售后",imgUrl:globalStore.state.imgapi+'image/souhuo.jpg',statuscount:0}
+       {name:"已完成",imgUrl:globalStore.state.imgapi+'image/tuihuo.png',statuscount:0}
+      //  {name:"售后",imgUrl:globalStore.state.imgapi+'image/souhuo.jpg',statuscount:0}
        ],
        userInfo:[],
        isUse: true,
@@ -148,7 +155,7 @@ export default {
               success: function (res) {
                 if(res.data.code==0){
                   wx.navigateTo({
-                    url: url+'?money='+res.data.money,
+                   url: url+'?money='+res.data.money,
                   })
                 }
                 else{
@@ -180,7 +187,12 @@ export default {
     jumporderdetail(e){
        var that = this;
        let id=e+1;
-       let url = '../orderdetail/main?currentTarget=' + id
+       var url;
+       if(id==5){
+          url='../souhou/main'
+       }else{
+          url = '../orderdetail/main?currentTarget=' + id
+       }
        that.jump(url)
     },
     getUserInfo(e){//获取用户信息
@@ -358,4 +370,6 @@ export default {
   -webkit-tap-highlight-color: transparent;
 }
 
+.shouhoubtn{background: #fff;line-height: 44rpx;padding: 0;margin: 0;}
+.shouhoubtn::after{border: none;}
 </style>

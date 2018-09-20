@@ -21,6 +21,7 @@
      
      <div class="orderList">
 
+
       <block v-for="(item,index) in list" :index='index' :key="item">
         <div class="shopTitle" v-if="cart==1"><image :src='homeimg' class="img01"></image>
           <span>{{item.shopname}}</span><image :src='titleright' class="img02"></image>
@@ -46,8 +47,13 @@
                <div class="infoprice"><span>￥{{item.price}}</span><span></span></div>
                <div class="infonum">X{{item.num}}</div>
              </div>
-           </div>
-         </div>
+            </div>
+          </div>
+      <!-- <div class="shopTitle"><image :src='homeimg' class="img01"></image><span>{{goodname}}</span></div> -->
+
+
+      <!--shopTile end-->
+   
        </div>
       </block>
   
