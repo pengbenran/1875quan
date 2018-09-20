@@ -2,7 +2,7 @@
   <div class="ruzhu">
     <form @submit='fromsub'>
     <div class="ruzhubrand"><img :src="headerimg"></div>
-    <div class="item itemname"><span>姓 名：</span><input name='username' type="text" placeholder="请输入商家姓名" placeholder-style='#ccc'/></div>
+    <div class="item itemname"><span>商家姓名：</span><input name='username' type="text" placeholder="请输入商家姓名" placeholder-style='#ccc'/></div>
     <div class="item"><span>商家名称：</span><input name='shopname' type="text" placeholder="请输入商家名称" placeholder-style='#ccc'/></div>
     <div class="listitem"><span class="hangye">行业分类：</span><div class="list">
        <picker @change="changpick" :value='index' :range='listmenu'>
@@ -188,7 +188,7 @@ export default {
 .list{display: flex;justify-content: space-between;align-items: center;width: 75%;}
 .list img{width: 30rpx;height: 30rpx;}
 .list .picker{color: #666;font-size: 28rpx;}
-.itemname span{letter-spacing:18rpx;}
+.itemname span{}
 .listitem .hangye{font-size: 32rpx;}
 
 .infoinput{padding-left: 20rpx;padding-right: 20rpx;}

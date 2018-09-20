@@ -506,9 +506,9 @@ image {
 /*infocontent*/
 .infocontent {display: flex;justify-content: space-between;padding: 20rpx 12rpx;}
 .contenLeft {display: flex;justify-content: center;align-items: center;}
-.righttop {font-size: 28rpx;color: #ccc;height: 72rpx;text-overflow:ellipsis;overflow: hidden;word-break:break-all;
+.righttop {font-size: 28rpx;color: #ccc;height: 75rpx;text-overflow:ellipsis;overflow: hidden;word-break:break-all;
 display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
-.contentcon {display: flex;align-items: center;border:1px solid #f8f8f8;border-radius: 25rpx;padding-left: 15rpx;margin-right: 10rpx;margin-left: 10rpx;}
+.contentcon {display: flex;align-items: center;border-radius: 25rpx;padding-left: 15rpx;margin-right: 10rpx;margin-left: 10rpx;}
 .contentcon img {width: 160rpx;height: 160rpx;margin-right: 15rpx;}
 .rightbotom {display: flex;justify-content: space-between;padding-left: 15rpx;padding-right: 15rpx;margin-top: 22rpx;}
 .rightbotom span {color: rgb(245, 109, 109);font-size: 28rpx;padding-right: 35rpx;}
@@ -528,5 +528,5 @@ display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
 .footer-box1 icon{width:35rpx;height:50rpx;}
 .iconfalse{display: inline-block;width: 35rpx;height: 35rpx;border:1px solid #ccc;border-radius: 50%;}
 .footer-box1 label{margin-left: 16rpx;}
-.footer-box4 span{display: inline-block;;width: 165rpx;height: 90rpx;text-align: center; background: #2757be;color: #ffffff;}
+.footer-box4 span{display: inline-block;;width: 210rpx;height: 90rpx;text-align: center; background: #2757be;color: #ffffff;}
 </style>

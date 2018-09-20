@@ -117,7 +117,6 @@ export default {
     guanggaowei:globalStore.state.imgapi+"/image/ruzhuheader.jpg",
      imageWidth:'',
      imageHeigth:'',
-
     }
   },
   components: {
