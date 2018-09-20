@@ -142,7 +142,7 @@ export default {
 .list{display: flex;justify-content: space-between;align-items: center;width: 75%;}
 .list img{width: 30rpx;height: 30rpx;}
 .list .picker{color: #666;font-size: 28rpx;}
-.itemname span{letter-spacing:18rpx;}
+.itemname span{letter-spacing:16rpx;}
 .listitem .hangye{font-size: 32rpx;}
 
 .infoinput{padding-left: 20rpx;padding-right: 20rpx;}

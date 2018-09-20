@@ -21,7 +21,7 @@
     
     <div class="listbtn">
       <div class="btnquren" @click="add">确认</div>
-      <div class="btnquxiao">取消</div>
+      <div class="btnquxiao" @click="fanhui">取消</div>
     </div>
   </div>
 </template>
@@ -71,6 +71,9 @@ export default {
         // complete
         }
         })
+},
+fanhui(){
+ wx.navigateTo({ url: '../address/main' });
 },
    add(){
      var that = this

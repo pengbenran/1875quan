@@ -35,6 +35,11 @@
      <!--shoplist end-->
 
      <div class="ruzhubtn" @click="ruzhubtn"><img :src="ruzhuimg"></div>
+
+    <div class="bottom">
+      <div class="btninfo">谷琴提供技术支持</div>
+      <div class="btn"><span @click="tomask()">我也要做小程序</span></div>
+    </div>
   </div>
 </template>
 
@@ -65,6 +70,11 @@ export default {
   },
 
   methods: {
+    
+  tomask(){
+    console.log("sadasd")
+       wx.navigateTo({ url: '../make/main' });
+  },
    jumpgoods:function(goodsId){
      let that=this;
      wx.navigateTo({
@@ -78,7 +88,6 @@ export default {
       wx.navigateTo({ url: '../../pages/storeruzhu/main' });
     }
   },
-
   onLoad (options) {
     var that = this
     that.juli=options.juli;
@@ -166,4 +175,11 @@ margin-left: 3%;margin-right: 1.5%;
 
 .ruzhubtn{position:fixed;top: 50%;width: 100rpx;height: 100rpx;right:20rpx;}
 .ruzhubtn img{border-radius: 100%;}
+
+/*bottom*/
+.btninfo{text-align: center;font-size: 28rpx;color: rgb(190, 190, 190)}
+.bottom{padding-top: 25rpx;padding-bottom: 20rpx;}
+.btn{text-align: center;}
+.btn span{display: inline-block;padding-left: 25rpx;padding-right: 25rpx;
+border:1px solid #F64F57;border-radius: 15rpx;color: #F64F57;font-size: 24rpx;height: 30rpx;line-height: 30rpx;}
 </style> 
