@@ -15,11 +15,11 @@
         <div class='spellimg'>
         <image :src="item.goodsDO.thumbnail" ></image>
       </div>  
-      <div class='spot'>收藏</div>
+      <!-- <div class='spot'>收藏</div> -->
     </div>
     <div class="spell-right">
       <div class="spell-top">
-        <text class='name'>{{item.goodsDO.name}}你好世界你好世界你好世界你好世界你好世界你好世界</text>
+        <text class='name'>{{item.goodsDO.name}}</text>
       </div>
       <div class=" spell-bottom">
         <div class="spe-left">
