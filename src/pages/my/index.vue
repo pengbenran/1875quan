@@ -8,6 +8,9 @@
           <span>{{userInfo.nickName}}</span>
           <div class="member" :hidden="!isMember">{{lvidname}}</div>
         </div>
+        <div class="quanqan">
+          圈圈:{{mp}}
+        </div>
       </div>
      <div class="mybrand"  v-else> <button  open-type="getUserInfo" @click="getUserInfo" @getuserinfo="bindGetUserInfo"> 点击授权登录 </button></div>
     </div>
@@ -44,7 +47,7 @@
    <div class="footer">
      <div class="item"></div>
    </div>
-
+<official-account></official-account>
   </div>
 </template>
 
@@ -83,6 +86,7 @@ export default {
       { name: '联系我们', imageurl: globalStore.state.imgapi+'image/kefu.png', jumpurl: '../storeruzhu/main',menuid:11 },
       { name: '关于我们', imageurl: globalStore.state.imgapi+'image/women.png', jumpurl: '../women/main',menuid:12 },
       ],
+      mp:''
       }
   },
 
@@ -297,10 +301,11 @@ export default {
 .userinfo{display: flex;align-items: center;}
 .userimg{width:220rpx;margin-right: 20rpx;}
 .userimg image{width: 150rpx;height: 150rpx;float: right;border-radius: 50%;border:1px solid #fff;}
-.userright{text-align: center;}
+.userright{width: 200rpx;}
+
 .userright span{color:#fff;font-size: 34rpx;}
 .usercase{margin-top:20rpx;text-align:center;width: 160rpx;padding-left: 12rpx;padding-right: 12rpx;border-radius: 45rpx;background:#f9ffff;color:#71b5ff;font-size:30rpx;height:48rpx;line-height:50rpx;}
-
+.quanqan{flex-grow:1;height: 260rpx;line-height: 260rpx;text-align: center;color:#fff;}
 /*myorder*/
 .ordertitle{display: flex;justify-content: space-between;padding-left: 15rpx;padding-right: 15rpx;line-height: 92rpx;border-bottom: 1px solid #F2F2F2;background: #fff;}
 .ordertitle span{font-size: 28rpx;}
@@ -314,7 +319,6 @@ export default {
 .member{
   margin-top: 20rpx;
   border-radius: 45rpx;
-  text-align: center;
   min-width:158rpx; 
   background: #f9ffff;
   color: #000;

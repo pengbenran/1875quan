@@ -70,14 +70,9 @@
          <div class="warpleft"><image :src="goodDetail.thumbnail"></image></div>
          <div class="warpright">
            <div class="warprighttop"><span class="spantitle">{{goodDetail.name}}</span><div class="col-img"><image :src="xximg" @click="colModel"></image></div></div>
-
-<<<<<<< HEAD
            <div class="warprightbottom"><span>￥<small>{{goodDetail.cost}}+{{goodDetail.memberPoint}}</small></span></div>
           <div class="warprightbottom"><span>￥<small>{{goodDetail.price}}</small></span><span>库存{{goodDetail.enableStore}}件</span></div>
-=======
-           <div class="warprightbottom"><span>￥{{goodDetail.cost}}+{{goodDetail.memberPoint}}</span></div>
-          <div class="warprightbottom"><span>￥{{goodDetail.price}}</span><span>库存{{goodDetail.enableStore}}件</span></div>
->>>>>>> 18b3e1f715749240b1326e4e618596fa96ecf179
+
          </div>
        </div>
         <!--规格  -->
@@ -718,7 +713,7 @@ export default {
   onShow:function(){
     var that=this;
     that.showModalStatus=false;
-    
+    that.showshareModal=false;
   },
  onShareAppMessage: function () {
    withShareTicket: true
@@ -854,15 +849,8 @@ width: 50%;
 .shoppir label{font-size: 22rpx;}
 .shopinfotab{display: flex;justify-content: space-between;margin-top: 18rpx;}
 .shopinfotab span{color:#9e9e9e;font-size: 20rpx;}
-<<<<<<< HEAD
 .shopinfotitel{font-size: 30rpx;height: 80rpx;text-overflow:ellipsis;overflow: hidden;word-break:break-all;
 display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
-
-=======
-.shopinfotitel{ width:100%;font-size: 30rpx; height: 80rpx;line-height: 80rpx; white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;}
->>>>>>> 18b3e1f715749240b1326e4e618596fa96ecf179
 .sminfoBrand swiper{height: 460rpx;}
 .sminfoBrand image{width: 100%;height: 100%;display: block;}
 /*shopcontent*/
