@@ -86,11 +86,18 @@ export default {
     },
     fenxiaoimg(){
       wx.navigateTo({ url: '../../pages/storeruzhu/main' });
-    }
+    },
+      getDistance: function (lat1, lng1, lat2, lng2) {
+        var rad1 = lat1 * Math.PI / 180.0;
+        var rad2 = lat2 * Math.PI / 180.0;
+        var a = rad1 - rad2;
+        var b = lng1 * Math.PI / 180.0 - lng2 * Math.PI / 180.0;
+        var r = 6378137;
+        return parseInt(r * 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) + Math.cos(rad1) * Math.cos(rad2) * Math.pow(Math.sin(b / 2), 2)))) 
+      }
   },
   onLoad (options) {
     var that = this
-    that.juli=options.juli;
     var windWidth=(wx.getSystemInfoSync().windowWidth);
     that.imageWidth=windWidth+"px";
     that.imageHeigth=windWidth*9/16+'px';
@@ -114,14 +121,30 @@ export default {
         if(res.data.code==0){
           that.brandDO=res.data.brandDO;
           that.Goods=res.data.Goods;
-          that.address=res.data.brandDO.url.split(',')[2]
+          that.address=res.data.brandDO.url.split(',')[2];
+           wx.getLocation({
+          success: function (res) {
+            if (res != undefined && res != null) {
+              console.log(res)
+              let latitude=res.latitude;
+              let longitude=res.longitude;
+              that.juli=that.getDistance(latitude,longitude,that.brandDO.url.split(',')[0],that.brandDO.url.split(',')[1]);
+            }
+            }
+            })
+          
         }
+     
+        
         //console.log(res.data);
         // wx.setNavigationBarTitle({
         //   title: option.titlebar//页面标题为路由参数
         // })
       }
     })
+
+   
+
   }
 }
 </script>

@@ -8,7 +8,7 @@
  
 
     <swiper class="swiper_box" autoplay="true" interval="5000" duration="1000" indicator-dots='true' :style="{width:imageWidth,height:imageHeigth}">    
-      <swiper-item v-for="(item,index) in banner" :key="key" :index="index">
+      <swiper-item v-for="(item,index) in banner" :key="key" :index="index" @click="tojump(item.houseId)">
         <image :src="item.imageUrl" ></image>
       </swiper-item>
     </swiper>
@@ -66,10 +66,8 @@
       <div class="homexin">
         <image :src='homexin'></image> 精品推荐
       </div>
-
             <ul class="smlistUl">
                 <li v-for="(item,itemindex) in goods" :key='item' :index='itemindex' @click="toshopinfo(item.goodsId,item.catId)">
-       
                     <div class="smlistimg"><image :src="item.thumbnail"></image></div>
                     <div class="smlistinfo">
                         <div class="infotitle">{{item.name}}</div>
@@ -81,7 +79,24 @@
                 </li>
                 <!--template内以上为动态代码 以下均可删除-->
             </ul>
+    </div>
 
+
+      <div class='newmodel' v-if='sModalStatus'>
+      <div class='mask'></div>
+      <div class='bcgImg' :animation="animationData">
+        <image src='https://shop.guqinet.com/html/images/shanquan/hong.jpg'></image>
+      </div>
+      <div class='closebtn' @click='hModal' :animation="animationData">
+      <image src='../../../static/images/bi.png'></image>
+      </div>
+      <div class='telphone' :animation="animationData">
+        <div class='inputBcg'>
+          {{mobile}}
+        </div>
+        <button open-type="getPhoneNumber" @getphonenumber="getPhoneNumber" class='getphoneBtn'>验证号码</button>
+      </div>
+      <div class='getbtn' :animation="animationData" @click='receiveRed'>立即领取{{faceValue}}元新人圈圈</div>
     </div>
     <div class="bottom">
       <div class="btninfo">谷琴提供技术支持</div>
@@ -107,6 +122,10 @@ export default {
     pingtuanList:[],
     goods:[],
     indexNotice:[],
+    sModalStatus:false,
+    animationData:[],
+    faceValue:'',
+    mobile:'请点击验证号码',
     ggbrandimg:globalStore.state.imgapi+"/image/homrguangao.png",
     shizong:globalStore.state.imgapi+"/image/homezhong.png",
     shangquan:globalStore.state.imgapi+"/image/shangquan.png",
@@ -166,6 +185,17 @@ export default {
         })
       }
     },
+    //跳转至店铺详情
+    tojump:function(brandId){
+      console.log("-----")
+      console.log(brandId)
+     if(brandId!=-1){
+          wx.navigateTo({
+            url:'../store/main?brandId='+brandId
+          })
+     }
+    },
+    //入驻页面跳转
     ruzhu:function(){
         wx.navigateTo({
           url:'../storeruzhu/main'
@@ -278,6 +308,7 @@ export default {
     var that = this
     that.getCode(function (memberId) {
       that.getMermberId(memberId)
+      that.selectMermberRed(memberId)
       that.memberId=memberId
     })
   },
@@ -338,7 +369,168 @@ export default {
         wx.hideNavigationBarLoading()
       }
     })
-  }
+  },
+    //立即购买模态框
+  sModal: function () {
+    
+    // 显示遮罩层
+    var animation = wx.createAnimation({
+      duration: 200,
+      timingFunction: "linear",
+      delay: 0
+    })
+    this.animation = animation
+    animation.translateY(300).step()
+
+      this.animationData=animation.export(),
+      this.sModalStatus=true
+
+    setTimeout(function () {
+      animation.translateY(0).step()
+        this.animationData=animation.export()
+    }.bind(this), 200)
+  },
+  
+  hModal: function () {
+    let that=this;
+    // 隐藏遮罩层
+    var animation = wx.createAnimation({
+      duration: 200,
+      timingFunction: "linear",
+      delay: 0
+    })
+    this.animation = animation
+    animation.translateY(300).step()
+
+      this.animationData=animation.export(),
+
+    setTimeout(function () {
+      animation.translateY(0).step()
+        this.animationData=animation.export(),
+        that.sModalStatus=false
+    }.bind(this), 200)
+  },
+
+    getPhoneNumber: function (e) {
+    var that = this;
+    if (e.mp.detail.errMsg == "getPhoneNumber:ok") {
+
+      that.disabled=true
+      wx.login({
+        success: res => {
+          // 发送 res.code 到后台换取 openId, sessionKey, unionId
+          if (res.code) {
+            wx.request({
+              url: globalStore.state.api + '/api/weCatGetTel',
+              data: {
+                code: res.code,//获取openid的话 需要向后台传递code,利用code请求api获取openid
+                encryptedData: e.mp.detail.encryptedData,
+                iv: e.mp.detail.iv
+              },
+              success: function (res) {
+               console.log("------------");
+               console.log(res.data);
+                if (res.data.code == 0) {
+                    that.mobile=res.data.mobile
+                    that.openId=res.data.opendId
+                }
+              }
+            })
+          }
+        }
+      })
+    }
+    },
+      selectMermberRed:function(memberId){//红包
+    var that=this
+    wx.request({
+      url: globalStore.state.api + '/api/redPacket/selectMermberRed',
+      data: {
+        memberId: memberId
+      },
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      success: function (res) {
+        if (res.data.code == 1) {
+          wx.request({
+            url: globalStore.state.api + '/api/redPacket/select',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            success: function (res) {
+              if (res.data.redPacket[0].isend == 1) {
+                that.sModal()
+                  that.iscanGet=true;
+                  that.faceValue=res.data.redPacket[0].faceValue;
+                  that.repacketId=res.data.redPacket[0].repacketId;
+              }
+            }
+          })
+        }
+      }
+    })
+  },
+    receiveRed:function(){
+    var that=this
+    var receiveParams = {}
+    receiveParams.openId = that.openId
+    receiveParams.phoneNumber = that.mobile
+    receiveParams.memberId = that.memberId
+    receiveParams.amount = that.faceValue
+    receiveParams.redpacketId = that.repacketId
+    console.log(that.memberId)
+    if(that.memberId=="00"){
+      wx.showModal({
+        title: '提示',
+        content: '请先授权登录',
+        confirmText: "去登录",
+        cancelText: '残忍拒绝',
+        success: function (res) {
+          if (res.confirm) {
+            that.hModal()
+           wx.switchTab({
+             url: '../my/main',
+           })
+          } else if (res.cancel) {
+
+          }
+        }
+      })
+    }
+    else{
+      if (that.mobile == '请点击验证号码') {
+        wx.showToast({
+          title: '未验证手机号',
+          icon: 'loading'
+        })
+      }
+      else{
+        wx.showLoading({
+          title: '请稍等',
+        })
+        wx.request({
+          url: globalStore.state.api + '/api/redPacket/MemberRedGet',
+          data: {
+            parm: receiveParams
+          },
+          success: function (res) {
+            if (res.data.code == 0) {
+              that.iscanGet=false
+              //that.onLoad()
+              that.hModal()
+              wx.hideLoading()
+              wx.showToast({
+                title: '领取成功',
+                icon:'success',
+                duration:2000
+              })
+            }   
+          }
+        })
+      }
+    } 
+  },
   },
   onLoad:function(options){
      var that = this
@@ -521,5 +713,24 @@ display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
 .btn{text-align: center;}
 .btn span{display: inline-block;padding-left: 25rpx;padding-right: 25rpx;
 border:1px solid #F64F57;border-radius: 15rpx;color: #F64F57;font-size: 24rpx;height: 30rpx;line-height: 30rpx;}
+
+/* 新人专享红包 */
+/* .newmodel{
+  position: relative;
+  top: 0;
+  left: 0;
+} */
+.mask{width: 100%;height: 100vh;background: #000;opacity: 0.5;position: fixed;top: 0;left: 0;}
+.bcgImg{width: 70vw;height: 90vw;overflow: hidden;position: fixed;top: 200rpx;left: 15vw;}
+.bcgImg image{width: 100%;height: 100%;display: block;}
+.telphone{position: fixed;top: 590rpx;left: 15vw;display: flex;width: 70vw;padding:0 2vw;box-sizing: border-box;}
+.inputBcg{width: 40vw;height: 80rpx;line-height:80rpx;border:2px solid #FA7C04; background: #fff;border-radius: 5rpx;padding-left:5rpx;box-sizing: border-box; font-size:30rpx;}
+.getphoneBtn{font-size:30rpx;padding: 0;margin-left: 10rpx;flex-grow: 1;background: #FFB425;}
+.getbtn{position: fixed;top: 730rpx;left: 17vw;height: 80rpx;line-height: 80rpx;width: 66vw;text-align: center;border-radius: 10rpx;font-size:30rpx;background: #FFB425;}
+.closebtn{height: 50rpx;width: 50rpx;position: fixed;right: 16vw;top:210rpx;}
+.closebtn image{width: 100%;height: 100%;display: block;}
+
+.showredpack{width: 100rpx;height: 100rpx;overflow: hidden;position: fixed;bottom: 120rpx;right: 80rpx;}
+.showredpack image{width: 100%;height: 100%;display: flex;}
 </style>
 
