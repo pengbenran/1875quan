@@ -1,18 +1,19 @@
 <template>
   <div class="dingdanContainer">
+    <div class="dingdan">
       <div  v-if="isAddr" @click="address">
-     <div class="dingdanHeader">
-       <div class="dingleft">
-         <img :src="heademapimg" >
+       <div class="dingdanHeader">
+         <div class="dingleft">
+           <img :src="heademapimg" >
+         </div>
+         <div class="dingright">
+           <div class="title"><span>收货人：{{addr.name}}</span><span>{{addr.mobile}}</span></div>
+           <div class="topdizhi">收货地址：{{addr.addr}}</div>
+           <div class="dingtip">(收货不便时，您可以自选投放地点及自取)</div>
+         </div>
+         <div class="dingrightimg"><img :src="headerrightimg" ></div>
        </div>
-       <div class="dingright">
-         <div class="title"><span>收货人：{{addr.name}}</span><span>{{addr.mobile}}</span></div>
-         <div class="topdizhi">收货地址：{{addr.addr}}</div>
-         <div class="dingtip">(收货不便时，您可以自选投放地点及自取)</div>
-       </div>
-       <div class="dingrightimg"><img :src="headerrightimg" ></div>
-     </div>
-     <div class="topbgimg"><img :src="headertopimgbg"></div>
+       <div class="topbgimg"><img :src="headertopimgbg"></div>
      </div>
      <!--dingdanHeader end-->
 
@@ -47,38 +48,40 @@
                <div class="infoprice"><span>￥{{item.price}}</span><span></span></div>
                <div class="infonum">X{{item.num}}</div>
              </div>
-            </div>
-          </div>
-      <!-- <div class="shopTitle"><image :src='homeimg' class="img01"></image><span>{{goodname}}</span></div> -->
+           </div>
+         </div>
+         <!-- <div class="shopTitle"><image :src='homeimg' class="img01"></image><span>{{goodname}}</span></div> -->
 
 
-      <!--shopTile end-->
-   
+         <!--shopTile end-->
+
        </div>
-      </block>
-  
-        <!--orderinfo end-->
-        <div class="listitem listinput"><span>买家留言：</span> <input  type="text" placeholder="点击填写留言" @input="clickd($event)" placeholder-style="color:#8d8d8d;"/></div>
+     </block>
 
-        <div class="Summary">
-          <div class="Summaryitem"><span>商品金额</span><span>￥{{goodsAmount}}</span></div>
-          <div class="Summaryitem"><span>运费</span><span>￥0</span></div>
-        </div>
-        <div class="zhifu">
-          <div class="zhifutitle">支付方式</div>
-          <div class="zhifuprice" v-for="(item,index) in payway" :index="index" :key="key">
-            <div class="price">{{item.way}}</div>
-            <div class="slectico" @click="choosepayway(index)">
-              <icon color='#e93429' type="success" size="20" v-if="item.isthisway" /><icon type="circle" v-else color="#DDD"   size="20" />
-            </div>
-          </div>
-     </div>
-    </div> 
-      
-    <div class="footer" v-for="(item,index) in payway" :index="index" :key="key" v-if="item.isthisway">
-      <div class="footerleft" >合计：<span>￥{{item.way}}</span></div><div class="footerright" @click="toast()">提交订单</div>
+     <!--orderinfo end-->
+     <div class="listitem listinput"><span>买家留言：</span> <input  type="text" placeholder="点击填写留言" v-model="msg"/></div>
+
+     <div class="Summary">
+      <div class="Summaryitem"><span>商品金额</span><span>￥{{goodsAmount}}</span></div>
+      <div class="Summaryitem"><span>运费</span><span>￥0</span></div>
     </div>
-    <!--footer end-->
+    <div class="zhifu">
+      <div class="zhifutitle">支付方式</div>
+      <div class="zhifuprice" v-for="(item,index) in payway" :index="index" :key="key">
+        <div class="price">{{item.way}}</div>
+        <div class="slectico" @click="choosepayway(index)">
+          <icon color='#e93429' type="success" size="20" v-if="item.isthisway" /><icon type="circle" v-else color="#DDD"   size="20" />
+        </div>
+      </div>
+    </div>
+  </div> 
+</div>
+
+
+<div class="footer" v-for="(item,index) in payway" :index="index" :key="key" v-if="item.isthisway">
+  <div class="footerleft" >合计：<span>￥{{item.way}}</span></div><div class="footerright" @click="toast()">提交订单</div>
+</div>
+<!--footer end-->
 
     <!-- <div class="showmodel" v-if="selectbtnbool"></div>
     <div class="itemmask" :class="{'selectbtn':selectbtnbool}">
@@ -97,108 +100,105 @@
 </template>
 
 <script>
-import globalStore from "../../stores/global-store"; 
-import showbtn from '../../components/showBtn';
+  import globalStore from "../../stores/global-store"; 
+  import showbtn from '../../components/showBtn';
 
-export default {
-  data () {
-    return {
-     homeimg:globalStore.state.imgapi + "/image/shang.png",
-     titleright:globalStore.state.imgapi +"/image/8.png",
-     heademapimg:globalStore.state.imgapi +"/image/order04.png",
-     headerrightimg:globalStore.state.imgapi +"/image/order03.png",
-     headertopimgbg:globalStore.state.imgapi +"/image/order01.jpg",
-     lisbtn:[{btnname:'首页',btnimg:globalStore.state.imgapi +"/image/listbtn02.png",url:'../index/main'},
-             {btnname:'我的',btnimg:globalStore.state.imgapi +"/image/listbtn03.png",url:'../my/main'},
-             {btnname:'收藏',btnimg:globalStore.state.imgapi +"/image/listbtn01.png",url:'../collection/main'},
-             {btnname:'充值',btnimg:globalStore.state.imgapi +"/image/listbtn04.png",url:'../quanchongzhi/main'},
-     ],
-     select:false,
-     isAddr:true,
-     selectbtnbool:false,
-     addr:'',
-     point:0,
-     cart:0,
-     point_price:0,
-     goodsAmount:0,
-     orderAmount:0,
-     list:[],
-     payway:[
-     {way:'3元+2圈圈',isthisway:true},
-     {way:'3元',isthisway:false}
-     ],
-     paymoney:'',
-     mp:'',
-     quanquan:'',
-     gooditem:[],
-     goodname:''
-    }
-  },
+  export default {
+    data () {
+      return {
+       homeimg:globalStore.state.imgapi + "/image/shang.png",
+       titleright:globalStore.state.imgapi +"/image/8.png",
+       heademapimg:globalStore.state.imgapi +"/image/order04.png",
+       headerrightimg:globalStore.state.imgapi +"/image/order03.png",
+       headertopimgbg:globalStore.state.imgapi +"/image/order01.jpg",
+       lisbtn:[{btnname:'首页',btnimg:globalStore.state.imgapi +"/image/listbtn02.png",url:'../index/main'},
+       {btnname:'我的',btnimg:globalStore.state.imgapi +"/image/listbtn03.png",url:'../my/main'},
+       {btnname:'收藏',btnimg:globalStore.state.imgapi +"/image/listbtn01.png",url:'../collection/main'},
+       {btnname:'充值',btnimg:globalStore.state.imgapi +"/image/listbtn04.png",url:'../quanchongzhi/main'},
+       ],
+       select:false,
+       isAddr:true,
+       selectbtnbool:false,
+       addr:'',
+       point:0,
+       cart:0,
+       point_price:0,
+       goodsAmount:0,
+       orderAmount:0,
+       list:[],
+       payway:[
+       {way:'3元+2圈圈',isthisway:true},
+       {way:'3元',isthisway:false}
+       ],
+       paymoney:'',
+       mp:'',
+       quanquan:'',
+       gooditem:[],
+       goodname:'',
+       msg:''
+     }
+   },
 
-  components: {
-   showbtn
-  },
+   components: {
+     showbtn
+   },
 
-  methods: {
-      choosepayway(index){
-        var that=this
-        for(var i in that.payway){
-          that.payway[i].isthisway=false
-        }
-        that.payway[index].isthisway=true
+   methods: {
+    choosepayway(index){
+      var that=this
+      for(var i in that.payway){
+        that.payway[i].isthisway=false
+      }
+      that.payway[index].isthisway=true
         // console.log(that.selectstu)
-      },
-      clickd(e){
-        console.log("留言填写");
-        this.clickd=e.target.value
       },
       dingjidong(){
        this.selectbtnbool=!this.selectbtnbool;
-      },
-      toclick(url){
-        console.log(url);
-        if(url=='../my/main'||url=='../index/main'){
-          wx.switchTab({ url: url });
-        }else{
-          wx.navigateTo({ url: url});
-        }
-      },
-      /*新增地址*/
-      address(){
-        var that=this
-        wx.setStorageSync('cart', that.cart);
-        wx.setStorageSync('gooditem', that.gooditem);
-        wx.setStorageSync('goodlist', that.goodlist);
-        wx.setStorageSync('select', that.select);
-        wx.setStorageSync('orderAmount', that.orderAmount);
-        wx.setStorageSync('pars', that.pars);
-        wx.setStorageSync('goodname',that.goodname)
-        wx.navigateTo({
-          url: '../address/main',
-        })
-      },
+     },
+     toclick(url){
+      console.log(url);
+      if(url=='../my/main'||url=='../index/main'){
+        wx.switchTab({ url: url });
+      }else{
+        wx.navigateTo({ url: url});
+      }
+    },
+    /*新增地址*/
+    address(){
+      var that=this
+      wx.setStorageSync('cart', that.cart);
+      wx.setStorageSync('gooditem', that.gooditem);
+      wx.setStorageSync('goodlist', that.goodlist);
+      wx.setStorageSync('select', that.select);
+      wx.setStorageSync('orderAmount', that.orderAmount);
+      wx.setStorageSync('pars', that.pars);
+      wx.setStorageSync('goodname',that.goodname)
+      wx.navigateTo({
+        url: '../address/main',
+      })
+    },
       //加载初始数据并存入缓存
       onloads(options){
-          var that=this
-          console.log(options)
-          wx.showLoading({
-            title: '加载中',
-          })
-          that.mp=wx.getStorageSync('mp')
+        var that=this
+        console.log(options)
+        wx.showLoading({
+          title: '加载中',
+        })
+        that.mp=wx.getStorageSync('mp')
           var indexdata = wx.getStorageSync('indexdata') //创建缓存
           // var point_price = Number(point / indexdata.pointCash).toFixed(2)
           if (options.cart==undefined){that.cart=wx.getStorageSync('cart')}
-          else{that.cart=options.cart}
+            else{that.cart=options.cart}
 
 
-          if(options.pars!=undefined){
+              if(options.pars!=undefined){
             //  说明用了优惠劵
             if (options.pars==1){
-                that.pars=options.pars;
-                that.memberVoucherId=options.memberVoucherId;
-                that.facevalue=options.facevalue;
-                that.select=wx.getStorageSync('select');
-                that.redamount=0;
+              that.pars=options.pars;
+              that.memberVoucherId=options.memberVoucherId;
+              that.facevalue=options.facevalue;
+              that.select=wx.getStorageSync('select');
+              that.redamount=0;
             }
             else if(options.pars==2){
               console.log(options.redamount)
@@ -210,22 +210,22 @@ export default {
             } 
           }
           else{
-              that.pars=0;
-              that.memberVoucherId=0;
-              that.facevalue=0;
-              that.redamount=0;
-              that.memberredpacketid=0;
+            that.pars=0;
+            that.memberVoucherId=0;
+            that.facevalue=0;
+            that.redamount=0;
+            that.memberredpacketid=0;
           }
           if (that.pars == 1 && options.pars == undefined){
-                that.facevalue=wx.getStorageSync('facevalue')
-                that.memberVoucherId=wx.getStorageSync('memberVoucherId') 
-            }
-              else if (that.pars == 2 && options.pars == undefined){
-                  that.redamount=wx.getStorageSync('redamount')
-                  that.memberredpacketid=wx.getStorageSync('memberredpacketid') 
-            }
-                that.memberId=wx.getStorageSync('memberId'),
-                that.indexdata=indexdata;
+            that.facevalue=wx.getStorageSync('facevalue')
+            that.memberVoucherId=wx.getStorageSync('memberVoucherId') 
+          }
+          else if (that.pars == 2 && options.pars == undefined){
+            that.redamount=wx.getStorageSync('redamount')
+            that.memberredpacketid=wx.getStorageSync('memberredpacketid') 
+          }
+          that.memberId=wx.getStorageSync('memberId'),
+          that.indexdata=indexdata;
                 // that.point=point;
                 // that.point_price=point_price;
 
@@ -258,47 +258,47 @@ export default {
               that.isAddr=true
             }
            if(that.cart==1){ //Cart订单类型
-              wx.hideLoading()
-              if (options.gooditem==undefined){
-                var gooditem = wx.getStorageSync('gooditem');
-                  that.gooditem=wx.getStorageSync('gooditem'),
-                  that.select=wx.getStorageSync('select')
+            wx.hideLoading()
+            if (options.gooditem==undefined){
+              var gooditem = wx.getStorageSync('gooditem');
+              that.gooditem=wx.getStorageSync('gooditem'),
+              that.select=wx.getStorageSync('select')
+            }
+            else{
+              var gooditem = JSON.parse(options.gooditem);
+              that.gooditem=gooditem  
+            }  
+            var orderamount = Number(gooditem.goodsAmount).toFixed(2)
+            let paymoney=0;
+            let quanquan=0;
+            for(var i in that.gooditem.googitem){
+              paymoney=Number(paymoney*1+that.gooditem.googitem[i].num * that.gooditem.googitem[i].weight).toFixed(2)
+              quanquan=Number(quanquan*1+that.gooditem.googitem[i].num * that.gooditem.googitem[i].point)
+            }
+            that.paymoney=paymoney;
+            that.quanquan=quanquan;
+            that.payway[0].way=paymoney+'元+'+quanquan+"圈圈"
+            that.payway[0].isthisway=true
+            that.payway[1].way=orderamount
+            that.payway[1].isthisway=false   
+            that.goodsAmount=orderamount;
+            that.list=gooditem.googitem;
+            that.weight=gooditem.weight;
+            that.orderAmount=orderamount;
+                // that.gainedpoint=gooditem.gainedpoint
               }
               else{
-                var gooditem = JSON.parse(options.gooditem);
-                that.gooditem=gooditem  
-              }  
-              var orderamount = Number(gooditem.goodsAmount).toFixed(2)
-              let paymoney=0;
-              let quanquan=0;
-              for(var i in that.gooditem.googitem){
-                paymoney=Number(paymoney*1+that.gooditem.googitem[i].num * that.gooditem.googitem[i].weight).toFixed(2)
-                quanquan=Number(quanquan*1+that.gooditem.googitem[i].num * that.gooditem.googitem[i].point)
-              }
-              that.paymoney=paymoney;
-              that.quanquan=quanquan;
-              that.payway[0].way=paymoney+'元+'+quanquan+"圈圈"
-              that.payway[0].isthisway=true
-              that.payway[1].way=orderamount
-              that.payway[1].isthisway=false   
-              that.goodsAmount=orderamount;
-              that.list=gooditem.googitem;
-              that.weight=gooditem.weight;
-              that.orderAmount=orderamount;
-                // that.gainedpoint=gooditem.gainedpoint
-            }
-           else{
-              if (options.goodlist == undefined) {
-                var goodlist = wx.getStorageSync('goodlist');   
-                that.goodlist=wx.getStorageSync('goodlist');
-                that.select=wx.getStorageSync('select')
-        
-              }
-              else {
-                var goodlist = JSON.parse(options.goodlist);
-                that.goodlist=goodlist
-              }
-              
+                if (options.goodlist == undefined) {
+                  var goodlist = wx.getStorageSync('goodlist');   
+                  that.goodlist=wx.getStorageSync('goodlist');
+                  that.select=wx.getStorageSync('select')
+
+                }
+                else {
+                  var goodlist = JSON.parse(options.goodlist);
+                  that.goodlist=goodlist
+                }
+
                 let ordermount = Number(that.goodlist[0].pic * that.goodlist[0].price).toFixed(2)
                 that.list=that.goodlist;
                 console.log(that.list)
@@ -343,50 +343,50 @@ export default {
                 //   }
                 // })
               }
-      },
-      toast(){
-          var that = this
-          if (that.addr == '') {
-            wx.showToast({
-              title: '请添加地址',
-            })
-          }
-          else {
-            var bean = {}
-            var goodObj = {}
-            wx.showLoading({
-              title: '请稍等',
-            })
-            let canflag=true;
-            if(that.payway[0].isthisway==true){
-              bean.orderAmount = that.paymoney
-              if(that.mp<that.quanquan){
-                  wx.hideLoading()
-                  wx.showModal({
-                    title:'提示',
-                    content:'圈圈不足，是否充值',
-                    success:function(res){
+            },
+            toast(){
+              var that = this
+              if (that.addr == '') {
+                wx.showToast({
+                  title: '请添加地址',
+                })
+              }
+              else {
+                var bean = {}
+                var goodObj = {}
+                wx.showLoading({
+                  title: '请稍等',
+                })
+                let canflag=true;
+                if(that.payway[0].isthisway==true){
+                  bean.orderAmount = that.paymoney
+                  if(that.mp<that.quanquan){
+                    wx.hideLoading()
+                    wx.showModal({
+                      title:'提示',
+                      content:'圈圈不足，是否充值',
+                      success:function(res){
                     if(res.confirm){//点击确定是直接跳转到用用户页进行登录
                       wx.navigateTo({
                        url:'../quanchongzhi/main'
-                      })
+                     })
                     }else if(res.cancel){}
-                   }
-                 })
-               canflag=false
+                  }
+                })
+                    canflag=false
+                  }
+                  else{
+                   bean.gainedpoint=that.quanquan 
+                 }
+               }
+               else{
+                bean.orderAmount = that.orderAmount
+                bean.gainedpoint=0
               }
-              else{
-               bean.gainedpoint=that.quanquan 
-              }
-            }
-            else{
-              bean.orderAmount = that.orderAmount
-              bean.gainedpoint=0
-            }
-            
 
-            if (that.cart==0){
-           
+
+              if (that.cart==0){
+
             // //判断是否使用积分
             // if(that.select==true){
             //   if (that.goodsAmount - that.point_price<=0){
@@ -402,24 +402,24 @@ export default {
             //   bean.consumepoint =0
             //   }
               // 确定支付方式
-          
+
               if(canflag){
-              bean.memberId = that.memberId
-              bean.image = that.list[0].image
-              bean.weight = that.list[0].weight * that.list[0].num
-              bean.shippingAmount = 0
-              bean.googitem = []
-              goodObj.price = that.list[0].price
-              goodObj.name = that.list[0].name
-              goodObj.num = that.list[0].num * 1
-              goodObj.cart = that.cart
-              goodObj.goodsId = that.list[0].goodsId
-              goodObj.catId = that.list[0].catId
-              goodObj.image = that.list[0].image
-              goodObj.goodsAmount = that.list[0].price * that.list[0].num
-              goodObj.productId = that.goodlist[0].productId
-              goodObj.specvalue=that.goodlist[0].specvalue
-              bean.googitem[0] = goodObj
+                bean.memberId = that.memberId
+                bean.image = that.list[0].image
+                bean.weight = that.list[0].weight * that.list[0].num
+                bean.shippingAmount = 0
+                bean.googitem = []
+                goodObj.price = that.list[0].price
+                goodObj.name = that.list[0].name
+                goodObj.num = that.list[0].num * 1
+                goodObj.cart = that.cart
+                goodObj.goodsId = that.list[0].goodsId
+                goodObj.catId = that.list[0].catId
+                goodObj.image = that.list[0].image
+                goodObj.goodsAmount = that.list[0].price * that.list[0].num
+                goodObj.productId = that.goodlist[0].productId
+                goodObj.specvalue=that.goodlist[0].specvalue
+                bean.googitem[0] = goodObj
               // bean.point = that.point
               // bean.gainedpoint = that.list[0].point
               bean.province = that.addr.province
@@ -429,7 +429,7 @@ export default {
               bean.shipMobile = that.addr.mobile
               bean.shipName = that.addr.name
               bean.addrId = that.addr.addrId
-              bean.clickd = that.clickd
+              bean.clickd = that.msg
               bean.goodsAmount = that.list[0].price * that.list[0].num
               bean = JSON.stringify(bean)
               wx.request({
@@ -509,43 +509,43 @@ export default {
                                   duration: 2000
                                 })
                                 // 如果使用圈圈支付则给上级推广商加圈圈
-                               
-                                  if(that.payway[0].isthisway==true){
-                                      // 选择圈圈加现金支付
-                                    let fenrunParm = {}
-                                    fenrunParm.memberId = that.memberId
-                                    fenrunParm.distribeId = wx.getStorageSync('isAgent')
-                                    fenrunParm.monetary = that.order.orderAmount
-                                    fenrunParm.memberPoint = that.quanquan
-                                    wx.request({
-                                      url: globalStore.state.api + "/api/distribe/shareProfit",
-                                      method: "POST",
-                                      data: {
-                                        params: JSON.stringify(fenrunParm)
-                                      },
-                                      header: {
-                                        'Content-Type': 'application/x-www-form-urlencoded'
-                                      },
-                                      method: "POST",
-                                      success: function (res) {
-                                        console.log(res.data)
-                                        if (res.data.code == 0) {
 
-                    
+                                if(that.payway[0].isthisway==true){
+                                      // 选择圈圈加现金支付
+                                      let fenrunParm = {}
+                                      fenrunParm.memberId = that.memberId
+                                      fenrunParm.distribeId = wx.getStorageSync('isAgent')
+                                      fenrunParm.monetary = that.order.orderAmount
+                                      fenrunParm.memberPoint = that.quanquan
+                                      wx.request({
+                                        url: globalStore.state.api + "/api/distribe/shareProfit",
+                                        method: "POST",
+                                        data: {
+                                          params: JSON.stringify(fenrunParm)
+                                        },
+                                        header: {
+                                          'Content-Type': 'application/x-www-form-urlencoded'
+                                        },
+                                        method: "POST",
+                                        success: function (res) {
+                                          console.log(res.data)
+                                          if (res.data.code == 0) {
+
+
+                                          }
                                         }
-                                      }
-                                    })
+                                      })
                                     }
                                     else{
 
                                     }
-                                  var orderparms = {}
-                                  var order={}
-                                  order.orderId = that.order.orderId
-                                  orderparms.order = order
-                                  orderparms.code = 200
+                                    var orderparms = {}
+                                    var order={}
+                                    order.orderId = that.order.orderId
+                                    orderparms.order = order
+                                    orderparms.code = 200
                                 // orderparms.gainedpoint = Number(that.order.gainedpoint)
-                                  orderparms.paymoney = that.order.orderAmount
+                                orderparms.paymoney = that.order.orderAmount
                                 wx.request({
                                   url: globalStore.state.api + "/api/order/passOrder",
                                   data: {
@@ -573,18 +573,18 @@ export default {
                             })
                           }
                         })
-                      }
-                    }
-                  })
-                }
-              }
-            })
+}
+}
+})
+}
+}
+})
 
 
-              }
+}
 
-            }
-            else{
+}
+else{
               // 购物车提交订单
               //  判断是否使用积分
               // if (that.select == true) {
@@ -603,7 +603,7 @@ export default {
 
               if(canflag){
 
-              bean.weight = that.weight
+                bean.weight = that.weight
               // bean.gainedpoint = that.gainedpoint
               bean.memberId = that.memberId
               bean.goodsAmount = that.goodsAmount
@@ -671,43 +671,42 @@ export default {
                                     icon: 'success',
                                     duration: 2000
                                   })
-                               // 如果使用圈圈支付则给上级推广商加圈圈
-                               
-                                  if(that.payway[0].isthisway==true){
+                               // 如果使用圈圈支付则给上级推广商加圈圈                          
+                               if(that.payway[0].isthisway==true){
                                       // 选择圈圈加现金支付
-                                    let fenrunParm = {}
-                                    fenrunParm.memberId = that.memberId
-                                    fenrunParm.distribeId = wx.getStorageSync('isAgent')
-                                    fenrunParm.monetary = that.order.orderAmount
-                                    fenrunParm.memberPoint = that.quanquan
-                                    wx.request({
-                                      url: globalStore.state.api + "/api/distribe/shareProfit",
-                                      method: "POST",
-                                      data: {
-                                        params: JSON.stringify(fenrunParm)
-                                      },
-                                      header: {
-                                        'Content-Type': 'application/x-www-form-urlencoded'
-                                      },
-                                      method: "POST",
-                                      success: function (res) {
-                                        console.log(res.data)
-                                        if (res.data.code == 0) {
+                                      let fenrunParm = {}
+                                      fenrunParm.memberId = that.memberId
+                                      fenrunParm.distribeId = wx.getStorageSync('isAgent')
+                                      fenrunParm.monetary = that.order.orderAmount
+                                      fenrunParm.memberPoint = that.quanquan
+                                      wx.request({
+                                        url: globalStore.state.api + "/api/distribe/shareProfit",
+                                        method: "POST",
+                                        data: {
+                                          params: JSON.stringify(fenrunParm)
+                                        },
+                                        header: {
+                                          'Content-Type': 'application/x-www-form-urlencoded'
+                                        },
+                                        method: "POST",
+                                        success: function (res) {
+                                          console.log(res.data)
+                                          if (res.data.code == 0) {
 
-                    
+
+                                          }
                                         }
-                                      }
-                                    })
+                                      })
                                     }
                                     else{
 
                                     }
-                            
-                                  var orderparms = {}
-                                  var order = {}
-                                  order.orderId = that.order.orderId
-                                  orderparms.order = order
-                                  orderparms.code = 200
+
+                                    var orderparms = {}
+                                    var order = {}
+                                    order.orderId = that.order.orderId
+                                    orderparms.order = order
+                                    orderparms.code = 200
                                   // orderparms.gainedpoint = Number(that.order.gainedpoint)
                                   orderparms.paymoney = that.order.orderAmount
                                   wx.request({
@@ -726,39 +725,41 @@ export default {
                                           icon: 'success',
                                           duration: 2000
                                         })
-                                      wx.navigateTo({
-                                        url: '../orderdetail/main?currentTarget=2',
-                                      })
+                                        wx.navigateTo({
+                                          url: '../orderdetail/main?currentTarget=2',
+                                        })
                                       }
                                     }
                                   })
+                                },
+                                complete:function(){
+                                  console.log("支付完成");
                                 }
-
                               })
-                            }
-                          })
-                        }
-                      }
-                    })
-                  }
-                }
-              })
-            }
-            }
+}
+})
+}
+}
+})
+}
+}
+})
+}
+}
 
-          }
+}
 
-      }
-  },
+}
+},
 
-  onLoad: function (options) {
-      this.onloads(options);   
-      if(options.goodname==undefined){
-        this.goodname=wx.getStorageSync('goodname')
-      }
-      else{      
+onLoad: function (options) {
+  this.onloads(options);   
+  if(options.goodname==undefined){
+    this.goodname=wx.getStorageSync('goodname')
+  }
+  else{      
       this.goodname=options.goodname;//获取店铺名称
-      }
+    }
   },
   onShow(){
     this.selectbtnbool=false;
@@ -768,6 +769,7 @@ export default {
 
 <style scoped>
 .dingdanContainer{background: #fff;padding-bottom: 50rpx;}
+.dingdan{height: 90vh;overflow: scroll;}
 /*dingdanHeader*/
 .dingdanHeader{display: flex;padding-top: 20rpx;padding-bottom: 15rpx;}
 .dingdanHeader .dingleft{width: 15%;display: flex;align-items: center;justify-content: center;}
@@ -830,7 +832,7 @@ export default {
 .Summaryitem{display: flex;justify-content: space-between;align-items: center;height: 75rpx;line-height: 75rpx;padding-right: 20rpx;padding-left: 20rpx;}
 
 /*footer*/
-.footer{box-shadow: 0px -3px 4px 0 rgba(0,0,0,0.05);position: fixed;bottom: 0;left: 0;width: 100%;display: flex;justify-content: space-between;align-items: center;line-height: 120rpx;}
+.footer{box-shadow: 0px -3px 4px 0 rgba(0,0,0,0.05);position: fixed;bottom: 0;left: 0;width: 100%;display: flex;justify-content: space-between;align-items: center;line-height: 10vh;height: 10vh;}
 .footer .footerleft{width: 65%;text-align:right;font-size: 35rpx;padding-right: 25rpx;background: #fff;}
 .footer .footerright{width: 35%;text-align: center;background: linear-gradient(to right, #ff9003 , #ff5001);color: #ffffff;}
 .footerleft span{color: #fc6305;}
@@ -846,11 +848,11 @@ export default {
 .bntlistt{display: flex;align-items:center;}
 .selectbtn{right:15rpx;}
 .itemleft{font-size: 26rpx;color: #fff;background: #000;opacity: 0.2;width: 85rpx;height: 85rpx;text-align: center;line-height: 85rpx;
-border-top-left-radius: 10rpx;border-bottom-left-radius: 10rpx;}
-.showmodel{position: fixed;z-index: 2;height: 100vh;width: 100%;top: 0;left: 0;;background:#000;opacity:0.2;}
-.btnimg{text-align: center;height: 54rpx;}
-.btnimg img{width: 54rpx;height: 54rpx;margin: auto;}
-.bntlistt  .titless{color: #666;font-size: 26rpx;display: block;text-align: center;}
-.btn1{padding:15rpx 25rpx;}
-.bntlistt{background: #fff;border-radius: 6rpx;}
+  border-top-left-radius: 10rpx;border-bottom-left-radius: 10rpx;}
+  .showmodel{position: fixed;z-index: 2;height: 100vh;width: 100%;top: 0;left: 0;;background:#000;opacity:0.2;}
+  .btnimg{text-align: center;height: 54rpx;}
+  .btnimg img{width: 54rpx;height: 54rpx;margin: auto;}
+  .bntlistt  .titless{color: #666;font-size: 26rpx;display: block;text-align: center;}
+  .btn1{padding:15rpx 25rpx;}
+  .bntlistt{background: #fff;border-radius: 6rpx;}
 </style>

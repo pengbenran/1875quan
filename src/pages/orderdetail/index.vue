@@ -222,7 +222,7 @@ export default {
   },
   jumpgooddetail:function(e){
      wx.navigateTo({
-      url: '../shumainfo/main?goodid='+e,
+      url: '../shumainfo/main?goodsId='+e,
     })
   },
   // 支付

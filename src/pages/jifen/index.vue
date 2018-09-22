@@ -52,7 +52,7 @@ export default {
       let memberId=wx.getStorageSync('memberId');
       var parms={};
       parms.memberId=memberId;
-      parms.cutpoint = 2  //积分签到获取
+      parms.cutpoint = 1 ; //积分签到获取
       var parms=JSON.stringify(parms);
       if (that.signStatus == 1){
         wx.request({

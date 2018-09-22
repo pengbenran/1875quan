@@ -234,7 +234,7 @@ export default {
           // 最后赋值到data中渲染到页面
           that.cartgoods=cartgoods,
           // totalPrice: total.toFixed(2)
-          that.totalPrice=total
+          that.totalPrice=total.toFixed(2)
         }
      },
      
@@ -469,13 +469,13 @@ image {
   display: block;
 }
 
-.topimg{height: 350rpx;}
+.topimg{height: 350rpx;position: absolute; top: 0;left: 0;z-index: 0; width: 100%;}
 
 .addressContainer {background: #fff;min-height: 100vh;}
 
 
 /*warp*/
-.warp{position: absolute;top: 15rpx;width: 100%;padding-bottom: 125rpx;background: #fff;}
+.warp{width: 100%;padding-bottom: 125rpx;z-index: 1;position: relative;}
 
 /*infowarp*/
 .infowarp {display: flex;flex-direction: column;}
@@ -520,7 +520,7 @@ display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
 
 .elseinfo {font-size: 32rpx;font-weight: bold;color: #fff;text-align: center;padding-top: 20rpx;}
 /*footer*/
-.footer{position: fixed;bottom: 0;display: flex;justify-content: space-between;width: 100%;height: 90rpx;box-shadow:rgb(201, 201, 201) 0 -2rpx 5rpx ;background: #ffffff;}
+.footer{z-index:2;position: fixed;bottom: 0;display: flex;justify-content: space-between;width: 100%;height: 90rpx;box-shadow:rgb(201, 201, 201) 0 -2rpx 5rpx ;background: #ffffff;}
 .footer div{font-size: 30rpx;height: 90rpx;line-height: 90rpx;}
 .footer-box1{display: flex;justify-content: center;align-items: center;color:#666;padding-left: 20rpx;}
 .footer-box2{color: #e93429;}
