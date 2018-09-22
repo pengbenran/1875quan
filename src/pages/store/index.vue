@@ -36,10 +36,10 @@
 
      <div class="ruzhubtn" @click="ruzhubtn"><img :src="ruzhuimg"></div>
 
-    <div class="bottom">
+    <!-- <div class="bottom">
       <div class="btninfo">谷琴提供技术支持</div>
       <div class="btn"><span @click="tomask()">我也要做小程序</span></div>
-    </div>
+    </div> -->
   </div>
 </template>
 

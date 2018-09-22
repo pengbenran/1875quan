@@ -18,7 +18,7 @@
         <span>热门搜索</span> <span @click="taps">换一批</span>
       </div>
      <div class="menu">
-       <span v-for="(item,index) in random" :index='index' :key='key'>{{item.name}}</span>
+       <span v-for="(item,index) in random" :index='index' :key='key'  @click="tojump(item.brandId)">{{item.name}}</span>
      </div>
     </div>
     <!--listmenu end-->
@@ -67,6 +67,11 @@ export default {
   },
 
   methods: {
+    tojump:function(brandId){
+    wx.navigateTo({
+        url:'../store/main?brandId='+brandId
+      })
+   },
     toshopinfo:function(goodsId,catId){
       let that=this;
       wx.navigateTo({ url: '../shumainfo/main?goodsId='+goodsId+'&catid='+catId });

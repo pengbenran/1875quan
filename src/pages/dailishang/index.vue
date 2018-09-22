@@ -5,7 +5,7 @@
     <div class="item itemname"><span>姓 名：</span><input name='username' type="text" placeholder="请输入商家姓名" placeholder-style='#ccc'/></div>
     <div class="item"><span>公司名称：</span><input name='shopname' type="text" placeholder="请输入公司名称" placeholder-style='#ccc'/></div>
     <div class="item"><span>联系电话：</span><input name='phone' type="text" placeholder="请输入您的电话" placeholder-style='#ccc'/></div>
-    <div class="item itemname"><span>区  域：</span><input name='aress' type="text" placeholder="请输入区域地址" placeholder-style='#ccc'/></div>
+    <div class="item "><span>意向区域：</span><input name='aress' type="text" placeholder="请输入区域地址" placeholder-style='#ccc'/></div>
     <div class="btn "><button form-type='submit'>申请入驻</button></div>      
     </form>  
   </div>
