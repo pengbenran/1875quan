@@ -150,6 +150,7 @@ export default {
           for(var i=0;i<that.menus.length;i++){
             arr.push(that.menus[i].name);
            }
+           arr.push('其他选项')
           console.log(arr);
           that.listmenu=arr;
       },
@@ -174,7 +175,7 @@ export default {
 </script>
 
 <style scoped>
-.ruzhubrand{height: 370rpx;margin-bottom: 12rpx;}
+.ruzhubrand{height: 400rpx;margin-bottom: 12rpx;}
 .ruzhubrand img{width: 100%;height: 100%;}
 .ruzhu{background: #fff;height: 100vh;}
 .item{display: flex;align-items: center;border-bottom: 1px solid #f5f5f5;height: 90rpx;line-height: 90rpx;padding-left: 20rpx;padding-right: 20rpx;}

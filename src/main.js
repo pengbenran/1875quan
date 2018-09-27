@@ -41,7 +41,7 @@ export default {
             pagePath: "pages/group/main",
             iconPath: "/static/images/all.png",
             selectedIconPath: "/static/images/all1.png",
-            text: "圈圈"
+            text: "商户"
           },
           {
             pagePath: "pages/cart/main",

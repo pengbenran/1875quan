@@ -123,7 +123,7 @@ export default {
 image{display: block;width: 100%;height: 100%;}
 .chongzhi{background: #fff;height: 100vh;}
 
-.header{height: 350rpx;}
+.header{height: 400rpx;}
 .headerbtn{margin-top: 35rpx;}
 .headerbtn ul{width: 76%;margin: auto;display: flex;align-items: center;flex-wrap: wrap;}
 .headerbtn li{width: 45%;margin-left: 2%;margin-right: 2%;border-top:1px solid #f8f8f8;margin-top: 35rpx;line-height: 110rpx;border-radius: 10rpx;text-align: center;    

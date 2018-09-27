@@ -1,17 +1,23 @@
 <template>
   <div class="chongzhi" >
-    <div class="header"><image :src="headerimg"></image></div>
+    <div class="header">
+      <swiper indicator-dots='true' autoplay='true'>
+        <swiper-item v-for="(item,index) in listimg" :index='index' :key='item'><image :src="item.imgurl"></image></swiper-item>
+      </swiper>
+    </div>
+    <!--header end-->
+    
     <div class="headerbtn">
         <div class="price" v-for="(item,index) in  quanquanPayDOList" :key="key" :index="index" @click="next(item.pay,item.quanPayId)">
             <span>{{item.pay}} 元</span>
-            <small>实际到账{{item.quanAmount}}圈圈</small>
+            <small>实际到账{{item.quanAmount}}(1875链)</small>
         </div>
     </div>
     <!-- <div class="tijiao" @click="next()"><span>微信支付</span> <div class="info">提示：一次性消费1元等于1圈圈</div> </div> -->
      <div class="tip">
        <p>充值规则</p>
        <p>1、充值对象为商圈所有会员</p>
-       <p>2、当圈圈数量大于500不能再次充值</p>
+       <p>2、个人账户1875链值大于500，无法再次充值 </p>
      </div>
   </div>
 </template>
@@ -22,6 +28,7 @@ import globalStore from "../../stores/global-store"
 export default {
   data () {
     return {
+      listimg:[{imgurl:globalStore.state.imgapi+'image/listquan01.jpg'},{imgurl:globalStore.state.imgapi+'image/listquan02.jpg'}],
        headerimg: globalStore.state.imgapi+'image/quanbran02.jpg',
        syswidth:0,
        sysheight:0,
@@ -176,8 +183,9 @@ export default {
 .chongzhi{background: #fff;height: 100vh;}
 image{width: 100%;height: 100%;display: block;}  
 
-.header{height: 350rpx;}
-.headerbtn{padding-top: 30rpx;padding-bottom: 30rpx;text-align: center; display: flex; justify-content: space-around;}
+.header{height: 380rpx;}
+.header swiper{height: 100%;}
+.headerbtn{padding-top: 90rpx;padding-bottom: 30rpx;text-align: center; display: flex; justify-content: space-around;}
 .price{width: 36%;margin: auto;border-top:1px solid #f5f5f5;padding-top: 16rpx;padding-bottom: 16rpx;border-radius: 10rpx;
     box-shadow: 0 10rpx 50rpx rgba(0,0,0,0.1);}
 .price small{font-size: 26rpx;color: #c1c1c1;padding-top: 10rpx;}
@@ -185,5 +193,5 @@ image{width: 100%;height: 100%;display: block;}
 .tijiao{padding-top:40rpx;text-align: center;}
 .tijiao span{display: inline-block;width: 40%;background: #111111;color:#fff;line-height: 58rpx;border-radius: 15rpx;text-align: center;margin: auto;}
 .tijiao .info{font-size: 26rpx;color: #c1c1c1;padding-top: 15rpx;}
-.tip{ font-size: 0.8em; color: #ccc;position: absolute; left: 150rpx;bottom: 100rpx;}
+.tip{ font-size: 0.8em; color: #ccc;position: absolute; left: 100rpx;bottom: 100rpx;}
 </style>

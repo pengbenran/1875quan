@@ -6,10 +6,10 @@
         <div class="userimg"><image :src="userInfo.avatarUrl" background-size="cover"></image></div>
         <div class="userright">
           <span>{{userInfo.nickName}}</span>
-          <div class="member" :hidden="!isMember">{{lvidname}}</div>
+          <div class="member lvname" :hidden="!isMember">{{lvidname}}</div>
         </div>
         <div class="quanqan">
-          圈圈:{{mp}}
+          <span>1875链:{{mp}}</span>
         </div>
       </div>
      <div class="mybrand"  v-else> <button  open-type="getUserInfo" @click="getUserInfo" @getuserinfo="bindGetUserInfo"> 点击授权登录 </button></div>
@@ -78,10 +78,10 @@ export default {
       { name: '我的收藏', imageurl: globalStore.state.imgapi+'image/shoucang.png', jumpurl: '../collection/main',menuid:3 },
       { name: '收货地址', imageurl: globalStore.state.imgapi+'image/address.png', jumpurl: '../address/main',menuid:4 },
       { name: '成为推广商', imageurl: globalStore.state.imgapi+'image/weifenxiao.png', jumpurl: '../membershipdetail/main',menuid:5 },
-      { name: '充值圈圈', imageurl:globalStore.state.imgapi+'image/chongzhi.png',jumpurl:'../quanchongzhi/main',menuid:6},
+      { name: '充值1875链', imageurl:globalStore.state.imgapi+'image/chongzhi.png',jumpurl:'../quanchongzhi/main',menuid:6},
       { name: '商家入驻', imageurl: globalStore.state.imgapi+'image/ruzhu.jpg', jumpurl: '../storeruzhu/main',menuid:7 },
       { name: '招募代理商', imageurl: globalStore.state.imgapi+'image/tuikuangshang.png', jumpurl: '../dailishang/main',menuid:8 },
-      { name: '圈圈兑换', imageurl: globalStore.state.imgapi+'image/duihuan.jpg', jumpurl: '../quanduihuan/main',menuid:9 },
+      { name: '1875链兑换', imageurl: globalStore.state.imgapi+'image/duihuan.jpg', jumpurl: '../quanduihuan/main',menuid:9 },
       { name: '邀请好友', imageurl: globalStore.state.imgapi+'image/haoyou.png', jumpurl: '../haoyou/main',menuid:10 },
       { name: '联系我们', imageurl: globalStore.state.imgapi+'image/kefu.png', jumpurl: '../storeruzhu/main',menuid:11 },
       { name: '关于我们', imageurl: globalStore.state.imgapi+'image/women.png', jumpurl: '../women/main',menuid:12 },
@@ -305,7 +305,8 @@ export default {
 
 .userright span{color:#fff;font-size: 34rpx;}
 .usercase{margin-top:20rpx;text-align:center;width: 160rpx;padding-left: 12rpx;padding-right: 12rpx;border-radius: 45rpx;background:#f9ffff;color:#71b5ff;font-size:30rpx;height:48rpx;line-height:50rpx;}
-.quanqan{flex-grow:1;height: 260rpx;line-height: 260rpx;text-align: center;color:#fff;}
+.quanqan{flex-grow:1;height: 260rpx;display: flex;align-items: center;justify-content: center;text-align: center;color:#fff;}
+.quanqan span{height: 65rpx;line-height: 65rpx;padding-left: 20rpx;padding-right: 20rpx;font-size: 30rpx;display: inline-block;background: #f64f57;border-radius: 30rpx;box-shadow: 0 0 15rpx rgba(0, 0, 0, 0.103);}
 /*myorder*/
 .ordertitle{display: flex;justify-content: space-between;padding-left: 15rpx;padding-right: 15rpx;line-height: 92rpx;border-bottom: 1px solid #F2F2F2;background: #fff;}
 .ordertitle span{font-size: 28rpx;}
@@ -383,4 +384,5 @@ export default {
 
 .shouhoubtn{background: #fff;line-height: 44rpx;padding: 0;margin: 0;}
 .shouhoubtn::after{border: none;}
+.lvname{text-align: center;}
 </style>

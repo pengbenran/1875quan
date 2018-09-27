@@ -10,10 +10,10 @@
     <div class='downicon'  :style="{transform:'rotate('+rot[1]+'deg)'}"><image :src='downimg'></image></div>
   </div>
   <div class="tip">
-    <p id="tiptitle">推广商邀请好友成为会员获得奖励:</p>
-    <p>1、会员消费圈圈你将获得一定数量圈圈</p>
-    <p>2、会员升级成为推广商你将获取33元佣金</p>
-    <p class="notice">注：会员邀请好友成功无法获得以上奖励</p>
+    <p id="tiptitle">邀请好友成为会员获得奖励：</p>
+    <p>1、会员消费，您将获得1875链奖励</p>
+    <p>2、会员升级成为推广商，您将获得33元升级奖励</p>
+    <p class="notice">注：会员（或升级）为推广商，才能获得以上奖励</p>
   </div>
 </div>
 </template>
@@ -79,7 +79,7 @@ export default {
 
 <style scoped>
 .membermanage{margin-top: 20rpx;}
-.tip{font-size: 0.8em;padding: 20rpx;box-sizing: border-box;position: absolute;bottom: 50rpx; left: 100rpx;}
+.tip{font-size: 0.8em;padding: 20rpx;box-sizing: border-box;position: absolute;bottom: 50rpx; left: 30rpx;}
 .notice{color: #F64F57}
 #tiptitle{font-size: 1.2em;height: 80rpx;line-height: 80rpx;}
 .list1{width: 95%;height: 160rpx;line-height: 160rpx;margin: 20rpx auto;background: #fff;display: flex;justify-content: space-between;border-radius: 10rpx;padding: 0 40rpx;box-sizing: border-box;}
