@@ -74,7 +74,7 @@
           <block v-if="orderListOut.status==4||orderListOut.status == 3&orderListOut.shipStatus==2&orderListOut.payStatus==2">
             <div class='complete-box4'>
                <div class='com-input01'>删除订单</div>
-              <div class='com-input02'  @click="payoff('查看订单',orderListOut.orderId)">查看订单</div>
+              <div class='com-input02'  @click="payoff('查看订单',orderListOut.orderId,outindex)">查看订单</div>
               <div class='com-input02'  @click="payoff('申请退货',orderListOut.orderId,orderListOut.sn,orderListOut.goodssn)" style='margin-left:20rpx;'>申请退货</div>
             </div>
           </block>

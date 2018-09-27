@@ -1,10 +1,16 @@
 <template>
   <div class='shanquanindex'>
    
-  <div class="search" @click="tosearch">
+   <div class="toppanel">
+    <div class="addressname" @click="chooscity">
+      <img :src="listmap"><span>{{cityname}}</span>
+    </div>
+    <div class="search" @click="tosearch">
      <icon type="search" size="20" color='#fff'/>
      <span>搜索商品</span>
-  </div>
+   </div>
+   </div>
+
  
 
     <swiper class="swiper_box" autoplay="true" interval="5000" duration="1000" indicator-dots='true' :style="{width:imageWidth,height:imageHeigth}">    
@@ -108,7 +114,7 @@
 
 <script>
 import globalStore from '../../stores/global-store';
-
+import globalLoca from  '../../utils/qqmap-wx-jssdk';
 export default {
   data () {
     return {
@@ -134,8 +140,10 @@ export default {
     gonggao:globalStore.state.imgapi+"/image/gonggao.png",
     guanggaowei:globalStore.state.imgapi+"/image/ruzhuheader.jpg",
     bottomimg:globalStore.state.imgapi+"/image/indebottomimg.jpg",
+    listmap:globalStore.state.imgapi+'image/listmaap.png',
      imageWidth:'',
      imageHeigth:'',
+     cityname:''
     }
   },
   components: {
@@ -143,6 +151,11 @@ export default {
   },
 
   methods: {
+    chooscity:function(){
+      wx.navigateTo({
+        url:'../choosecity/main'
+      })
+    },
     jump:function(index,catId){
       var that=this;
       if(index==0){
@@ -532,29 +545,98 @@ export default {
       }
     } 
   },
+  getaddress:function(){
+    var that=this;
+      var qqmapsdk = new globalLoca.QQMapWX({
+        key: 'ARCBZ-73GW6-EEQS3-EPCSS-6Z6OJ-ONFUQ' // 必填
+      });
+      wx.getLocation({
+      type: 'wgs84',
+      success: function (res) {
+        //2、根据坐标获取当前位置名称，显示在顶部:腾讯地图逆地址解析
+        qqmapsdk.reverseGeocoder({
+          location: {
+            latitude: res.latitude,
+            longitude: res.longitude
+          },
+          success: function (addressRes) {       
+            var address = addressRes.result.address_component.city;
+            console.log(addressRes)
+            if(that.globalData.cityname==undefined){
+              that.cityname=address
+              that.globalData.cityname = address
+              that.globalData.citycode = addressRes.result.ad_info. city_code.substring(3) 
+            }
+            else{
+              that.cityname=that.globalData.cityname
+
+            }
+          }
+        })
+      }
+    })
+  }
   },
   onLoad:function(options){
-     var that = this
+    var that = this
+      
     if (options.scene == undefined) {
       wx.setStorageSync('distribeId', null)
     }
     else {
       wx.setStorageSync('distribeId', decodeURIComponent(options.scene))
     }
+    // that.cityname=options.cityname
   },
   onShow(){ 
-    var windWidth=(wx.getSystemInfoSync().windowWidth);
-    this.imageWidth=windWidth+"px";
-    this.imageHeigth=windWidth*9/16+'px';
-   this.userLogin();
-   this.getactive();
-   this.getMain();
+   
+  var windWidth=(wx.getSystemInfoSync().windowWidth);
+  this.imageWidth=windWidth+"px";
+  this.imageHeigth=windWidth*9/16+'px';
+  this.userLogin();
+  this.getactive();
+  this.getMain();
+  this.getaddress();
   }
 }
 </script>
 
 <style scoped>
 /* pages/shanquanindex/shanquanindex.wxss */
+.toppanel{
+  display: flex;
+  position: absolute;
+  top:30rpx;
+  z-index: 4;
+  width: 100%;
+  padding-right:30rpx;
+  padding-left: 20rpx;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+.addressname{
+  width:150rpx; 
+ 
+}
+.addressname img{
+  width: 40rpx;height: 40rpx;
+  vertical-align: center;
+}
+.addressname span{
+  width:100rpx; 
+  display: inline-block;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  display: break-all;
+  -webkit-line-clamp:1;
+  height: 48rpx;
+  line-height: 52rpx;
+  padding-left: 10rpx;
+  font-size: 0.8em;
+  box-sizing: border-box;
+
+}
 image{
 width:100%;
   height: 100%;
@@ -693,9 +775,7 @@ display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
 
 .homexin{text-align: center;display: flex;align-items: center;justify-content: center;color: #f6352c;font-size: 34rpx;font-weight: bold;}
 .homexin image{height: 45rpx;width: 45rpx;margin-right: 15rpx;}
-
-.search{display: flex;align-items: center;justify-content: center;}
-.search{position:absolute;z-index: 3;top: 30rpx;margin-left: 8%;border:1px solid #adadad;background: #adadad;opacity: 0.4;;border-radius: 20rpx;height: 52rpx;width: 84%;}
+.search{display: flex;align-items: center;justify-content: center;border:1px solid #adadad;background: #adadad;opacity: 0.4;;border-radius: 20rpx;height: 52rpx;flex-grow: 1;}
 .search icon{margin-right: 20rpx;}
 .search span{font-size: 30rpx;color: #fff;}
 

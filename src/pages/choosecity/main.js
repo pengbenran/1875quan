@@ -6,6 +6,7 @@ Vue.prototype.globalData = getApp().globalData
 app.$mount()
 export default {
   config: {
-    navigationBarTitleText: '首页'
+    navigationBarTitleText: '切换城市',
+    "enablePullDownRefresh": true
   }
 }
