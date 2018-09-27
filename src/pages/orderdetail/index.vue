@@ -51,7 +51,7 @@
           <div class='complete-box3'>
             <text class='tex01'>共件商品{{orderListOut.totalnum}}合计:</text>
             <text class='tex02' v-if="orderListOut.gainedpoint==0">￥{{orderListOut.needPayMoney}}</text>
-            <text class='tex02' v-else>￥{{orderListOut.needPayMoney}}+{{orderListOut.gainedpoint}}圈圈</text>
+            <span class='tex02' v-else>￥{{orderListOut.needPayMoney}}+{{orderListOut.gainedpoint}} <span class="lian">1875链</span></span>
           </div>
           <block>
             <div class='complete-box4'  v-if="orderListOut.status==0&orderListOut.shipStatus==0">
@@ -702,4 +702,5 @@ color:#919191;
   text-align: center;
   color:#8A8890;
 }
+.lian{border:2rpx solid #fb4901;border-radius:30rpx;background:#fb4901;color:#fff;font-size:25rpx;padding-left:15rpx;padding-right:15rpx;}
 </style>

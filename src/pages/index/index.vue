@@ -104,11 +104,13 @@
       </div>
       <div class='getbtn' :animation="animationData" @click='receiveRed'>立即领取{{faceValue}}元新人圈圈</div>
     </div>
-    <div class="bottom">
-      <div class="btninfo">1875技术团队提供支持</div>
-      <!-- <div class="btn"><span @click="tomask">我也要做小程序</span></div> -->
+    <!-- <div class="bottom">
+      <div class="btninfo">一个买啥卖啥都赚钱还能轻松创业的平台</div>
+       <div class="btn"><span @click="tomask">我也要做小程序</span></div> 
+    </div> -->
+    <div class="footerbottom">
+      <div class="bottomimg"><img :src="bottomhome" /></div>
     </div>
-
 </div>
 </template>
 
@@ -141,9 +143,10 @@ export default {
     guanggaowei:globalStore.state.imgapi+"/image/ruzhuheader.jpg",
     bottomimg:globalStore.state.imgapi+"/image/indebottomimg.jpg",
     listmap:globalStore.state.imgapi+'image/listmaap.png',
-     imageWidth:'',
-     imageHeigth:'',
-     cityname:''
+    bottomhome:globalStore.state.imgapi+"/image/bottom-home.jpg",
+    imageWidth:'',
+    imageHeigth:'',
+    cityname:''
     }
   },
   components: {
@@ -814,7 +817,9 @@ border:1px solid #F64F57;border-radius: 15rpx;color: #F64F57;font-size: 24rpx;he
 .showredpack{width: 100rpx;height: 100rpx;overflow: hidden;position: fixed;bottom: 120rpx;right: 80rpx;}
 .showredpack image{width: 100%;height: 100%;display: flex;}
 
-.bottonimg{text-align: center;}
-.bottonimg img{width: 200rpx;height: 65rpx;}
+.bottomimg{text-align: center;}
+.bottomimg img{width: 365rpx;height: 122rpx;}
+
+
 </style>
 

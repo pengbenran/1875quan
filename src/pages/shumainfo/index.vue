@@ -17,7 +17,7 @@
           </div>
           <div class="priceright">
             <div class="shoppir"><label>￥</label>{{goodDetail.price}}</div>
-            <div class="shoppir"><label>￥</label>{{goodDetail.cost}}+{{goodDetail.memberPoint}}圈圈</div>
+            <div class="shoppir"><label>￥</label>{{goodDetail.cost}}+{{goodDetail.memberPoint}} <span>1875链</span></div>
           </div>
           <div class="sharing" @click="sharemodel">
             <image :src='shaimg'></image>
@@ -847,6 +847,7 @@ width: 50%;
 .Shopinfo{padding: 0 25rpx 15rpx;}
 .shoppir{color:#fb4901;font-size: 28rpx;}
 .shoppir label{font-size: 22rpx;}
+.shoppir span{border: 1px solid #fb4901;border-radius: 30rpx;background: #fb4901;color: #fff;font-size: 25rpx;padding-left: 15rpx;padding-right: 15rpx;}
 .shopinfotab{display: flex;justify-content: space-between;margin-top: 18rpx;}
 .shopinfotab span{color:#9e9e9e;font-size: 20rpx;}
 .shopinfotitel{font-size: 30rpx;height: 80rpx;text-overflow:ellipsis;overflow: hidden;word-break:break-all;

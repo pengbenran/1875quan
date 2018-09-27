@@ -68,7 +68,7 @@
     <div class="zhifu">
       <div class="zhifutitle">支付方式</div>
       <div class="zhifuprice" v-for="(item,index) in payway" :index="index" :key="key">
-        <div class="price">{{item.way}}</div>
+        <div class="price">{{item.way}} <span v-if="index==0" class="lian">1875链</span></div>
         <div class="slectico" @click="choosepayway(index)">
           <icon color='#e93429' type="success" size="20" v-if="item.isthisway" /><icon type="circle" v-else color="#DDD"   size="20" />
         </div>
@@ -127,7 +127,7 @@
        orderAmount:0,
        list:[],
        payway:[
-       {way:'3元+2圈圈',isthisway:true},
+       {way:'3元+2',isthisway:true},
        {way:'3元',isthisway:false}
        ],
        paymoney:'',
@@ -277,7 +277,7 @@
             }
             that.paymoney=paymoney;
             that.quanquan=quanquan;
-            that.payway[0].way=paymoney+'元+'+quanquan+"圈圈"
+            that.payway[0].way=paymoney+'元+'+quanquan
             that.payway[0].isthisway=true
             that.payway[1].way=orderamount
             that.payway[1].isthisway=false   
@@ -308,7 +308,7 @@
                 let quanquan=Number(that.goodlist[0].pic * that.goodlist[0].memberPoint)
                 that.paymoney=paymoney;
                 that.quanquan=quanquan;
-                that.payway[0].way=paymoney+'元+'+quanquan+"圈圈"
+                that.payway[0].way=paymoney+'元+'+quanquan
                 that.payway[0].isthisway=true
                 that.payway[1].way=ordermount
                 that.payway[1].isthisway=false
@@ -782,6 +782,8 @@ onLoad: function (options) {
 .dingrightimg{width: 10%;display: flex;justify-content: center;align-items: center;margin-top: 15rpx;}
 .dingrightimg img{width: 25rpx;height: 38rpx;}
 .topbgimg img{height: 12rpx;width: 100%;}
+
+.lian{border:2rpx solid #fb4901;border-radius:30rpx;background:#fb4901;color:#fff;font-size:25rpx;padding-left:15rpx;padding-right:15rpx;}
 
 /*topbtn*/
 .topBtn{background: #f2f2f2;text-align: center;}

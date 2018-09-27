@@ -4,7 +4,7 @@
         <div class='membershipIcon'>
         <image src='https://shop.guqinet.com/html/images/shanquan/memberIcon.jpg'></image>
         </div>
-        <div class='membershiptitle'>微分销详细信息提交</div>
+        <div class='membershiptitle'>推广商详细信息提交</div>
         <form @submit='btnform'>
         <div class='membershipFormList'>
             <input placeholder='姓名' name="name"></input>
@@ -83,12 +83,13 @@ export default {
       var parms = {}
       parms.name= e.detail.value.name
       parms.mobile= e.detail.value.mobile
-      parms.referrer= ''
+      parms.referrer= '30'
        parms.lvid= that.memberIdlvId;
       parms.memberId = that.memberId
       parms.midentity = e.detail.value.IDcard
       parms.cardno = e.detail.value.bankcard
       parms.depositBank = e.detail.value.depositBlank
+    
       wx.request({
         url: globalStore.state.api + '/api/distribe/submitDistribeApply',
         data: {

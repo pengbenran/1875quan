@@ -470,15 +470,14 @@ image {
 }
 
 
+
 .topimg{height: 350rpx;position: absolute; top: 0;left: 0;z-index: 0; width: 100%;}
-
-
 .addressContainer {background: #fff;min-height: 100vh;}
-
 
 /*warp*/
 
 .warp{position: relative;z-index: 3;top: 15rpx;width: 100%;padding-bottom: 125rpx;}
+
 
 
 /*infowarp*/
@@ -526,6 +525,7 @@ display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
 /*footer*/
 
 .footer{z-index:5;position: fixed;bottom: 0;display: flex;justify-content: space-between;width: 100%;height: 90rpx;box-shadow:rgb(201, 201, 201) 0 -2rpx 5rpx ;background: #ffffff;}
+
 .footer div{font-size: 30rpx;height: 90rpx;line-height: 90rpx;}
 .footer-box1{display: flex;justify-content: center;align-items: center;color:#666;padding-left: 20rpx;}
 .footer-box2{color: #e93429;}
